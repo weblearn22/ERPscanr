@@ -1,0 +1,4 @@
+# Ignore compiled py files
+*.pyc
+# Ignore ipynb checkpoint files
+**/.ipynb_checkpoints
