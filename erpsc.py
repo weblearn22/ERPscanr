@@ -12,7 +12,8 @@ class ERPSC_Count:
     def __init__(self):
 
         # 
-        self.url_front = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&field=word&term='
+        self.url_front = ('http://eutils.ncbi.nlm.nih.gov' +
+                '/entrez/eutils/esearch.fcgi?db=pubmed&field=word&term=')
 
         # Initliaze list of erp & cog terms to use
         self.erps = list()
@@ -51,7 +52,12 @@ class ERPSC_Count:
 
 
     def scrape_data(self):
-        """Search through pubmed for all abstracts with co-occurence of ERP & COG terms. """
+        """Search through pubmed for all abstracts with co-occurence of ERP & COG terms. 
+
+        The scraping does an exact word search for two terms (one ERP and one COG)
+        The HTML page returned by the pubmed search includes a 'count' field. 
+        This field contains the number of papers with both terms. This is extracted. 
+        """
 
         # Set date of when data was collected
         self.date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
@@ -107,7 +113,9 @@ class ERPSC_Count:
             erp_ind = self.erps.index(erp)
             cog_ind = np.argmax(self.dat_percent[erp_ind, :])
 
-            print('For the  {:5} the most common association is  {:10} with %{:05.2f}'.format(erp, self.cogs[cog_ind], self.dat_percent[erp_ind, cog_ind]*100))
+            print("For the  {:5} the most common association is \t {:10} with \t %{:05.2f}"
+                    .format(erp, self.cogs[cog_ind], \
+                            self.dat_percent[erp_ind, cog_ind]*100))
 
 
     def check_cogs(self):
@@ -118,16 +126,21 @@ class ERPSC_Count:
             cog_ind = self.cogs.index(cog)
             erp_ind = np.argmax(self.dat_percent[:, cog_ind])
 
-            print('For  {:20} the strongest associated ERP is   {:5} with   %{:05.2f}'.format(cog, self.erps[erp_ind], self.dat_percent[erp_ind, cog_ind]*100))
+            print("For  {:20} the strongest associated ERP is \t {:5} with \t %{:05.2f}"
+                    .format(cog, self.erps[erp_ind], \
+                            self.dat_percent[erp_ind, cog_ind]*100))
 
 
     def check_top(self):
         """Check the terms with the most papers. """
         
-        print('The most studied ERP is  {:6}  with  {:8.0f}  papers'.format(self.erps[np.argmax(self.ERP_counts)], \
-                                                                    self.ERP_counts[np.argmax(self.ERP_counts)]))
-        print('The most studied COG is  {:6}  with  {:8.0f}  papers'.format(self.cogs[np.argmax(self.COG_counts)], \
-                                                                    self.COG_counts[np.argmax(self.COG_counts)]))
+        print("The most studied ERP is  {:6}  with {:8.0f} papers"
+                .format(self.erps[np.argmax(self.ERP_counts)], \
+                        self.ERP_counts[np.argmax(self.ERP_counts)]))
+
+        print("The most studied COG is  {:6}  with {:8.0f}  papers"
+                .format(self.cogs[np.argmax(self.COG_counts)], \
+                        self.COG_counts[np.argmax(self.COG_counts)]))
 
     def check_counts(self, dat):
         """Check how many papers found for each term. """
