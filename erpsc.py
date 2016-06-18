@@ -1,19 +1,26 @@
 from __future__ import print_function, division
 import numpy as np
+import os
 import datetime
 import requests
-#import pickle
+import pickle
 from bs4 import BeautifulSoup
 
+###########################
+###### ERPSC - Class ######
+###########################
 
-class ERPSC_Count:
-    """This is a class for counting co-occurence of pre-specified ERP & Cognitive terms. """
+class ERPSC_Base():
+    """ Base class for ERPSC analyses. """
 
     def __init__(self):
 
         # 
-        self.url_front = ('http://eutils.ncbi.nlm.nih.gov' +
-                '/entrez/eutils/esearch.fcgi?db=pubmed&field=word&term=')
+        self.eutils_url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
+
+        #
+        self.save_loc = ('/Users/thomasdonoghue/Documents/' + 
+                        'Research/1-Projects/ERP-SCANR/2-Data/')
 
         # Initliaze list of erp & cog terms to use
         self.erps = list()
@@ -26,10 +33,6 @@ class ERPSC_Count:
         # Initialize vector of counts of number of papers for each term
         self.ERP_counts = np.zeros(0)
         self.COG_counts = np.zeros(0)
-
-        # Initialize for 
-        self.dat_numbers = np.zeros(0)
-        self.dat_percent = np.zeros(0)
 
         # Initialize for date that data is collected
         self.date = ''
@@ -49,6 +52,24 @@ class ERPSC_Count:
         self.cogs = cogs
         self.nCOGs = len(cogs)
         self.COG_counts = np.zeros([self.nCOGs])
+
+
+
+class ERPSC_Count(ERPSC_Base):
+    """This is a class for counting co-occurence of pre-specified ERP & Cognitive terms. """
+
+    def __init__(self):
+
+        #
+        ERPSC_Base.__init__(self)
+
+        # 
+        self.eutils_search = self.eutils_url + 
+                            'esearch.fcgi?db=pubmed&field=word&term='
+
+        # Initialize for 
+        self.dat_numbers = np.zeros(0)
+        self.dat_percent = np.zeros(0)
 
 
     def scrape_data(self):
@@ -75,10 +96,10 @@ class ERPSC_Count:
                 cog_ind = self.cogs.index(cog)
 
                 # Make URL - Exact Term Version
-                url = self.url_front + '"' + erp + '"AND"' + cog + '"'
+                url = self.eutils_search + '"' + erp + '"AND"' + cog + '"'
 
                 # Make URL - Non-exact term version
-                #url = self.url_front + erp + ' erp ' + cog
+                #url = self.eutils_search + erp + ' erp ' + cog
 
                 # Pull the page, and parse with Beatiful Soup
                 page = requests.get(url)
@@ -134,6 +155,7 @@ class ERPSC_Count:
     def check_top(self):
         """Check the terms with the most papers. """
         
+        # 
         print("The most studied ERP is  {:6}  with {:8.0f} papers"
                 .format(self.erps[np.argmax(self.ERP_counts)], \
                         self.ERP_counts[np.argmax(self.ERP_counts)]))
@@ -142,21 +164,69 @@ class ERPSC_Count:
                 .format(self.cogs[np.argmax(self.COG_counts)], \
                         self.COG_counts[np.argmax(self.COG_counts)]))
 
+
     def check_counts(self, dat):
         """Check how many papers found for each term. """
 
+        # Check counts for all ERP terms
         if dat is 'erp':
             for erp in self.erps:
                 erp_ind = self.erps.index(erp)
                 print('{:5} - {:8.0f}'.format(erp, self.ERP_counts[erp_ind]))
 
+        # Check counts for all COG terms
         elif dat is 'cog':
             for cog in self.cogs:
                 cog_ind = self.cogs.index(cog)
                 print('{:18} - {:10.0f}'.format(cog, self.COG_counts[cog_ind]))
 
 
-    def save_pickle():
-        """NOTE: NOT YET IMPLEMETED"""
-        pass
+    def save_pickle(self):
+        """   """
+
+        # Save pickle file
+        save_file = os.path.join(self.save_loc, 'counts', 'counts.p')
+        pickle.dump( self, open(save_file, 'wb') )
+
+
+
+
+class ERPSC_Words(ERPSC_Base):
+    """This is a class for searching through words in the abstracts of specified papers. """
+
+    def __init__(self):
+
+        #
+        ERPSC_Base.__init__(self)
+
+        #
+
+    def save_pickle(self):
+        """   """
+
+        # Save pickle file
+        save_file = os.path.join(self.save_loc, 'words', 'words.p')
+        pickle.dump( self, open(save_file, 'wb') )
+
+
+###############################
+###### ERPSC - Functions ######
+###############################
+
+
+def load_pickle_counts():
+    """    """
+
+    #
+    save_loc = ('/Users/thomasdonoghue/Documents/Research/1-Projects/ERP-SCANR/2-Data/counts/')
+    return pickle.load( open( os.path.join(save_loc, 'counts.p'), 'rb'))
+
+def load_pickle_words():
+    """    """
+
+    #
+    save_loc = ('/Users/thomasdonoghue/Documents/Research/1-Projects/ERP-SCANR/2-Data/words/')
+    return pickle.load( open( os.path.join(save_loc, 'words.p'), 'rb'))
+
+
 
