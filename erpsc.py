@@ -209,9 +209,9 @@ class ERPSC_Words(ERPSC_Base):
         pickle.dump( self, open(save_file, 'wb') )
 
 
-########################################
-###### ERPSC - Functions (Public) ######
-########################################
+############################################
+######## ERPSC - Functions (Public) ########
+############################################
 
 
 def load_pickle_counts():
@@ -229,9 +229,9 @@ def load_pickle_words():
     return pickle.load( open( os.path.join(save_loc, 'words.p'), 'rb'))
 
 
-#######################################
-###### ERPSC - Functions (Local) ######
-#######################################
+###########################################
+######## ERPSC - Functions (Local) ########
+###########################################
 
 def _ids_to_str(ids):
     """Takes a list of pubmed ids, returns a str of the ids separated by commas. """
