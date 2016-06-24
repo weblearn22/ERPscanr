@@ -6,9 +6,9 @@ import requests
 import pickle
 from bs4 import BeautifulSoup
 
-###########################
-###### ERPSC - Class ######
-###########################
+###################################
+########## ERPSC - Class ##########
+###################################
 
 class ERPSC_Base():
     """ Base class for ERPSC analyses. """
@@ -64,8 +64,7 @@ class ERPSC_Count(ERPSC_Base):
         ERPSC_Base.__init__(self)
 
         # 
-        self.eutils_search = self.eutils_url + 
-                            'esearch.fcgi?db=pubmed&field=word&term='
+        self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pubmed&field=word&term='
 
         # Initialize for 
         self.dat_numbers = np.zeros(0)
@@ -87,8 +86,9 @@ class ERPSC_Count(ERPSC_Base):
         self.dat_numbers = np.zeros([self.nERPs, self.nCOGs])
         self.dat_percent = np.zeros([self.nERPs, self.nCOGs])
 
-        #
+        # Loop through each ERP term
         for erp in self.erps:
+            # Within each ERP, loop through each COG term
             for cog in self.cogs:
 
                 #
@@ -129,6 +129,7 @@ class ERPSC_Count(ERPSC_Base):
     def check_erps(self):
         """"Prints out the COG terms most associatied with each ERP. """
 
+        # 
         for erp in self.erps:
 
             erp_ind = self.erps.index(erp)
@@ -142,6 +143,7 @@ class ERPSC_Count(ERPSC_Base):
     def check_cogs(self):
         """Prints out the ERP terms most associated with each COG. """
         
+        # 
         for cog in self.cogs:
 
             cog_ind = self.cogs.index(cog)
@@ -160,6 +162,7 @@ class ERPSC_Count(ERPSC_Base):
                 .format(self.erps[np.argmax(self.ERP_counts)], \
                         self.ERP_counts[np.argmax(self.ERP_counts)]))
 
+        # 
         print("The most studied COG is  {:6}  with {:8.0f}  papers"
                 .format(self.cogs[np.argmax(self.COG_counts)], \
                         self.COG_counts[np.argmax(self.COG_counts)]))
@@ -189,6 +192,21 @@ class ERPSC_Count(ERPSC_Base):
         pickle.dump( self, open(save_file, 'wb') )
 
 
+class words_results():
+    """   """
+
+    def __init__(self, erp):
+
+        self.erp = erp
+
+        self.ids = list()
+
+        self.nArticles = int()
+
+        self.years = list()
+        self.titles = list()
+        self.words = list()
+
 
 
 class ERPSC_Words(ERPSC_Base):
@@ -196,10 +214,80 @@ class ERPSC_Words(ERPSC_Base):
 
     def __init__(self):
 
-        #
+        # Inherit from ERPSC Base Class
         ERPSC_Base.__init__(self)
 
+        # 
+        self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pubmed&field=word&term='
+        self.search_retmax = '&retmax=10'
+
         #
+        self.eutils_fetch = self.eutils_url + 'efetch.fcgi?db=pubmed&retmode=xml&id='
+
+        #
+        self.results = list()
+
+
+    def scrape_data(self):
+        """   """
+
+        # Set date of when data was collected
+        self.date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+
+        #
+        for erp in self.erps:
+
+            cur_erp = words_results(erp)
+
+            # 
+            url = self.eutils_search + '"' + erp + '"' + self.search_retmax
+
+            # Get page and parse
+            page = requests.get(url)
+            page_soup = BeautifulSoup(page.content)
+
+
+            # Get all ids
+            ids = page_soup.find_all('id')
+
+            # Convert ids to string
+            ids_str = _ids_to_str(ids)
+
+            # Get article page
+            art_url = self.eutils_fetch + ids_str
+            art_page = requests.get(art_url)
+            art_page_soup = BeautifulSoup(art_page.content, "xml")
+
+            # Pull out articles
+            articles = art_page_soup.findAll('PubmedArticle')
+
+            # Check how many articles there are
+            cur_erp.nArticles = len(articles)
+
+            for art in range(0, cur_erp.nArticles):
+
+                #
+                cur_erp.ids.append(int(ids[art].text))
+
+                #
+                try:
+                    cur_erp.titles.append(articles[art].find('ArticleTitle').text)
+                except AttributeError:
+                    cur_erp.titles.append(None)
+                #
+                try:
+                    cur_erp.words.append(articles[art].find('AbstractText').text)
+                except AttributeError:
+                    cur_erp.words.append(None)   
+
+                #
+                try:
+                    cur_erp.years.append(int(articles[art].find('DateCreated').find('Year').text))
+                except AttributeError:
+                    cur_erp.years.append(None)
+
+            #
+            self.results.append(cur_erp)
 
     def save_pickle(self):
         """   """
@@ -209,9 +297,9 @@ class ERPSC_Words(ERPSC_Base):
         pickle.dump( self, open(save_file, 'wb') )
 
 
-############################################
-######## ERPSC - Functions (Public) ########
-############################################
+####################################################
+############ ERPSC - Functions (Public) ############
+####################################################
 
 
 def load_pickle_counts():
@@ -229,9 +317,9 @@ def load_pickle_words():
     return pickle.load( open( os.path.join(save_loc, 'words.p'), 'rb'))
 
 
-###########################################
-######## ERPSC - Functions (Local) ########
-###########################################
+###################################################
+############ ERPSC - Functions (Local) ############
+###################################################
 
 def _ids_to_str(ids):
     """Takes a list of pubmed ids, returns a str of the ids separated by commas. """
@@ -244,7 +332,7 @@ def _ids_to_str(ids):
     
     # Loop through rest of the id's, appending to end of id_str
     for i in range(1, nIds):
-        ids_str = ids_str + ',' + ids[i].text
+        ids_str = ids_str + ',' + str(ids[i].text)
         
     # Return string of ids
     return ids_str
