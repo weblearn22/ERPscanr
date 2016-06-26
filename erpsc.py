@@ -4,11 +4,13 @@ import os
 import datetime
 import requests
 import pickle
+import nltk
 from bs4 import BeautifulSoup
+from nltk.corpus import stopwords
 
-###################################
-########## ERPSC - Class ##########
-###################################
+###################################################
+################## ERPSC - Class ##################
+###################################################
 
 class ERPSC_Base():
     """ Base class for ERPSC analyses. """
@@ -197,12 +199,16 @@ class words_results():
 
     def __init__(self, erp):
 
+        #
         self.erp = erp
 
+        #
         self.ids = list()
 
+        #
         self.nArticles = int()
 
+        #
         self.years = list()
         self.titles = list()
         self.words = list()
@@ -276,7 +282,8 @@ class ERPSC_Words(ERPSC_Base):
                     cur_erp.titles.append(None)
                 #
                 try:
-                    cur_erp.words.append(articles[art].find('AbstractText').text)
+                    #cur_erp.words.append(articles[art].find('AbstractText').text)
+                    cur_erp.words.append(_process_words(articles[art].find('AbstractText').text))
                 except AttributeError:
                     cur_erp.words.append(None)   
 
@@ -297,9 +304,9 @@ class ERPSC_Words(ERPSC_Base):
         pickle.dump( self, open(save_file, 'wb') )
 
 
-####################################################
-############ ERPSC - Functions (Public) ############
-####################################################
+############################################################
+################ ERPSC - Functions (Public) ################
+############################################################
 
 
 def load_pickle_counts():
@@ -317,9 +324,9 @@ def load_pickle_words():
     return pickle.load( open( os.path.join(save_loc, 'words.p'), 'rb'))
 
 
-###################################################
-############ ERPSC - Functions (Local) ############
-###################################################
+###########################################################
+################ ERPSC - Functions (Local) ################
+###########################################################
 
 def _ids_to_str(ids):
     """Takes a list of pubmed ids, returns a str of the ids separated by commas. """
@@ -336,4 +343,12 @@ def _ids_to_str(ids):
         
     # Return string of ids
     return ids_str
+
+def _process_words(words):
+    """   """
+    
+    # Remove stop words, and anything that is only one character (punctuation)
+    words_processed = [word.lower() for word in words if ((not word.lower() in stopwords.words('english')) & (len(word) > 1))]
+    
+    return words_processed
 
