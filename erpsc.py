@@ -8,9 +8,9 @@ import nltk
 from bs4 import BeautifulSoup
 from nltk.corpus import stopwords
 
-###################################################
-################## ERPSC - Class ##################
-###################################################
+###########################################################
+###################### ERPSC - Class ######################
+###########################################################
 
 class ERPSC_Base():
     """ Base class for ERPSC analyses. """
@@ -62,13 +62,13 @@ class ERPSC_Count(ERPSC_Base):
 
     def __init__(self):
 
-        #
+        # Inherit from the ERPSC base class
         ERPSC_Base.__init__(self)
 
-        # 
+        # Set the esearch url for pubmed
         self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pubmed&field=word&term='
 
-        # Initialize for 
+        # Initialize data output variables
         self.dat_numbers = np.zeros(0)
         self.dat_percent = np.zeros(0)
 
@@ -81,7 +81,7 @@ class ERPSC_Count(ERPSC_Base):
         This field contains the number of papers with both terms. This is extracted. 
         """
 
-        # Set date of when data was collected
+        # Set date of when data was scraped
         self.date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
         # Initialize right size matrices to store data
@@ -93,7 +93,7 @@ class ERPSC_Count(ERPSC_Base):
             # Within each ERP, loop through each COG term
             for cog in self.cogs:
 
-                #
+                # Get the indices of the current erp & cog terms
                 erp_ind = self.erps.index(erp)
                 cog_ind = self.cogs.index(cog)
 
@@ -131,7 +131,7 @@ class ERPSC_Count(ERPSC_Base):
     def check_erps(self):
         """"Prints out the COG terms most associatied with each ERP. """
 
-        # 
+        # Loop through each erp term, find maximally associated cog term and print out
         for erp in self.erps:
 
             erp_ind = self.erps.index(erp)
@@ -145,7 +145,7 @@ class ERPSC_Count(ERPSC_Base):
     def check_cogs(self):
         """Prints out the ERP terms most associated with each COG. """
         
-        # 
+        # Loop through each cig term, find maximally associated erp term and print out
         for cog in self.cogs:
 
             cog_ind = self.cogs.index(cog)
@@ -159,12 +159,12 @@ class ERPSC_Count(ERPSC_Base):
     def check_top(self):
         """Check the terms with the most papers. """
         
-        # 
+        # Find and print the erp term for which the most papers were found
         print("The most studied ERP is  {:6}  with {:8.0f} papers"
                 .format(self.erps[np.argmax(self.ERP_counts)], \
                         self.ERP_counts[np.argmax(self.ERP_counts)]))
 
-        # 
+        # Find and print the cog term for which the most papers were found
         print("The most studied COG is  {:6}  with {:8.0f}  papers"
                 .format(self.cogs[np.argmax(self.COG_counts)], \
                         self.COG_counts[np.argmax(self.COG_counts)]))
@@ -243,6 +243,7 @@ class ERPSC_Words(ERPSC_Base):
         #
         for erp in self.erps:
 
+            #
             cur_erp = words_results(erp)
 
             # 
@@ -280,6 +281,7 @@ class ERPSC_Words(ERPSC_Base):
                     cur_erp.titles.append(articles[art].find('ArticleTitle').text)
                 except AttributeError:
                     cur_erp.titles.append(None)
+
                 #
                 try:
                     #cur_erp.words.append(articles[art].find('AbstractText').text)
@@ -304,9 +306,9 @@ class ERPSC_Words(ERPSC_Base):
         pickle.dump( self, open(save_file, 'wb') )
 
 
-############################################################
-################ ERPSC - Functions (Public) ################
-############################################################
+###################################################################
+#################### ERPSC - Functions (Public) ###################
+###################################################################
 
 
 def load_pickle_counts():
@@ -324,9 +326,9 @@ def load_pickle_words():
     return pickle.load( open( os.path.join(save_loc, 'words.p'), 'rb'))
 
 
-###########################################################
-################ ERPSC - Functions (Local) ################
-###########################################################
+###################################################################
+#################### ERPSC - Functions (Local) ####################
+###################################################################
 
 def _ids_to_str(ids):
     """Takes a list of pubmed ids, returns a str of the ids separated by commas. """
@@ -347,8 +349,9 @@ def _ids_to_str(ids):
 def _process_words(words):
     """   """
     
-    # Remove stop words, and anything that is only one character (punctuation)
-    words_processed = [word.lower() for word in words if ((not word.lower() in stopwords.words('english')) & (len(word) > 1))]
-    
-    return words_processed
+    # Remove stop words, and anything that is only one character (punctuation). Return the result
+    return [word.lower() for word in words if ((not word.lower() in stopwords.words('english')) & (len(word) > 1))]
+
+    #words_processed = [word.lower() for word in words if ((not word.lower() in stopwords.words('english')) & (len(word) > 1))]
+    #return words_processed
 
