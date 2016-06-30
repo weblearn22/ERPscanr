@@ -8,19 +8,20 @@ import nltk
 from bs4 import BeautifulSoup
 from nltk.corpus import stopwords
 
-###########################################################
-###################### ERPSC - Class ######################
-###########################################################
+###################################################################
+########################## ERPSC - Class ##########################
+###################################################################
 
 class ERPSC_Base():
     """ Base class for ERPSC analyses. """
 
     def __init__(self):
 
-        # 
+        # Set the base path for the NCBI eutils
+        # Details here: http://www.ncbi.nlm.nih.gov/books/NBK25500/
         self.eutils_url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
 
-        #
+        # Set path (on Tom's laptop) to save out the data
         self.save_loc = ('/Users/thomasdonoghue/Documents/' + 
                         'Research/1-Projects/ERP-SCANR/2-Data/')
 
@@ -90,7 +91,8 @@ class ERPSC_Count(ERPSC_Base):
 
         # Loop through each ERP term
         for erp in self.erps:
-            # Within each ERP, loop through each COG term
+
+            # For each ERP, loop through each COG term
             for cog in self.cogs:
 
                 # Get the indices of the current erp & cog terms
@@ -134,9 +136,11 @@ class ERPSC_Count(ERPSC_Base):
         # Loop through each erp term, find maximally associated cog term and print out
         for erp in self.erps:
 
+            # Find the index of the most common cog for current erp
             erp_ind = self.erps.index(erp)
             cog_ind = np.argmax(self.dat_percent[erp_ind, :])
 
+            # Print out the results
             print("For the  {:5} the most common association is \t {:10} with \t %{:05.2f}"
                     .format(erp, self.cogs[cog_ind], \
                             self.dat_percent[erp_ind, cog_ind]*100))
@@ -148,9 +152,11 @@ class ERPSC_Count(ERPSC_Base):
         # Loop through each cig term, find maximally associated erp term and print out
         for cog in self.cogs:
 
+            # Find the index of the most common erp for current cog
             cog_ind = self.cogs.index(cog)
             erp_ind = np.argmax(self.dat_percent[:, cog_ind])
 
+            # Print out the results
             print("For  {:20} the strongest associated ERP is \t {:5} with \t %{:05.2f}"
                     .format(cog, self.erps[erp_ind], \
                             self.dat_percent[erp_ind, cog_ind]*100))
@@ -187,28 +193,28 @@ class ERPSC_Count(ERPSC_Base):
 
 
     def save_pickle(self):
-        """   """
+        """Saves out a pickle file of the ERPSC_Count object. """
 
         # Save pickle file
         save_file = os.path.join(self.save_loc, 'counts', 'counts.p')
         pickle.dump( self, open(save_file, 'wb') )
 
 
-class words_results():
-    """   """
+class Words():
+    """An object to hold the word results for a given term. """
 
     def __init__(self, erp):
 
-        #
+        # Set the given string as the erp label
         self.erp = erp
 
-        #
+        # Initialize list to store pubmed article ids
         self.ids = list()
 
-        #
+        # Initialize to store article count
         self.nArticles = int()
 
-        #
+        # Initiliaze to store data pulled from articles
         self.years = list()
         self.titles = list()
         self.words = list()
@@ -223,36 +229,50 @@ class ERPSC_Words(ERPSC_Base):
         # Inherit from ERPSC Base Class
         ERPSC_Base.__init__(self)
 
-        # 
+        # Set url and setting for e-search. Retmax is maximum number of ids to return
         self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pubmed&field=word&term='
         self.search_retmax = '&retmax=10'
 
-        #
+        # Set the url and settings for the e-fetch utility
         self.eutils_fetch = self.eutils_url + 'efetch.fcgi?db=pubmed&retmode=xml&id='
 
-        #
+        # Initialize a list to store results for all the erps
         self.results = list()
 
 
     def scrape_data(self):
-        """   """
+        """Search through pubmed for all abstracts referring to a given ERP. 
+
+        The scraping does an exact word search for the ERP term given. 
+        It then loops through all the artciles found about that data. 
+        For each article, pulls title, year and word data. 
+
+        Notes: 
+        - Pulls data using the hierarchical tag structure that organize the articles. 
+        - Initially, the procedure was to pull all tags of a certain type. 
+            For example: extract all 'DateCreated' tags. 
+            This procedure fails (or badly organizes data) when an articles is 
+                missing a particular tag. 
+            Now: take advantage of the hierarchy, loop through each article tag. 
+                From here, pull out the data, if available. 
+                This way, can deal with cases of missing data. 
+        """
 
         # Set date of when data was collected
         self.date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
-        #
+        # Loop through all the erps
         for erp in self.erps:
 
-            #
-            cur_erp = words_results(erp)
+            # Initiliaze object to store data for current erp papers
+            cur_erp = Words(erp)
 
-            # 
+            # Create the url for the erp search term
             url = self.eutils_search + '"' + erp + '"' + self.search_retmax
 
             # Get page and parse
             page = requests.get(url)
             page_soup = BeautifulSoup(page.content)
-
 
             # Get all ids
             ids = page_soup.find_all('id')
@@ -271,64 +291,68 @@ class ERPSC_Words(ERPSC_Base):
             # Check how many articles there are
             cur_erp.nArticles = len(articles)
 
+            # Loop through each article, pulling out desired info
             for art in range(0, cur_erp.nArticles):
+                # NOTE: Pubmed article pages could be missing info. 
+                # For example, can have an id that's missing abstract text
+                # This is why data collections are all in try statements. 
 
-                #
+                # Add id of current article to object data
                 cur_erp.ids.append(int(ids[art].text))
 
-                #
+                # Get Title, if there is one
                 try:
                     cur_erp.titles.append(articles[art].find('ArticleTitle').text)
                 except AttributeError:
                     cur_erp.titles.append(None)
 
-                #
+                # Get Words from the Abstract, if available
                 try:
-                    #cur_erp.words.append(articles[art].find('AbstractText').text)
                     cur_erp.words.append(_process_words(articles[art].find('AbstractText').text))
                 except AttributeError:
                     cur_erp.words.append(None)   
 
-                #
+                # Get the Year of the paper, if available
                 try:
                     cur_erp.years.append(int(articles[art].find('DateCreated').find('Year').text))
                 except AttributeError:
                     cur_erp.years.append(None)
 
-            #
+            # Add the object with current erp data to results list
             self.results.append(cur_erp)
 
+
     def save_pickle(self):
-        """   """
+        """Saves out a pickle file of the ERPSC_Word object. """
 
         # Save pickle file
         save_file = os.path.join(self.save_loc, 'words', 'words.p')
         pickle.dump( self, open(save_file, 'wb') )
 
 
-###################################################################
-#################### ERPSC - Functions (Public) ###################
-###################################################################
+###########################################################################
+######################## ERPSC - Functions (Public) #######################
+###########################################################################
 
 
 def load_pickle_counts():
-    """    """
+    """Loads a pickle file of an ERPSC_Count object. """
 
-    #
+    # Set the location to look for data, and load the available count data
     save_loc = ('/Users/thomasdonoghue/Documents/Research/1-Projects/ERP-SCANR/2-Data/counts/')
     return pickle.load( open( os.path.join(save_loc, 'counts.p'), 'rb'))
 
 def load_pickle_words():
-    """    """
+    """Loads a pickle file of an ERPSC_Word object. """
 
-    #
+    # Set the location to look for data, and load the available word data
     save_loc = ('/Users/thomasdonoghue/Documents/Research/1-Projects/ERP-SCANR/2-Data/words/')
     return pickle.load( open( os.path.join(save_loc, 'words.p'), 'rb'))
 
 
-###################################################################
-#################### ERPSC - Functions (Local) ####################
-###################################################################
+###########################################################################
+######################## ERPSC - Functions (Local) ########################
+###########################################################################
 
 def _ids_to_str(ids):
     """Takes a list of pubmed ids, returns a str of the ids separated by commas. """
@@ -347,11 +371,12 @@ def _ids_to_str(ids):
     return ids_str
 
 def _process_words(words):
-    """   """
+    """Takes a list of words, sets to lower case, and removes all stopwords. """
     
     # Remove stop words, and anything that is only one character (punctuation). Return the result
     return [word.lower() for word in words if ((not word.lower() in stopwords.words('english')) & (len(word) > 1))]
 
+    # OLD: (same code)
     #words_processed = [word.lower() for word in words if ((not word.lower() in stopwords.words('english')) & (len(word) > 1))]
     #return words_processed
 
