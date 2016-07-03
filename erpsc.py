@@ -219,6 +219,12 @@ class Words():
         self.titles = list()
         self.words = list()
 
+        # Initialize a list to store all words (across all papers)
+        self.all_words = list()
+
+        # Initialize to store FreqDists (across all words)
+        self.freqs = list()
+
 
 
 class ERPSC_Words(ERPSC_Base):
@@ -231,7 +237,7 @@ class ERPSC_Words(ERPSC_Base):
 
         # Set url and setting for e-search. Retmax is maximum number of ids to return
         self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pubmed&field=word&term='
-        self.search_retmax = '&retmax=10'
+        self.search_retmax = '&retmax=500'
 
         # Set the url and settings for the e-fetch utility
         self.eutils_fetch = self.eutils_url + 'efetch.fcgi?db=pubmed&retmode=xml&id='
@@ -304,22 +310,62 @@ class ERPSC_Words(ERPSC_Base):
                 try:
                     cur_erp.titles.append(articles[art].find('ArticleTitle').text)
                 except AttributeError:
-                    cur_erp.titles.append(None)
+                    cur_erp.titles.append([])
 
                 # Get Words from the Abstract, if available
                 try:
-                    cur_erp.words.append(_process_words(articles[art].find('AbstractText').text))
+                    cur_erp.words.append(_process_words(articles[art].find('AbstractText').text.split()))
                 except AttributeError:
-                    cur_erp.words.append(None)   
+                    cur_erp.words.append([])   
 
                 # Get the Year of the paper, if available
                 try:
                     cur_erp.years.append(int(articles[art].find('DateCreated').find('Year').text))
                 except AttributeError:
-                    cur_erp.years.append(None)
+                    cur_erp.years.append([])
 
             # Add the object with current erp data to results list
             self.results.append(cur_erp)
+
+
+    def comb_words(self):
+        """   """
+
+        for erp in range(0, self.nERPs):
+            for art in range(0, self.results[erp].nArticles):
+                self.results[erp].all_words.extend(self.results[erp].words[art])
+
+
+    def freq_dists(self):
+        """   """
+
+        #
+        for erp in range(0, self.nERPs):
+
+            #
+            self.results[erp].freqs = nltk.FreqDist(self.results[erp].all_words)
+
+            # Remove 
+            try:
+                self.results[erp].freqs.pop(self.erps[erp].lower())
+            except KeyError:
+                pass
+
+
+    def check_words(self, nCheck):
+        """   """
+
+        for erp in range(0, self.nERPs):
+
+            #
+            top_words = self.results[erp].freqs.most_common()[0:nCheck]
+
+            top_words_str = ''
+            for i in range(0, nCheck):
+                top_words_str += top_words[i][0]
+                top_words_str += ' , '
+
+            print(self.erps[erp], ': ', top_words_str)
 
 
     def save_pickle(self):
@@ -375,8 +421,4 @@ def _process_words(words):
     
     # Remove stop words, and anything that is only one character (punctuation). Return the result
     return [word.lower() for word in words if ((not word.lower() in stopwords.words('english')) & (len(word) > 1))]
-
-    # OLD: (same code)
-    #words_processed = [word.lower() for word in words if ((not word.lower() in stopwords.words('english')) & (len(word) > 1))]
-    #return words_processed
 
