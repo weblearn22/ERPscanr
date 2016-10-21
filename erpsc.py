@@ -22,7 +22,7 @@ class ERPSC_Base():
         self.eutils_url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
 
         # Set path (on Tom's laptop) to save out the data
-        self.save_loc = ('/Users/thomasdonoghue/Documents/' + 
+        self.save_loc = ('/Users/thomasdonoghue/Documents/' +
                         'Research/1-Projects/ERP-SCANR/2-Data/')
 
         # Initliaze list of erp & cog terms to use
@@ -75,11 +75,11 @@ class ERPSC_Count(ERPSC_Base):
 
 
     def scrape_data(self):
-        """Search through pubmed for all abstracts with co-occurence of ERP & COG terms. 
+        """Search through pubmed for all abstracts with co-occurence of ERP & COG terms.
 
         The scraping does an exact word search for two terms (one ERP and one COG)
-        The HTML page returned by the pubmed search includes a 'count' field. 
-        This field contains the number of papers with both terms. This is extracted. 
+        The HTML page returned by the pubmed search includes a 'count' field.
+        This field contains the number of papers with both terms. This is extracted.
         """
 
         # Set date of when data was scraped
@@ -148,7 +148,7 @@ class ERPSC_Count(ERPSC_Base):
 
     def check_cogs(self):
         """Prints out the ERP terms most associated with each COG. """
-        
+
         # Loop through each cig term, find maximally associated erp term and print out
         for cog in self.cogs:
 
@@ -164,7 +164,7 @@ class ERPSC_Count(ERPSC_Base):
 
     def check_top(self):
         """Check the terms with the most papers. """
-        
+
         # Find and print the erp term for which the most papers were found
         print("The most studied ERP is  {:6}  with {:8.0f} papers"
                 .format(self.erps[np.argmax(self.ERP_counts)], \
@@ -247,21 +247,21 @@ class ERPSC_Words(ERPSC_Base):
 
 
     def scrape_data(self):
-        """Search through pubmed for all abstracts referring to a given ERP. 
+        """Search through pubmed for all abstracts referring to a given ERP.
 
-        The scraping does an exact word search for the ERP term given. 
-        It then loops through all the artciles found about that data. 
-        For each article, pulls title, year and word data. 
+        The scraping does an exact word search for the ERP term given.
+        It then loops through all the artciles found about that data.
+        For each article, pulls title, year and word data.
 
-        Notes: 
-        - Pulls data using the hierarchical tag structure that organize the articles. 
-        - Initially, the procedure was to pull all tags of a certain type. 
-            For example: extract all 'DateCreated' tags. 
-            This procedure fails (or badly organizes data) when an articles is 
-                missing a particular tag. 
-            Now: take advantage of the hierarchy, loop through each article tag. 
-                From here, pull out the data, if available. 
-                This way, can deal with cases of missing data. 
+        Notes:
+        - Pulls data using the hierarchical tag structure that organize the articles.
+        - Initially, the procedure was to pull all tags of a certain type.
+            For example: extract all 'DateCreated' tags.
+            This procedure fails (or badly organizes data) when an articles is
+                missing a particular tag.
+            Now: take advantage of the hierarchy, loop through each article tag.
+                From here, pull out the data, if available.
+                This way, can deal with cases of missing data.
         """
 
         # Set date of when data was collected
@@ -299,9 +299,9 @@ class ERPSC_Words(ERPSC_Base):
 
             # Loop through each article, pulling out desired info
             for art in range(0, cur_erp.nArticles):
-                # NOTE: Pubmed article pages could be missing info. 
+                # NOTE: Pubmed article pages could be missing info.
                 # For example, can have an id that's missing abstract text
-                # This is why data collections are all in try statements. 
+                # This is why data collections are all in try statements.
 
                 # Add id of current article to object data
                 cur_erp.ids.append(int(ids[art].text))
@@ -316,7 +316,7 @@ class ERPSC_Words(ERPSC_Base):
                 try:
                     cur_erp.words.append(_process_words(articles[art].find('AbstractText').text.split()))
                 except AttributeError:
-                    cur_erp.words.append([])   
+                    cur_erp.words.append([])
 
                 # Get the Year of the paper, if available
                 try:
@@ -345,7 +345,7 @@ class ERPSC_Words(ERPSC_Base):
             #
             self.results[erp].freqs = nltk.FreqDist(self.results[erp].all_words)
 
-            # Remove 
+            # Remove
             try:
                 self.results[erp].freqs.pop(self.erps[erp].lower())
             except KeyError:
@@ -382,7 +382,15 @@ class ERPSC_Words(ERPSC_Base):
 
 
 def load_pickle_counts():
-    """Loads a pickle file of an ERPSC_Count object. """
+    """Loads a pickle file of an ERPSC_Count object.
+
+    THIS IS A LONGER DESCRIPTION OF WHATS GOING ON.
+
+    Returns
+    -------
+    results : matrix
+        This is a matrix of stuff
+    """
 
     # Set the location to look for data, and load the available count data
     save_loc = ('/Users/thomasdonoghue/Documents/Research/1-Projects/ERP-SCANR/2-Data/counts/')
@@ -401,24 +409,24 @@ def load_pickle_words():
 ###########################################################################
 
 def _ids_to_str(ids):
-    """Takes a list of pubmed ids, returns a str of the ids separated by commas. """
-    
+    """Takes a list of pubmed ids, returns a str of the ids separated by commas."""
+
     # Check how many ids in list
     nIds = len(ids)
-    
+
     # Initialize string with first id
     ids_str = str(ids[0].text)
-    
+
     # Loop through rest of the id's, appending to end of id_str
     for i in range(1, nIds):
         ids_str = ids_str + ',' + str(ids[i].text)
-        
+
     # Return string of ids
     return ids_str
 
 def _process_words(words):
-    """Takes a list of words, sets to lower case, and removes all stopwords. """
-    
+    """Takes a list of words, sets to lower case, and removes all stopwords."""
+
     # Remove stop words, and anything that is only one character (punctuation). Return the result
     return [word.lower() for word in words if ((not word.lower() in stopwords.words('english')) & (len(word) > 1))]
 
