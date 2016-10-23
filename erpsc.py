@@ -8,9 +8,9 @@ from bs4 import BeautifulSoup
 import nltk
 from nltk.corpus import stopwords
 
-#####################################################################
-########################## ERPSC - Classes ##########################
-#####################################################################
+#############################################################################
+############################## ERPSC - Classes ##############################
+#############################################################################
 
 class ERPSCBase(object):
     """Base class for ERPSC analyses."""
@@ -177,7 +177,14 @@ class ERPSCCount(ERPSCBase):
 
 
     def check_counts(self, dat):
-        """Check how many papers found for each term."""
+        """Check how many papers found for each term.
+
+        Parameters
+        ----------
+        dat : str
+            Which data type to print out.
+                Options: {'erp', 'cog'}
+        """
 
         # Check counts for all ERP terms
         if dat is 'erp':
@@ -204,6 +211,12 @@ class Words(object):
     """An object to hold the word results for a given term."""
 
     def __init__(self, erp):
+        """
+        Parameters
+        ----------
+        erp  : ?
+            xx
+        """
 
         # Set the given string as the erp label
         self.erp = erp
@@ -329,9 +342,10 @@ class ERPSCWords(ERPSCBase):
             self.results.append(cur_erp)
 
 
-    def comb_words(self):
+    def combine_words(self):
         """FILL IN DOCSTRING."""
 
+        # ?
         for erp in range(0, self.n_erp_terms):
             for art in range(0, self.results[erp].n_articles):
                 self.results[erp].all_words.extend(self.results[erp].words[art])
@@ -354,11 +368,18 @@ class ERPSCWords(ERPSCBase):
 
 
     def check_words(self, n_check):
-        """FILL IN DOCSTRING."""
+        """FILL IN DOCSTRING.
 
+        Parameters
+        ----------
+        n_check : ?
+            xx
+        """
+
+        # ?
         for erp in range(0, self.n_erp_terms):
 
-            #
+            # ?
             top_words = self.results[erp].freqs.most_common()[0:n_check]
 
             top_words_str = ''
@@ -388,7 +409,7 @@ def load_pickle_counts():
     Returns
     -------
     results : matrix
-        This is a matrix of stuff
+        xx
     """
 
     # Set the location to look for data, and load the available count data
@@ -396,7 +417,13 @@ def load_pickle_counts():
     return pickle.load(open(os.path.join(save_loc, 'counts.p'), 'rb'))
 
 def load_pickle_words():
-    """Loads a pickle file of an ERPSC_Word object."""
+    """Loads a pickle file of an ERPSC_Word object.
+
+    Returns
+    -------
+    results : ?
+        xx
+    """
 
     # Set the location to look for data, and load the available word data
     save_loc = ('/Users/thomasdonoghue/Documents/Research/1-Projects/ERP-SCANR/2-Data/words/')
@@ -439,6 +466,6 @@ def _process_words(words):
     """
 
     # Remove stop words, and anything that is only one character (punctuation). Return the result.
-    return [word.lower() for word in words if (not word.lower() in stopwords.words('english')
+    return [word.lower() for word in words if ((not word.lower() in stopwords.words('english'))
                                                & (len(word) > 1))]
 
