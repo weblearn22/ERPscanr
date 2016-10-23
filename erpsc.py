@@ -1,19 +1,19 @@
 from __future__ import print_function, division
-import numpy as np
 import os
-import datetime
-import requests
 import pickle
-import nltk
+import datetime
+import numpy as np
+import requests
 from bs4 import BeautifulSoup
+import nltk
 from nltk.corpus import stopwords
 
 #####################################################################
 ########################## ERPSC - Classes ##########################
 #####################################################################
 
-class ERPSC_Base():
-    """ Base class for ERPSC analyses. """
+class ERPSCBase(object):
+    """Base class for ERPSC analyses."""
 
     def __init__(self):
 
@@ -22,49 +22,49 @@ class ERPSC_Base():
         self.eutils_url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
 
         # Set path (on Tom's laptop) to save out the data
-        self.save_loc = ('/Users/thomasdonoghue/Documents/' +
-                        'Research/1-Projects/ERP-SCANR/2-Data/')
+        self.save_loc = ("/Users/thomasdonoghue/Documents/"
+                         "Research/1-Projects/ERP-SCANR/2-Data/")
 
         # Initliaze list of erp & cog terms to use
         self.erps = list()
         self.cogs = list()
 
         # Initialize counters for numbers of terms
-        self.nERPs = int()
-        self.nCOGs = int()
+        self.n_erp_terms = int()
+        self.n_cog_terms = int()
 
         # Initialize vector of counts of number of papers for each term
-        self.ERP_counts = np.zeros(0)
-        self.COG_counts = np.zeros(0)
+        self.erp_counts = np.zeros(0)
+        self.cog_counts = np.zeros(0)
 
         # Initialize for date that data is collected
         self.date = ''
 
 
     def set_erps(self, erps):
-        """Sets the given list of strings as erp terms to use. """
+        """Sets the given list of strings as erp terms to use."""
 
         self.erps = erps
-        self.nERPs = len(erps)
-        self.ERP_counts = np.zeros([self.nERPs])
+        self.n_erp_terms = len(erps)
+        self.erp_counts = np.zeros([self.n_erp_terms])
 
 
     def set_cogs(self, cogs):
-        """Sets the given list of strings as cog terms to use. """
+        """Sets the given list of strings as cog terms to use."""
 
         self.cogs = cogs
-        self.nCOGs = len(cogs)
-        self.COG_counts = np.zeros([self.nCOGs])
+        self.n_cog_terms = len(cogs)
+        self.cog_counts = np.zeros([self.n_cog_terms])
 
 
 
-class ERPSC_Count(ERPSC_Base):
-    """This is a class for counting co-occurence of pre-specified ERP & Cognitive terms. """
+class ERPSCCount(ERPSCBase):
+    """This is a class for counting co-occurence of pre-specified ERP & Cognitive terms."""
 
     def __init__(self):
 
         # Inherit from the ERPSC base class
-        ERPSC_Base.__init__(self)
+        ERPSCBase.__init__(self)
 
         # Set the esearch url for pubmed
         self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pubmed&field=word&term='
@@ -86,8 +86,8 @@ class ERPSC_Count(ERPSC_Base):
         self.date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
         # Initialize right size matrices to store data
-        self.dat_numbers = np.zeros([self.nERPs, self.nCOGs])
-        self.dat_percent = np.zeros([self.nERPs, self.nCOGs])
+        self.dat_numbers = np.zeros([self.n_erp_terms, self.n_cog_terms])
+        self.dat_percent = np.zeros([self.n_erp_terms, self.n_cog_terms])
 
         # Loop through each ERP term
         for erp in self.erps:
@@ -122,8 +122,8 @@ class ERPSC_Count(ERPSC_Base):
                     vec.append(int(ext))
 
                 # Add the total number of papers for erp & cog
-                self.ERP_counts[erp_ind] = vec[1]
-                self.COG_counts[cog_ind] = vec[2]
+                self.erp_counts[erp_ind] = vec[1]
+                self.cog_counts[cog_ind] = vec[2]
 
                 # Add the number & percent of overlapping papers
                 self.dat_numbers[erp_ind, cog_ind] = vec[0]
@@ -131,7 +131,7 @@ class ERPSC_Count(ERPSC_Base):
 
 
     def check_erps(self):
-        """"Prints out the COG terms most associatied with each ERP. """
+        """"Prints out the COG terms most associatied with each ERP."""
 
         # Loop through each erp term, find maximally associated cog term and print out
         for erp in self.erps:
@@ -142,12 +142,12 @@ class ERPSC_Count(ERPSC_Base):
 
             # Print out the results
             print("For the  {:5} the most common association is \t {:10} with \t %{:05.2f}"
-                    .format(erp, self.cogs[cog_ind], \
-                            self.dat_percent[erp_ind, cog_ind]*100))
+                  .format(erp, self.cogs[cog_ind], \
+                  self.dat_percent[erp_ind, cog_ind]*100))
 
 
     def check_cogs(self):
-        """Prints out the ERP terms most associated with each COG. """
+        """Prints out the ERP terms most associated with each COG."""
 
         # Loop through each cig term, find maximally associated erp term and print out
         for cog in self.cogs:
@@ -158,50 +158,50 @@ class ERPSC_Count(ERPSC_Base):
 
             # Print out the results
             print("For  {:20} the strongest associated ERP is \t {:5} with \t %{:05.2f}"
-                    .format(cog, self.erps[erp_ind], \
-                            self.dat_percent[erp_ind, cog_ind]*100))
+                  .format(cog, self.erps[erp_ind], \
+                  self.dat_percent[erp_ind, cog_ind]*100))
 
 
     def check_top(self):
-        """Check the terms with the most papers. """
+        """Check the terms with the most papers."""
 
         # Find and print the erp term for which the most papers were found
         print("The most studied ERP is  {:6}  with {:8.0f} papers"
-                .format(self.erps[np.argmax(self.ERP_counts)], \
-                        self.ERP_counts[np.argmax(self.ERP_counts)]))
+              .format(self.erps[np.argmax(self.erp_counts)], \
+              self.erp_counts[np.argmax(self.erp_counts)]))
 
         # Find and print the cog term for which the most papers were found
         print("The most studied COG is  {:6}  with {:8.0f}  papers"
-                .format(self.cogs[np.argmax(self.COG_counts)], \
-                        self.COG_counts[np.argmax(self.COG_counts)]))
+              .format(self.cogs[np.argmax(self.cog_counts)], \
+              self.cog_counts[np.argmax(self.cog_counts)]))
 
 
     def check_counts(self, dat):
-        """Check how many papers found for each term. """
+        """Check how many papers found for each term."""
 
         # Check counts for all ERP terms
         if dat is 'erp':
             for erp in self.erps:
                 erp_ind = self.erps.index(erp)
-                print('{:5} - {:8.0f}'.format(erp, self.ERP_counts[erp_ind]))
+                print('{:5} - {:8.0f}'.format(erp, self.erp_counts[erp_ind]))
 
         # Check counts for all COG terms
         elif dat is 'cog':
             for cog in self.cogs:
                 cog_ind = self.cogs.index(cog)
-                print('{:18} - {:10.0f}'.format(cog, self.COG_counts[cog_ind]))
+                print('{:18} - {:10.0f}'.format(cog, self.cog_counts[cog_ind]))
 
 
     def save_pickle(self):
-        """Saves out a pickle file of the ERPSC_Count object. """
+        """Saves out a pickle file of the ERPSCCount object."""
 
         # Save pickle file
         save_file = os.path.join(self.save_loc, 'counts', 'counts.p')
-        pickle.dump( self, open(save_file, 'wb') )
+        pickle.dump(self, open(save_file, 'wb'))
 
 
-class Words():
-    """An object to hold the word results for a given term. """
+class Words(object):
+    """An object to hold the word results for a given term."""
 
     def __init__(self, erp):
 
@@ -212,7 +212,7 @@ class Words():
         self.ids = list()
 
         # Initialize to store article count
-        self.nArticles = int()
+        self.n_articles = int()
 
         # Initiliaze to store data pulled from articles
         self.years = list()
@@ -227,13 +227,13 @@ class Words():
 
 
 
-class ERPSC_Words(ERPSC_Base):
-    """This is a class for searching through words in the abstracts of specified papers. """
+class ERPSCWords(ERPSCBase):
+    """This is a class for searching through words in the abstracts of specified papers."""
 
     def __init__(self):
 
         # Inherit from ERPSC Base Class
-        ERPSC_Base.__init__(self)
+        ERPSCBase.__init__(self)
 
         # Set url and setting for e-search. Retmax is maximum number of ids to return
         self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pubmed&field=word&term='
@@ -295,10 +295,10 @@ class ERPSC_Words(ERPSC_Base):
             articles = art_page_soup.findAll('PubmedArticle')
 
             # Check how many articles there are
-            cur_erp.nArticles = len(articles)
+            cur_erp.n_articles = len(articles)
 
             # Loop through each article, pulling out desired info
-            for art in range(0, cur_erp.nArticles):
+            for art in range(0, cur_erp.n_articles):
                 # NOTE: Pubmed article pages could be missing info.
                 # For example, can have an id that's missing abstract text
                 # This is why data collections are all in try statements.
@@ -314,7 +314,8 @@ class ERPSC_Words(ERPSC_Base):
 
                 # Get Words from the Abstract, if available
                 try:
-                    cur_erp.words.append(_process_words(articles[art].find('AbstractText').text.split()))
+                    cur_erp.words.append(_process_words(
+                        articles[art].find('AbstractText').text.split()))
                 except AttributeError:
                     cur_erp.words.append([])
 
@@ -329,18 +330,18 @@ class ERPSC_Words(ERPSC_Base):
 
 
     def comb_words(self):
-        """   """
+        """FILL IN DOCSTRING."""
 
-        for erp in range(0, self.nERPs):
-            for art in range(0, self.results[erp].nArticles):
+        for erp in range(0, self.n_erp_terms):
+            for art in range(0, self.results[erp].n_articles):
                 self.results[erp].all_words.extend(self.results[erp].words[art])
 
 
     def freq_dists(self):
-        """   """
+        """FILL IN DOCSTRING."""
 
         #
-        for erp in range(0, self.nERPs):
+        for erp in range(0, self.n_erp_terms):
 
             #
             self.results[erp].freqs = nltk.FreqDist(self.results[erp].all_words)
@@ -352,16 +353,16 @@ class ERPSC_Words(ERPSC_Base):
                 pass
 
 
-    def check_words(self, nCheck):
-        """   """
+    def check_words(self, n_check):
+        """FILL IN DOCSTRING."""
 
-        for erp in range(0, self.nERPs):
+        for erp in range(0, self.n_erp_terms):
 
             #
-            top_words = self.results[erp].freqs.most_common()[0:nCheck]
+            top_words = self.results[erp].freqs.most_common()[0:n_check]
 
             top_words_str = ''
-            for i in range(0, nCheck):
+            for i in range(0, n_check):
                 top_words_str += top_words[i][0]
                 top_words_str += ' , '
 
@@ -369,11 +370,11 @@ class ERPSC_Words(ERPSC_Base):
 
 
     def save_pickle(self):
-        """Saves out a pickle file of the ERPSC_Word object. """
+        """Saves out a pickle file of the ERPSC_Word object."""
 
         # Save pickle file
         save_file = os.path.join(self.save_loc, 'words', 'words.p')
-        pickle.dump( self, open(save_file, 'wb') )
+        pickle.dump(self, open(save_file, 'wb'))
 
 
 ###########################################################################
@@ -382,9 +383,7 @@ class ERPSC_Words(ERPSC_Base):
 
 
 def load_pickle_counts():
-    """Loads a pickle file of an ERPSC_Count object.
-
-    THIS IS A LONGER DESCRIPTION OF WHATS GOING ON.
+    """Loads a pickle file of an ERPSCCount object.
 
     Returns
     -------
@@ -394,14 +393,14 @@ def load_pickle_counts():
 
     # Set the location to look for data, and load the available count data
     save_loc = ('/Users/thomasdonoghue/Documents/Research/1-Projects/ERP-SCANR/2-Data/counts/')
-    return pickle.load( open( os.path.join(save_loc, 'counts.p'), 'rb'))
+    return pickle.load(open(os.path.join(save_loc, 'counts.p'), 'rb'))
 
 def load_pickle_words():
-    """Loads a pickle file of an ERPSC_Word object. """
+    """Loads a pickle file of an ERPSC_Word object."""
 
     # Set the location to look for data, and load the available word data
     save_loc = ('/Users/thomasdonoghue/Documents/Research/1-Projects/ERP-SCANR/2-Data/words/')
-    return pickle.load( open( os.path.join(save_loc, 'words.p'), 'rb'))
+    return pickle.load(open(os.path.join(save_loc, 'words.p'), 'rb'))
 
 
 ###########################################################################
@@ -409,24 +408,37 @@ def load_pickle_words():
 ###########################################################################
 
 def _ids_to_str(ids):
-    """Takes a list of pubmed ids, returns a str of the ids separated by commas."""
+    """Takes a list of pubmed ids, returns a str of the ids separated by commas.
+
+    Parameters
+    ----------
+    ids : ?
+        xx
+    """
 
     # Check how many ids in list
-    nIds = len(ids)
+    n_ids = len(ids)
 
     # Initialize string with first id
     ids_str = str(ids[0].text)
 
     # Loop through rest of the id's, appending to end of id_str
-    for i in range(1, nIds):
+    for i in range(1, n_ids):
         ids_str = ids_str + ',' + str(ids[i].text)
 
     # Return string of ids
     return ids_str
 
 def _process_words(words):
-    """Takes a list of words, sets to lower case, and removes all stopwords."""
+    """Takes a list of words, sets to lower case, and removes all stopwords.
 
-    # Remove stop words, and anything that is only one character (punctuation). Return the result
-    return [word.lower() for word in words if ((not word.lower() in stopwords.words('english')) & (len(word) > 1))]
+    Parameters
+    ----------
+    words : ?
+        xx
+    """
+
+    # Remove stop words, and anything that is only one character (punctuation). Return the result.
+    return [word.lower() for word in words if (not word.lower() in stopwords.words('english')
+                                               & (len(word) > 1))]
 
