@@ -25,41 +25,53 @@ class ERPSCBase(object):
         self.save_loc = ("/Users/thomasdonoghue/Documents/"
                          "Research/1-Projects/ERP-SCANR/2-Data/")
 
-        # Initliaze list of erp & cog terms to use
+        # Initliaze list of erps & term terms to use
         self.erps = list()
-        self.cogs = list()
+        self.terms = list()
 
         # Initialize counters for numbers of terms
         self.n_erp_terms = int()
-        self.n_cog_terms = int()
+        self.n_term_terms = int()
 
         # Initialize vector of counts of number of papers for each term
         self.erp_counts = np.zeros(0)
-        self.cog_counts = np.zeros(0)
+        self.term_counts = np.zeros(0)
 
         # Initialize for date that data is collected
         self.date = ''
 
 
     def set_erps(self, erps):
-        """Sets the given list of strings as erp terms to use."""
+        """Sets the given list of strings as erp terms to use.
+
+        Parameters
+        ----------
+        erps : ?
+            xx
+        """
 
         self.erps = erps
         self.n_erp_terms = len(erps)
         self.erp_counts = np.zeros([self.n_erp_terms])
 
 
-    def set_cogs(self, cogs):
-        """Sets the given list of strings as cog terms to use."""
+    def set_terms(self, terms):
+        """Sets the given list of strings as term terms to use.
 
-        self.cogs = cogs
-        self.n_cog_terms = len(cogs)
-        self.cog_counts = np.zeros([self.n_cog_terms])
+        Parameters
+        ----------
+        terms : ?
+            xx
+        """
+
+        self.terms = terms
+        self.n_term_terms = len(terms)
+        self.term_counts = np.zeros([self.n_term_terms])
 
 
 
 class ERPSCCount(ERPSCBase):
-    """This is a class for counting co-occurence of pre-specified ERP & Cognitive terms."""
+    """This is a class for counting co-occurence of pre-specified ERP & termnitive terms."""
 
     def __init__(self):
 
@@ -75,9 +87,9 @@ class ERPSCCount(ERPSCBase):
 
 
     def scrape_data(self):
-        """Search through pubmed for all abstracts with co-occurence of ERP & COG terms.
+        """Search through pubmed for all abstracts with co-occurence of ERP & term terms.
 
-        The scraping does an exact word search for two terms (one ERP and one COG)
+        The scraping does an exact word search for two terms (one ERP and one term)
         The HTML page returned by the pubmed search includes a 'count' field.
         This field contains the number of papers with both terms. This is extracted.
         """
@@ -86,24 +98,24 @@ class ERPSCCount(ERPSCBase):
         self.date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
         # Initialize right size matrices to store data
-        self.dat_numbers = np.zeros([self.n_erp_terms, self.n_cog_terms])
-        self.dat_percent = np.zeros([self.n_erp_terms, self.n_cog_terms])
+        self.dat_numbers = np.zeros([self.n_erp_terms, self.n_term_terms])
+        self.dat_percent = np.zeros([self.n_erp_terms, self.n_term_terms])
 
         # Loop through each ERP term
         for erp in self.erps:
 
-            # For each ERP, loop through each COG term
-            for cog in self.cogs:
+            # For each ERP, loop through each term term
+            for term in self.terms:
 
-                # Get the indices of the current erp & cog terms
+                # Get the indices of the current erp & term terms
                 erp_ind = self.erps.index(erp)
-                cog_ind = self.cogs.index(cog)
+                term_ind = self.terms.index(term)
 
                 # Make URL - Exact Term Version
-                url = self.eutils_search + '"' + erp + '"AND"' + cog + '"'
+                url = self.eutils_search + '"' + erp + '"AND"' + term + '"'
 
                 # Make URL - Non-exact term version
-                #url = self.eutils_search + erp + ' erp ' + cog
+                #url = self.eutils_search + erp + ' erp ' + term
 
                 # Pull the page, and parse with Beatiful Soup
                 page = requests.get(url)
@@ -121,45 +133,45 @@ class ERPSCCount(ERPSCBase):
                     ext = count.text
                     vec.append(int(ext))
 
-                # Add the total number of papers for erp & cog
+                # Add the total number of papers for erp & term
                 self.erp_counts[erp_ind] = vec[1]
-                self.cog_counts[cog_ind] = vec[2]
+                self.term_counts[term_ind] = vec[2]
 
                 # Add the number & percent of overlapping papers
-                self.dat_numbers[erp_ind, cog_ind] = vec[0]
-                self.dat_percent[erp_ind, cog_ind] = vec[0]/vec[1]
+                self.dat_numbers[erp_ind, term_ind] = vec[0]
+                self.dat_percent[erp_ind, term_ind] = vec[0]/vec[1]
 
 
     def check_erps(self):
-        """"Prints out the COG terms most associatied with each ERP."""
+        """"Prints out the term terms most associatied with each ERP."""
 
-        # Loop through each erp term, find maximally associated cog term and print out
+        # Loop through each erp term, find maximally associated term term and print out
         for erp in self.erps:
 
-            # Find the index of the most common cog for current erp
+            # Find the index of the most common term for current erp
             erp_ind = self.erps.index(erp)
-            cog_ind = np.argmax(self.dat_percent[erp_ind, :])
+            term_ind = np.argmax(self.dat_percent[erp_ind, :])
 
             # Print out the results
             print("For the  {:5} the most common association is \t {:10} with \t %{:05.2f}"
-                  .format(erp, self.cogs[cog_ind], \
-                  self.dat_percent[erp_ind, cog_ind]*100))
+                  .format(erp, self.terms[term_ind], \
+                  self.dat_percent[erp_ind, term_ind]*100))
 
 
-    def check_cogs(self):
-        """Prints out the ERP terms most associated with each COG."""
+    def check_terms(self):
+        """Prints out the ERP terms most associated with each term."""
 
         # Loop through each cig term, find maximally associated erp term and print out
-        for cog in self.cogs:
+        for term in self.terms:
 
-            # Find the index of the most common erp for current cog
-            cog_ind = self.cogs.index(cog)
-            erp_ind = np.argmax(self.dat_percent[:, cog_ind])
+            # Find the index of the most common erp for current term
+            term_ind = self.terms.index(term)
+            erp_ind = np.argmax(self.dat_percent[:, term_ind])
 
             # Print out the results
             print("For  {:20} the strongest associated ERP is \t {:5} with \t %{:05.2f}"
-                  .format(cog, self.erps[erp_ind], \
-                  self.dat_percent[erp_ind, cog_ind]*100))
+                  .format(term, self.erps[erp_ind], \
+                  self.dat_percent[erp_ind, term_ind]*100))
 
 
     def check_top(self):
@@ -170,10 +182,10 @@ class ERPSCCount(ERPSCBase):
               .format(self.erps[np.argmax(self.erp_counts)], \
               self.erp_counts[np.argmax(self.erp_counts)]))
 
-        # Find and print the cog term for which the most papers were found
-        print("The most studied COG is  {:6}  with {:8.0f}  papers"
-              .format(self.cogs[np.argmax(self.cog_counts)], \
-              self.cog_counts[np.argmax(self.cog_counts)]))
+        # Find and print the term term for which the most papers were found
+        print("The most studied term is  {:6}  with {:8.0f}  papers"
+              .format(self.terms[np.argmax(self.term_counts)], \
+              self.term_counts[np.argmax(self.term_counts)]))
 
 
     def check_counts(self, dat):
@@ -183,7 +195,7 @@ class ERPSCCount(ERPSCBase):
         ----------
         dat : str
             Which data type to print out.
-                Options: {'erp', 'cog'}
+                Options: {'erp', 'term'}
         """
 
         # Check counts for all ERP terms
@@ -192,11 +204,11 @@ class ERPSCCount(ERPSCBase):
                 erp_ind = self.erps.index(erp)
                 print('{:5} - {:8.0f}'.format(erp, self.erp_counts[erp_ind]))
 
-        # Check counts for all COG terms
-        elif dat is 'cog':
-            for cog in self.cogs:
-                cog_ind = self.cogs.index(cog)
-                print('{:18} - {:10.0f}'.format(cog, self.cog_counts[cog_ind]))
+        # Check counts for all term terms
+        elif dat is 'term':
+            for term in self.terms:
+                term_ind = self.terms.index(term)
+                print('{:18} - {:10.0f}'.format(term, self.term_counts[term_ind]))
 
 
     def save_pickle(self):
