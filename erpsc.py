@@ -55,6 +55,11 @@ class ERPSCBase(object):
         self.erp_counts = np.zeros([self.n_erp_terms])
 
 
+    def set_erps_file(self, f_name):
+        """   """
+        pass
+
+
     def set_terms(self, terms):
         """Sets the given list of strings as term terms to use.
 
@@ -69,9 +74,14 @@ class ERPSCBase(object):
         self.term_counts = np.zeros([self.n_term_terms])
 
 
+    def set_terms_file(self, f_name):
+        """   """
+        pass
+
+
 
 class ERPSCCount(ERPSCBase):
-    """This is a class for counting co-occurence of pre-specified ERP & termnitive terms."""
+    """This is a class for counting co-occurence of pre-specified ERPs & terms."""
 
     def __init__(self):
 
@@ -87,7 +97,7 @@ class ERPSCCount(ERPSCBase):
 
 
     def scrape_data(self):
-        """Search through pubmed for all abstracts with co-occurence of ERP & term terms.
+        """Search through pubmed for all abstracts with co-occurence of ERP & terms.
 
         The scraping does an exact word search for two terms (one ERP and one term)
         The HTML page returned by the pubmed search includes a 'count' field.
@@ -299,7 +309,8 @@ class ERPSCWords(ERPSCBase):
             cur_erp = Words(erp)
 
             # Create the url for the erp search term
-            url = self.eutils_search + '"' + erp + '"' + self.search_retmax
+            #url = self.eutils_search + '"' + erp + '"' + self.search_retmax
+            url = self.eutils_search + '"' + erp + '"NOT"' + '"cell"' + self.search_retmax
 
             # Get page and parse
             page = requests.get(url)
@@ -451,8 +462,8 @@ def _ids_to_str(ids):
 
     Parameters
     ----------
-    ids : ?
-        xx
+    ids : list(ints)
+        List of pubmed ids
     """
 
     # Check how many ids in list
@@ -473,8 +484,8 @@ def _process_words(words):
 
     Parameters
     ----------
-    words : ?
-        xx
+    words : list(str)
+        List of words
     """
 
     # Remove stop words, and anything that is only one character (punctuation). Return the result.
