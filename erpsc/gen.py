@@ -154,6 +154,14 @@ class ERPSCBase(object):
         self.erp_counts = np.zeros([self.n_erps])
 
 
+    def check_erps(self):
+        """Print out the current list of erps."""
+
+        print('List of ERPs used: \n')
+        for i in range(self.n_erps):
+            print(", ".join(e for e in self.erps[i]))
+
+
     def set_exclusions(self, exclusions):
         """Sets the given list of strings as exclusion words.
 
@@ -199,12 +207,12 @@ class ERPSCBase(object):
             self.exclusions.append(exclusions[i][3:].split(','))
 
 
-    def check_erps(self):
-        """Print out the current list of erps."""
+    def check_exclusions(self):
+        """Print out the current list of exclusion words."""
 
-        print('List of ERPs used: \n')
+        print('List of exclusion words used: \n')
         for i in range(self.n_erps):
-            print(", ".join(e for e in self.erps[i]))
+            print(self.erps[i][0] + "\t : " + ", ".join(e for e in self.exclusions[i]))
 
 
     def set_terms(self, terms):
