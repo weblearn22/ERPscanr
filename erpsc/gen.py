@@ -90,7 +90,7 @@ class ERPSCBase(object):
 
         # Initialize list of erps & term terms to use
         self.erps = list()
-        self.exclude = list()
+        self.exclusions = list()
         self.terms = list()
 
         # Initialize counters for numbers of terms
@@ -165,7 +165,7 @@ class ERPSCBase(object):
 
         # Set given list as erp exclusion words
         for i in range(len(exclusions)):
-            self.exclusions.append([erps[]])
+            self.exclusions.append([erps[i]])
 
         # Check that the number of exclusions matches n_erps
         if len(exclusions) != self.n_erps:
