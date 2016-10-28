@@ -98,13 +98,20 @@ class ERPSCWords(ERPSCBase):
         urls = URLS('pubmed')
 
         # Loop through all the erps
-        for erp in self.erps:
+        for ind, erp in enumerate(self.erps):
 
             # Initiliaze object to store data for current erp papers
             cur_erp = Words(erp)
 
+            # Set up search terms - add exclusions, if there are any
+            if self.exclusions[ind][0]:
+                term_arg = '"' + erp[0] + '"' + 'NOT' + '"' + self.exclusions[ind][0] + '"'
+            else:
+                term_arg = '"' + erp[0] + '"'
+
             # Create the url for the erp search term
-            url = urls.search + '"' + erp[0] + '"'
+            url = urls.search + term_arg
+            #url = urls.search + '"' + erp[0] + '"'
             #url = urls.search + '"' + erp + '"' + self.search_retmax
             #url = self.eutils_search + '"' + erp + '"NOT"' + '"cell"' + self.search_retmax
 
