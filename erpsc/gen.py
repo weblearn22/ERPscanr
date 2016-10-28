@@ -155,7 +155,13 @@ class ERPSCBase(object):
 
 
     def set_exclusions(self, exclusions):
-        """   """
+        """Sets the given list of strings as exclusion words.
+
+        Parameters
+        ----------
+        exclusions : list(str)
+            List of exclusion words to be used.
+        """
 
         # Set given list as erp exclusion words
         for i in range(len(exclusions)):
@@ -167,7 +173,13 @@ class ERPSCBase(object):
 
 
     def set_exclusions_file(self, f_name):
-        """   """
+        """Load exclusion words from a txt file.
+
+        Parameters
+        ----------
+        f_name : str
+            Name of the file to be loaded as exclusion words.
+        """
 
         # Get ERPSC database object to set paths
         db = ERPDB()
