@@ -212,7 +212,7 @@ class ERPSCWords(ERPSCBase):
                 top_words_str += ' , '
 
             # Print out the top words for the current ERP
-            print(self.erps[erp], ': ', top_words_str)
+            print(self.erps[erp[0]], ': ', top_words_str)
 
 
     def save_pickle(self, f_name):
