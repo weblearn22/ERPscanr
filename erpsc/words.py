@@ -104,7 +104,7 @@ class ERPSCWords(ERPSCBase):
             cur_erp = Words(erp)
 
             # Create the url for the erp search term
-            url = urls.search + '"' + erp + '"'
+            url = urls.search + '"' + erp[0] + '"'
             #url = urls.search + '"' + erp + '"' + self.search_retmax
             #url = self.eutils_search + '"' + erp + '"NOT"' + '"cell"' + self.search_retmax
 
