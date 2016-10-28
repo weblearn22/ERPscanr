@@ -209,11 +209,23 @@ class ERPSCWords(ERPSCBase):
             print(self.erps[erp], ': ', top_words_str)
 
 
-    def save_pickle(self):
-        """Saves out a pickle file of the ERPSC_Word object."""
+    def save_pickle(self, f_name):
+        """Saves out a pickle file of the ERPSC_Word object.
+
+        Parameters
+        ----------
+        f_name : ?
+            xx
+        """
+
+        # Get ERPSC database object to set paths
+        db = ERPDB()
+
+        # Initialize full file name
+        save_name = f_name + '_words.p'
 
         # Save pickle file
-        save_file = os.path.join(self.save_loc, 'words', 'words.p')
+        save_file = os.path.join(self.db.words_path, save_name)
         pickle.dump(self, open(save_file, 'wb'))
 
 
@@ -221,8 +233,13 @@ class ERPSCWords(ERPSCBase):
 ##################### ERPSC_Words - Public Functions ####################
 #########################################################################
 
-def load_pickle_words():
+def load_pickle_words(f_name):
     """Loads a pickle file of an ERPSC_Word object.
+
+    Parameters
+    ----------
+    f_name : str
+        File name of the words file to load.
 
     Returns
     -------
@@ -230,10 +247,14 @@ def load_pickle_words():
         xx
     """
 
-    # Set the location to look for data, and load the available word data
-    save_loc = ("/Users/thomasdonoghue/Documents/Research/1-Projects/"
-                "ERP-SCANR/2-Data/words/")
-    return pickle.load(open(os.path.join(save_loc, 'words.p'), 'rb'))
+    # Get ERPSC database object to set paths
+    db = ERPDB()
+
+    # Initialize full file name to load
+    file_name = f_name + '_words.p'
+
+    # Load and return the data
+    return pickle.load(open(os.path.join(db.words_path, file_name), 'rb'))
 
 
 ###################################################################################
