@@ -173,7 +173,7 @@ class ERPSCBase(object):
 
         # Set given list as erp exclusion words
         for i in range(len(exclusions)):
-            self.exclusions.append([erps[i]])
+            self.exclusions.append([exclusions[i]])
 
         # Check that the number of exclusions matches n_erps
         if len(exclusions) != self.n_erps:
@@ -212,7 +212,8 @@ class ERPSCBase(object):
 
         print('List of exclusion words used: \n')
         for i in range(self.n_erps):
-            print(self.erps[i][0] + "\t : " + ", ".join(e for e in self.exclusions[i]))
+            print(self.erps[i][0] + "\t : " +
+                  ", ".join(e for e in self.exclusions[i]))
 
 
     def set_terms(self, terms):
