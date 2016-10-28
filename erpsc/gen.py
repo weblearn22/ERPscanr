@@ -2,13 +2,6 @@ from __future__ import print_function, division
 import os
 import numpy as np
 
-#import pickle
-#import datetime
-#import requests
-#from bs4 import BeautifulSoup
-#import nltk
-#from nltk.corpus import stopwords
-
 """
 This ....
 
