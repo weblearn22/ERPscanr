@@ -161,7 +161,7 @@ class ERPSCWords(ERPSCBase):
         """Combine the words from each article together."""
 
         # Loop through each erp, and each article
-        for erp in range(0, self.n_erp_terms):
+        for erp in range(0, self.n_erps):
             for art in range(0, self.results[erp].n_articles):
 
                 # Combine the words from each article into the 'all_words' collection
@@ -172,7 +172,7 @@ class ERPSCWords(ERPSCBase):
         """FILL IN DOCSTRING."""
 
         # Loop through all ERPs
-        for erp in range(0, self.n_erp_terms):
+        for erp in range(0, self.n_erps):
 
             #
             self.results[erp].freqs = nltk.FreqDist(self.results[erp].all_words)
@@ -194,7 +194,7 @@ class ERPSCWords(ERPSCBase):
         """
 
         # Loop through each ERP term
-        for erp in range(0, self.n_erp_terms):
+        for erp in range(0, self.n_erps):
 
             # Get the requested number of most common words for the ERP
             top_words = self.results[erp].freqs.most_common()[0:n_check]

@@ -47,8 +47,8 @@ class ERPSCCount(ERPSCBase):
         self.date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
         # Initialize right size matrices to store data
-        self.dat_numbers = np.zeros([self.n_erp_terms, self.n_term_terms])
-        self.dat_percent = np.zeros([self.n_erp_terms, self.n_term_terms])
+        self.dat_numbers = np.zeros([self.n_erps, self.n_terms])
+        self.dat_percent = np.zeros([self.n_erps, self.n_terms])
 
         # Loop through each ERP term
         for erp in self.erps:
