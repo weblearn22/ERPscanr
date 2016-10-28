@@ -103,7 +103,7 @@ class ERPSCBase(object):
         self.n_erps = len(erps)
 
         # Initialize count variable to the correct length
-        self.erp_counts = np.zeros([self.n_erp_terms])
+        self.erp_counts = np.zeros([self.n_erps])
 
 
     def set_erps_file(self, f_name):
@@ -159,7 +159,7 @@ class ERPSCBase(object):
         self.n_terms = len(terms)
 
         # Initialize count variable to the correct length
-        self.term_counts = np.zeros([self.n_term_terms])
+        self.term_counts = np.zeros([self.n_terms])
 
 
     def set_terms_file(self, f_name):
