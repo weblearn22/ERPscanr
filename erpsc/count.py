@@ -94,7 +94,7 @@ class ERPSCCount(ERPSCBase):
                 self.dat_percent[erp_ind, term_ind] = vec[0]/vec[1]
 
 
-    def check_erps_counts(self):
+    def check_cooc_erps(self):
         """"Prints out the terms most associatied with each ERP."""
 
         # Loop through each erp term, find maximally associated term term and print out
@@ -106,11 +106,11 @@ class ERPSCCount(ERPSCBase):
 
             # Print out the results
             print("For the  {:5} the most common association is \t {:10} with \t %{:05.2f}"
-                  .format(erp, self.terms[term_ind], \
+                  .format(erp[0], self.terms[term_ind], \
                   self.dat_percent[erp_ind, term_ind]*100))
 
 
-    def check_terms_counts(self):
+    def check_cooc_terms(self):
         """Prints out the ERP terms most associated with each term."""
 
         # Loop through each cig term, find maximally associated erp term and print out
@@ -122,7 +122,7 @@ class ERPSCCount(ERPSCBase):
 
             # Print out the results
             print("For  {:20} the strongest associated ERP is \t {:5} with \t %{:05.2f}"
-                  .format(term, self.erps[erp_ind], \
+                  .format(term, self.erps[erp_ind][0], \
                   self.dat_percent[erp_ind, term_ind]*100))
 
 
