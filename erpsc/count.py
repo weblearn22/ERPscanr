@@ -28,7 +28,7 @@ class ERPSCCount(ERPSCBase):
 
         # Set the esearch url for pubmed
         #self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pubmed&field=word&term='
-        self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pmc&field=word&term='
+        #self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pmc&field=word&term='
 
         # Initialize data output variables
         self.dat_numbers = np.zeros(0)
@@ -46,6 +46,9 @@ class ERPSCCount(ERPSCBase):
         # Set date of when data was scraped
         self.date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
+        # Get e-utils URLS object
+        urls = URLS('pubmed')
+
         # Initialize right size matrices to store data
         self.dat_numbers = np.zeros([self.n_erps, self.n_terms])
         self.dat_percent = np.zeros([self.n_erps, self.n_terms])
@@ -61,7 +64,7 @@ class ERPSCCount(ERPSCBase):
                 term_ind = self.terms.index(term)
 
                 # Make URL - Exact Term Version
-                url = self.eutils_search + '"' + erp + '"AND"' + term + '"'
+                url = urls.search + '"' + erp[0] + '"AND"' + term + '"'
 
                 # Make URL - Non-exact term version
                 #url = self.eutils_search + erp + ' erp ' + term
@@ -91,8 +94,8 @@ class ERPSCCount(ERPSCBase):
                 self.dat_percent[erp_ind, term_ind] = vec[0]/vec[1]
 
 
-    def check_erps(self):
-        """"Prints out the term terms most associatied with each ERP."""
+    def check_erps_counts(self):
+        """"Prints out the terms most associatied with each ERP."""
 
         # Loop through each erp term, find maximally associated term term and print out
         for erp in self.erps:
@@ -107,7 +110,7 @@ class ERPSCCount(ERPSCBase):
                   self.dat_percent[erp_ind, term_ind]*100))
 
 
-    def check_terms(self):
+    def check_terms_counts(self):
         """Prints out the ERP terms most associated with each term."""
 
         # Loop through each cig term, find maximally associated erp term and print out
@@ -165,8 +168,8 @@ class ERPSCCount(ERPSCBase):
 
         Parameters
         ----------
-        f_name : ?
-            xx
+        f_name : str
+            String to add to the beginning of the saved out file.
         """
 
         # Get ERPSC database object to set paths
@@ -180,9 +183,9 @@ class ERPSCCount(ERPSCBase):
         pickle.dump(self, open(save_file, 'wb'))
 
 
-########################################################################
-#################### ERPSC_Words - Public Functions ####################
-########################################################################
+############################################################################
+###################### ERPSC_Words - Public Functions ######################
+############################################################################
 
 def load_pickle_counts(f_name):
     """Loads a pickle file of an ERPSCCount object.
@@ -194,7 +197,7 @@ def load_pickle_counts(f_name):
 
     Returns
     -------
-    results : matrix
+    results : ?
         xx
     """
 
