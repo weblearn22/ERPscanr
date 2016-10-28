@@ -184,10 +184,10 @@ class ERPSCWords(ERPSCBase):
             self.results[erp].freqs = nltk.FreqDist(self.results[erp].all_words)
 
             # Remove ... ?
-            try:
-                self.results[erp].freqs.pop(self.erps[erp].lower())
-            except KeyError:
-                pass
+            #try:
+            #    self.results[erp].freqs.pop(self.erps[erp].lower())
+            #except KeyError:
+            #    pass
 
 
     def check_words(self, n_check):
