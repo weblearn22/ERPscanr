@@ -1,5 +1,6 @@
 from __future__ import print_function, division
 
+import pickle
 import datetime
 import requests
 from bs4 import BeautifulSoup
@@ -62,11 +63,11 @@ class ERPSCWords(ERPSCBase):
         ERPSCBase.__init__(self)
 
         # Set url and setting for e-search. Retmax is maximum number of ids to return
-        self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pubmed&field=word&term='
-        self.search_retmax = '&retmax=500'
+        #self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pubmed&field=word&term='
+        #self.search_retmax = '&retmax=500'
 
         # Set the url and settings for the e-fetch utility
-        self.eutils_fetch = self.eutils_url + 'efetch.fcgi?db=pubmed&retmode=xml&id='
+        #self.eutils_fetch = self.eutils_url + 'efetch.fcgi?db=pubmed&retmode=xml&id='
 
         # Initialize a list to store results for all the erps
         self.results = list()
@@ -93,6 +94,9 @@ class ERPSCWords(ERPSCBase):
         # Set date of when data was collected
         self.date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
+        # Get e-utils URLS object
+        urls = URLS('pubmed')
+
         # Loop through all the erps
         for erp in self.erps:
 
@@ -100,7 +104,8 @@ class ERPSCWords(ERPSCBase):
             cur_erp = Words(erp)
 
             # Create the url for the erp search term
-            url = self.eutils_search + '"' + erp + '"' + self.search_retmax
+            url = urls.search + '"' + erp + '"'
+            #url = urls.search + '"' + erp + '"' + self.search_retmax
             #url = self.eutils_search + '"' + erp + '"NOT"' + '"cell"' + self.search_retmax
 
             # Get page and parse
@@ -114,7 +119,8 @@ class ERPSCWords(ERPSCBase):
             ids_str = _ids_to_str(ids)
 
             # Get article page
-            art_url = self.eutils_fetch + ids_str
+            #art_url = self.eutils_fetch + ids_str
+            art_url = urls.fetch + ids_str
             art_page = requests.get(art_url)
             art_page_soup = BeautifulSoup(art_page.content, "xml")
 
@@ -225,7 +231,7 @@ class ERPSCWords(ERPSCBase):
         save_name = f_name + '_words.p'
 
         # Save pickle file
-        save_file = os.path.join(self.db.words_path, save_name)
+        save_file = os.path.join(db.words_path, save_name)
         pickle.dump(self, open(save_file, 'wb'))
 
 
