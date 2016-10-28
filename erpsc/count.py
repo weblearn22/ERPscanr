@@ -154,7 +154,7 @@ class ERPSCCount(ERPSCBase):
         if dat is 'erp':
             for erp in self.erps:
                 erp_ind = self.erps.index(erp)
-                print('{:5} - {:8.0f}'.format(erp, self.erp_counts[erp_ind]))
+                print('{:5} - {:8.0f}'.format(erp[0], self.erp_counts[erp_ind]))
 
         # Check counts for all term terms
         elif dat is 'term':
