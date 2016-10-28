@@ -37,7 +37,7 @@ class ERPDB(object):
         # Set paths to different data types
         self.dict_path = os.path.join(self.data_path, 'dicts')
         self.counts_path = os.path.join(self.data_path, 'counts')
-        self.words_path = os.path.join(self.words_path, 'words')
+        self.words_path = os.path.join(self.data_path, 'words')
 
 
 class URLS(object):
@@ -75,8 +75,8 @@ class ERPSCBase(object):
         self.eutils_url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
 
         # Set path (on Tom's laptop) to save out the data
-        self.save_loc = ("/Users/thomasdonoghue/Documents/"
-                         "Research/1-Projects/ERP-SCANR/2-Data/")
+        #self.save_loc = ("/Users/thomasdonoghue/Documents/"
+        #                 "Research/1-Projects/ERP-SCANR/2-Data/")
 
         # Initialize list of erps & term terms to use
         self.erps = list()
