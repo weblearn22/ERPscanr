@@ -83,8 +83,8 @@ class ERPSCBase(object):
         self.terms = list()
 
         # Initialize counters for numbers of terms
-        self.n_erp_terms = int()
-        self.n_term_terms = int()
+        self.n_erps = int()
+        self.n_terms = int()
 
         # Initialize vector of counts of number of papers for each term
         self.erp_counts = np.zeros(0)
@@ -99,18 +99,55 @@ class ERPSCBase(object):
 
         Parameters
         ----------
-        erps : ?
-            xx
+        erps : list(str)
+            List of ERP terms to be used.
         """
 
+        # Set given list as the erps
         self.erps = erps
-        self.n_erp_terms = len(erps)
+
+        # Set the number of erps
+        self.n_erps = len(erps)
+
+        # Initialize count variable to the correct length
         self.erp_counts = np.zeros([self.n_erp_terms])
 
 
     def set_erps_file(self, f_name):
-        """   """
-        pass
+        """Load ERP terms from a txt file.
+
+        Parameters
+        ----------
+        f_name : str
+            Name of the file to be loaded as ERP terms.
+        """
+
+        # Get ERPSC database object to set paths
+        db = ERPDB()
+
+        # Open file
+        txt_file = open(os.path.join(db.dict_path, f_name), 'r')
+
+        # Read file and input ERP terms
+        erps = txt_file.read().splitlines()
+
+        # Set the number of erps
+        self.n_erps = len(erps)
+
+        # Drop number indices for erps, and set as list
+        for i in range(self.n_erps):
+            self.erps.append(erps[i][3:].split(','))
+
+        # Initialize count variable to the correct length
+        self.erp_counts = np.zeros([self.n_erps])
+
+
+    def check_erps(self):
+        """Print out the current list of erps."""
+
+        print('List of ERPs used: \n')
+        for i in range(self.n_erps):
+            print(", ".join(e for e in self.erps[i]))
 
 
     def set_terms(self, terms):
@@ -118,15 +155,47 @@ class ERPSCBase(object):
 
         Parameters
         ----------
-        terms : ?
-            xx
+        terms : list(str)
+            List of terms to be used.
         """
 
+        # Set given list as the terms
         self.terms = terms
-        self.n_term_terms = len(terms)
+
+        # Set the number of terms
+        self.n_terms = len(terms)
+
+        # Initialize count variable to the correct length
         self.term_counts = np.zeros([self.n_term_terms])
 
 
     def set_terms_file(self, f_name):
-        """   """
-        pass
+        """Load terms from a txt file.
+
+        Parameters
+        ----------
+        f_name : str
+            Name of the file to be loaded as terms.
+        """
+
+        # Get ERPSC database object to set paths
+        db = ERPDB()
+
+        # Open file
+        txt_file = open(os.path.join(db.dict_path, f_name), 'r')
+
+        # Read file and input ERP terms
+        self.terms = txt_file.read().splitlines()
+
+        # Set the number of terms
+        self.n_terms = len(self.terms)
+
+        # Initialize count variable to the correct length
+        self.term_counts = np.zeros([self.n_terms])
+
+
+    def check_terms(self):
+        """Print out the current list of terms."""
+
+        print('List of terms used: \n')
+        print("\n".join(self.terms))
