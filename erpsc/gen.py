@@ -73,6 +73,7 @@ class URLS(object):
         fetch_base = self.eutils + 'efetch.fcgi?'
         self.fetch = fetch_base + db_arg + '&' + retmode_arg + '&' + 'id='
 
+        # OLD:
         # Set the search url
         #self.search = self.base_url + 'esearch.fcgi?db=pmc&field=word&term='
         #self.fetch = self.base_url + ''
@@ -89,6 +90,7 @@ class ERPSCBase(object):
 
         # Initialize list of erps & term terms to use
         self.erps = list()
+        self.exclude = list()
         self.terms = list()
 
         # Initialize counters for numbers of terms
@@ -150,6 +152,39 @@ class ERPSCBase(object):
 
         # Initialize count variable to the correct length
         self.erp_counts = np.zeros([self.n_erps])
+
+
+    def set_exclusions(self, exclusions):
+        """   """
+
+        # Set given list as erp exclusion words
+        for i in range(len(exclusions)):
+            self.exclusions.append([erps[]])
+
+        # Check that the number of exclusions matches n_erps
+        if len(exclusions) != self.n_erps:
+            print('Mismatch in number of exclusions and erps!')
+
+
+    def set_exclusions_file(self, f_name):
+        """   """
+
+        # Get ERPSC database object to set paths
+        db = ERPDB()
+
+        # Open file
+        txt_file = open(os.path.join(db.dict_path, f_name), 'r')
+
+        # Read file and input exclusion terms
+        exclusions = txt_file.read().splitlines()
+
+        # Check that the number of exclusions matches n_erps
+        if len(exclusions) != self.n_erps:
+            print('Mismatch in number of exclusions and erps!')
+
+        # Drop number indices for exclusions, and set as list
+        for i in range(self.n_erps):
+            self.exclusions.append(exclusions[i][3:].split(','))
 
 
     def check_erps(self):
