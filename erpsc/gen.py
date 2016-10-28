@@ -54,11 +54,13 @@ class URLS(object):
         db = db_in
         retmax_val = 500
         field_val = ''
+        retmode_val = 'xml'
 
         # Parameter
         db_arg = 'db=' + db
         retmax_arg = 'retmax=' + str(retmax_val)
         field_arg = 'field=' + field_val
+        retmode_arg = 'retmode=' + retmode_val
 
         # Set up the base url for ncbi e-utils
         self.eutils = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
@@ -69,6 +71,7 @@ class URLS(object):
 
         # Set the fetch url
         fetch_base = self.eutils + 'efetch.fcgi?'
+        self.fetch = fetch_base + db_arg + '&' + retmode_arg + '&' + 'id='
 
         # Set the search url
         #self.search = self.base_url + 'esearch.fcgi?db=pmc&field=word&term='
@@ -110,7 +113,8 @@ class ERPSCBase(object):
         """
 
         # Set given list as the erps
-        self.erps = erps
+        for i in range(len(erps)):
+            self.erps.append([erps[i]])
 
         # Set the number of erps
         self.n_erps = len(erps)
