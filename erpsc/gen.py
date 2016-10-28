@@ -5,7 +5,11 @@ import numpy as np
 """
 This ....
 
-Details on NCBI E-utils: http://www.ncbi.nlm.nih.gov/books/NBK25500/
+EUtils Quick Start: http://www.ncbi.nlm.nih.gov/books/NBK25500/
+EUtils in Depth: https://www.ncbi.nlm.nih.gov/books/NBK25499/
+
+A list of all the valid databases is here:
+    https://eutils.ncbi.nlm.nih.gov/entrez/eutils/einfo.fcgi
 
 TODO:
   - Figure out 'HTTP POST' for large # of ID fetches
@@ -36,7 +40,7 @@ class ERPDB(object):
 class URLS(object):
     """Class to hold URL information for ERP SCANR project."""
 
-    def __init__(self, database):
+    def __init__(self, db_in):
         """Initialize the ncbi e-utils urls.
 
         Parameters
@@ -46,17 +50,30 @@ class URLS(object):
                 Options: {'pubmed', 'pmc'}
         """
 
-        # Set which database is being used
-        self.db = database
+        # Parameters
+        db = db_in
+        retmax_val = 500
+        field_val = ''
+
+        # Parameter
+        db_arg = 'db=' + db
+        retmax_arg = 'retmax=' + str(retmax_val)
+        field_arg = 'field=' + field_val
 
         # Set up the base url for ncbi e-utils
-        self.base_url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
+        self.eutils = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
 
-        self.search = self.base_url + 'esearch.fcgi?db=pmc&field=word&term='
+        # Set the search url
+        search_base = self.eutils + 'esearch.fcgi?'
+        self.search = search_base + db_arg + '&' + field_arg + '&' + 'term='
 
-        self.fetch = self.base_url + ''
+        # Set the fetch url
+        fetch_base = self.eutils + 'efetch.fcgi?'
 
-        self.retmax = ''
+        # Set the search url
+        #self.search = self.base_url + 'esearch.fcgi?db=pmc&field=word&term='
+        #self.fetch = self.base_url + ''
+        #self.retmax = ''
 
 
 class ERPSCBase(object):
@@ -66,10 +83,6 @@ class ERPSCBase(object):
 
         # Set the base path for the NCBI eutils
         self.eutils_url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
-
-        # Set path (on Tom's laptop) to save out the data
-        #self.save_loc = ("/Users/thomasdonoghue/Documents/"
-        #                 "Research/1-Projects/ERP-SCANR/2-Data/")
 
         # Initialize list of erps & term terms to use
         self.erps = list()
