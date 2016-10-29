@@ -88,6 +88,9 @@ class ERPSCBase(object):
         # Set the base path for the NCBI eutils
         self.eutils_url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
 
+        # Initialize variable to keep track of term type used
+        self.terms_type = str()
+
         # Initialize list of erps & term terms to use
         self.erps = list()
         self.exclusions = list()
@@ -125,23 +128,24 @@ class ERPSCBase(object):
         self.erp_counts = np.zeros([self.n_erps])
 
 
-    def set_erps_file(self, f_name):
+    def set_erps_file(self, f_name=None):
         """Load ERP terms from a txt file.
 
         Parameters
         ----------
-        f_name : str
+        f_name : str, optional
             Name of the file to be loaded as ERP terms.
+                Default None, loads standard terms from module.
         """
 
-        # Get ERPSC database object to set paths
-        db = ERPDB()
-
-        # Open file
-        txt_file = open(os.path.join(db.dict_path, f_name), 'r')
+        # Open file to read from - either input file or default from module
+        if f_name:
+            terms_file = open(f_name, 'r')
+        else:
+            terms_file = open('erpsc/terms/erps.txt', 'r')
 
         # Read file and input ERP terms
-        erps = txt_file.read().splitlines()
+        erps = terms_file.read().splitlines()
 
         # Set the number of erps
         self.n_erps = len(erps)
@@ -180,23 +184,24 @@ class ERPSCBase(object):
             print('Mismatch in number of exclusions and erps!')
 
 
-    def set_exclusions_file(self, f_name):
+    def set_exclusions_file(self, f_name=None):
         """Load exclusion words from a txt file.
 
         Parameters
         ----------
-        f_name : str
+        f_name : str, optional
             Name of the file to be loaded as exclusion words.
+                Default None, loads standard exclusion words from module.
         """
 
-        # Get ERPSC database object to set paths
-        db = ERPDB()
-
-        # Open file
-        txt_file = open(os.path.join(db.dict_path, f_name), 'r')
+        # Open file to read from - either input file or default from module
+        if f_name:
+            terms_file = open(f_name, 'r')
+        else:
+            terms_file = open('erpsc/terms/erps_exclude.txt', 'r')
 
         # Read file and input exclusion terms
-        exclusions = txt_file.read().splitlines()
+        exclusions = terms_file.read().splitlines()
 
         # Check that the number of exclusions matches n_erps
         if len(exclusions) != self.n_erps:
@@ -235,23 +240,30 @@ class ERPSCBase(object):
         self.term_counts = np.zeros([self.n_terms])
 
 
-    def set_terms_file(self, f_name):
+    def set_terms_file(self, terms_type, f_name=None):
         """Load terms from a txt file.
 
         Parameters
         ----------
-        f_name : str
+        terms_type : str
+            Type of the terms to be loaded.
+                Options: {'cognitive', 'disease'}
+        f_name : str, optional
             Name of the file to be loaded as terms.
+                Default None, loads standard terms of specified type from module.
         """
 
-        # Get ERPSC database object to set paths
-        db = ERPDB()
+        # Set the type of terms
+        self.terms_type = terms_type
 
-        # Open file
-        txt_file = open(os.path.join(db.dict_path, f_name), 'r')
+        # Open file to read from - either input file or default from module
+        if f_name:
+            terms_file = open(f_name, 'r')
+        else:
+            terms_file = open('erpsc/terms/' + terms_type + '.txt', 'r')
 
         # Read file and input ERP terms
-        self.terms = txt_file.read().splitlines()
+        self.terms = terms_file.read().splitlines()
 
         # Set the number of terms
         self.n_terms = len(self.terms)
