@@ -1,0 +1,21 @@
+language
+memory
+attention
+motor
+decision making
+vision
+pain
+auditory
+emotion
+categorization
+reward
+spatial
+somatosensory
+face
+cognitive
+awareness
+tactile
+pain
+learning
+reasoning
+social
