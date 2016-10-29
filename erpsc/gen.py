@@ -85,9 +85,6 @@ class ERPSCBase(object):
 
     def __init__(self):
 
-        # Set the base path for the NCBI eutils
-        self.eutils_url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
-
         # Initialize variable to keep track of term type used
         self.terms_type = str()
 
