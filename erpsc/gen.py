@@ -118,8 +118,8 @@ class ERPSCBase(object):
         """
 
         # Set given list as the erps
-        for i in range(len(erps)):
-            self.erps.append([erps[i]])
+        for erp in erps:
+            self.erps.append(erp)
 
         # Set the number of erps
         self.n_erps = len(erps)
@@ -176,8 +176,8 @@ class ERPSCBase(object):
         """
 
         # Set given list as erp exclusion words
-        for i in range(len(exclusions)):
-            self.exclusions.append([exclusions[i]])
+        for exclude in exclusions:
+            self.exclusions.append(exclude)
 
         # Check that the number of exclusions matches n_erps
         if len(exclusions) != self.n_erps:
