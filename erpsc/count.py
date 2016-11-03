@@ -7,7 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 
 # Import custom code
-from gen import *
+from erpsc.gen import *
 
 """
 
