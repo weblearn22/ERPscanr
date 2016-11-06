@@ -1,3 +1,7 @@
+"""MODULE DOCSTRING - TO FILL IN.
+
+"""
+
 from __future__ import print_function, division
 
 import datetime
@@ -8,10 +12,6 @@ from bs4 import BeautifulSoup
 
 # Import custom code
 from erpsc.gen import *
-
-"""
-
-"""
 
 #################################################################################
 ############################ ERPSC - COUNT - CLASSES ############################
