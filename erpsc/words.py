@@ -1,3 +1,7 @@
+"""MODULE DOCSTRING: TO FILL IN.
+
+"""
+
 from __future__ import print_function, division
 
 import pickle
@@ -9,12 +13,6 @@ from nltk.corpus import stopwords
 
 # Import custom code
 from erpsc.gen import *
-
-"""
-
-This ...
-
-"""
 
 #############################################################################
 ########################## ERPSC - WORDS - Classes ##########################
