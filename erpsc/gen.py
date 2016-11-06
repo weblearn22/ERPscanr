@@ -45,9 +45,8 @@ class URLS(object):
 
         Parameters
         ----------
-        db : str
+        db : {'pubmed', 'pmc'}
             Which database to use.
-                Options: {'pubmed', 'pmc'}
         """
 
         # Parameters
@@ -113,7 +112,7 @@ class ERPSCBase(object):
 
         Parameters
         ----------
-        erps : list(str)
+        erps : list of str
             List of ERP terms to be used.
         """
 
@@ -133,7 +132,7 @@ class ERPSCBase(object):
 
         Parameters
         ----------
-        f_name : str, optional
+        f_name : str, optional (default = None)
             Name of the file to be loaded as ERP terms.
                 Default None, loads standard terms from module.
         """
@@ -171,7 +170,7 @@ class ERPSCBase(object):
 
         Parameters
         ----------
-        exclusions : list(str)
+        exclusions : list of str
             List of exclusion words to be used.
         """
 
@@ -189,7 +188,7 @@ class ERPSCBase(object):
 
         Parameters
         ----------
-        f_name : str, optional
+        f_name : str, optional (default = None)
             Name of the file to be loaded as exclusion words.
                 Default None, loads standard exclusion words from module.
         """
@@ -226,7 +225,7 @@ class ERPSCBase(object):
 
         Parameters
         ----------
-        terms : list(str)
+        terms : list of str
             List of terms to be used.
         """
 
@@ -245,12 +244,10 @@ class ERPSCBase(object):
 
         Parameters
         ----------
-        terms_type : str
+        terms_type : {'cognitive', 'disease'}
             Type of the terms to be loaded.
-                Options: {'cognitive', 'disease'}
-        f_name : str, optional
+        f_name : str, optional (default = None)
             Name of the file to be loaded as terms.
-                Default None, loads standard terms of specified type from module.
         """
 
         # Set the type of terms
