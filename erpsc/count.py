@@ -145,9 +145,8 @@ class ERPSCCount(ERPSCBase):
 
         Parameters
         ----------
-        dat : str
+        dat : {'erp', 'term'}
             Which data type to print out.
-                Options: {'erp', 'term'}
         """
 
         # Check counts for all ERP terms
