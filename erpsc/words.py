@@ -280,7 +280,7 @@ def _ids_to_str(ids):
 
     Parameters
     ----------
-    ids : list(ints)
+    ids : list of int
         List of pubmed ids
     """
 
@@ -303,7 +303,7 @@ def _process_words(words):
 
     Parameters
     ----------
-    words : list(str)
+    words : list of str
         List of words
     """
 
