@@ -1,8 +1,4 @@
-from __future__ import print_function, division
-import os
-import numpy as np
-
-"""
+"""MODULE DOCSTRING: TO FINISH
 This ....
 
 EUtils Quick Start: http://www.ncbi.nlm.nih.gov/books/NBK25500/
@@ -14,6 +10,10 @@ A list of all the valid databases is here:
 TODO:
   - Figure out 'HTTP POST' for large # of ID fetches
 """
+
+from __future__ import print_function, division
+import os
+import numpy as np
 
 #######################################################################################
 ############################## ERPSC - GENERAL - CLASSES ##############################
