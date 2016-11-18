@@ -196,12 +196,12 @@ class ERPSCWords(ERPSCBase):
                 pass
 
 
-    def check_words(self, n_check):
+    def check_words(self, n_check=20):
         """Check the most common words for each ERP.
 
         Parameters
         ----------
-        n_check : int
+        n_check : int, optional (default=20)
             Number of top words, for each ERP, to print out.
         """
 
