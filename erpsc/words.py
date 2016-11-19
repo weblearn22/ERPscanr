@@ -14,15 +14,34 @@ from nltk.corpus import stopwords
 # Import custom code
 from erpsc.gen import *
 
-#############################################################################
-########################## ERPSC - WORDS - Classes ##########################
-#############################################################################
+#################################################################################
+############################ ERPSC - WORDS - Classes ############################
+#################################################################################
 
 class Words(object):
-    """An object to hold the word results for a given term."""
+    """An object to hold the word results for a given ERP or term.
+
+    Attributes
+    ----------
+    erp : str
+        Name of the ERP word data relates to.
+    ids : list of int
+        Pubmed article ids for all articles included in object.
+    n_articles : int
+        Number of articles included in object.
+    years : list of int
+        Publication year of each article included in object.
+    titles : list of unicode
+        Titles of all articles included in object.
+    words : list of list of unicode
+        Words extracted from each article.
+    all_words : list of unicode
+        All words from all articles.
+    freqs : nltk FreqDist
+        Frequency distribution of all words.
+    """
 
     def __init__(self, erp):
-
         """Initialize
 
         Parameters
@@ -41,9 +60,9 @@ class Words(object):
         self.n_articles = int()
 
         # Initiliaze to store data pulled from articles
-        self.years = list()
         self.titles = list()
         self.words = list()
+        self.years = list()
 
         # Initialize a list to store all words (across all papers)
         self.all_words = list()
@@ -53,12 +72,23 @@ class Words(object):
 
 
 class ERPSCWords(ERPSCBase):
-    """This is a class for searching through words in the abstracts of specified papers."""
+    """This is a class for searching through words in the abstracts of specified papers.
+
+    XX...
+
+    Attributes
+    ----------
+    results : list of Words() objects
+        Results for each ERP, stored in custom Words object.
+    """
 
     def __init__(self):
 
         # Inherit from ERPSC Base Class
         ERPSCBase.__init__(self)
+
+        # Initialize a list to store results for all the erps
+        self.results = list()
 
         # Set url and setting for e-search. Retmax is maximum number of ids to return
         #self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pubmed&field=word&term='
@@ -66,9 +96,6 @@ class ERPSCWords(ERPSCBase):
 
         # Set the url and settings for the e-fetch utility
         #self.eutils_fetch = self.eutils_url + 'efetch.fcgi?db=pubmed&retmode=xml&id='
-
-        # Initialize a list to store results for all the erps
-        self.results = list()
 
 
     def scrape_data(self):
@@ -226,8 +253,8 @@ class ERPSCWords(ERPSCBase):
 
         Parameters
         ----------
-        f_name : ?
-            xx
+        f_name : str
+            String to append to beginning of file to save out.
         """
 
         # Get ERPSC database object to set paths
@@ -279,7 +306,7 @@ def _ids_to_str(ids):
     Parameters
     ----------
     ids : list of int
-        List of pubmed ids
+        List of pubmed ids.
     """
 
     # Check how many ids in list
@@ -302,7 +329,7 @@ def _process_words(words):
     Parameters
     ----------
     words : list of str
-        List of words
+        List of words.
     """
 
     # Remove stop words, and anything that is only one character (punctuation). Return the result.
