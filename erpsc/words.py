@@ -205,7 +205,6 @@ class ERPSCWords(ERPSCBase):
                 # Add id of current article to object data
                 new_id = int(ids[art].text)
                 cur_erp.add_id(new_id)
-                #cur_erp.ids.append(int(ids[art].text))
 
                 # Get Title of the paper, if available, and add to current results
                 try:
@@ -213,11 +212,6 @@ class ERPSCWords(ERPSCBase):
                 except AttributeError:
                     cur_title = []
                 cur_erp.add_title(cur_title)
-
-                #try:
-                #    cur_erp.titles.append(articles[art].find('ArticleTitle').text)
-                #except AttributeError:
-                #    cur_erp.titles.append([])
 
                 # Get Words from the Abstract, if available, and add to current results
                 try:
@@ -227,12 +221,6 @@ class ERPSCWords(ERPSCBase):
                     cur_words = []
                 cur_erp.add_words(cur_words)
 
-                #try:
-                #    cur_erp.words.append(_process_words(
-                #        articles[art].find('AbstractText').text.split()))
-                #except AttributeError:
-                #    cur_erp.words.append([])
-
                 # Get the Year of the paper, if available, and add to current results
                 try:
                     cur_year = int(articles[art].find('DateCreated').find('Year').text)
@@ -240,17 +228,11 @@ class ERPSCWords(ERPSCBase):
                     cur_year = []
                 cur_erp.add_year(cur_year)
 
-                #try:
-                #    cur_erp.years.append(int(articles[art].find('DateCreated').find('Year').text))
-                #except AttributeError:
-                #    cur_erp.years.append([])
-
             # Check consistency of extracted results
             cur_erp.check_results()
 
             # Add the object with current erp data to results list
             self.add_results(cur_erp)
-            #self.results.append(cur_erp)
 
 
     def combine_words(self):
