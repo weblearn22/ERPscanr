@@ -13,13 +13,25 @@ from bs4 import BeautifulSoup
 # Import custom code
 from erpsc.gen import *
 
-#################################################################################
-############################ ERPSC - COUNT - CLASSES ############################
-#################################################################################
+#########################################################################################
+################################ ERPSC - COUNT - CLASSES ################################
+#########################################################################################
 
 
 class ERPSCCount(ERPSCBase):
-    """This is a class for counting co-occurence of pre-specified ERPs & terms."""
+    """This is a class for counting co-occurence of pre-specified ERPs & terms.
+
+    Attributes
+    ----------
+    erp_counts : 1d array
+        xx
+    term_counts : 1d array
+        xx
+    dat_numbers : ?
+        xx
+    dat_percent : ?
+        xx
+    """
 
     def __init__(self):
 
@@ -29,6 +41,10 @@ class ERPSCCount(ERPSCBase):
         # Set the esearch url for pubmed
         #self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pubmed&field=word&term='
         #self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pmc&field=word&term='
+
+        # Initialize vector of counts of number of papers for each term
+        #self.erp_counts = np.zeros(0)
+        #self.term_counts = np.zeros(0)
 
         # Initialize data output variables
         self.dat_numbers = np.zeros(0)
