@@ -141,12 +141,12 @@ class ERPSCBase(object):
         self.n_erps = int()
         self.n_terms = int()
 
+        # Initialize for date that data is collected
+        self.date = ''
+
         # Initialize vector of counts of number of papers for each term
         #self.erp_counts = np.zeros(0)
         #self.term_counts = np.zeros(0)
-
-        # Initialize for date that data is collected
-        self.date = ''
 
 
     def set_erps(self, erps):
@@ -163,7 +163,7 @@ class ERPSCBase(object):
 
         # Set given list as the erps
         for erp in erps:
-            self.erps.append(erp)
+            self.erps.append([erp])
 
         # Set the number of erps
         self.n_erps = len(erps)
@@ -202,18 +202,22 @@ class ERPSCBase(object):
     def check_erps(self):
         """Print out the current list of erps."""
 
+        # Print out header and all current ERPs
         print('List of ERPs used: \n')
         for i in range(self.n_erps):
             print(", ".join(e for e in self.erps[i]))
 
 
     def unload_erps(self):
-        """   """
+        """Unload the current set of ERP words."""
 
+        # Check if exclusions are loaded, to empty them if so.
         if self.erps:
 
+            # Print status that ERPs are being unloaded
             print('Unloading previous ERP words.')
 
+            # Reset ERP variables to empty
             self.erps = list()
             self.n_erps = int()
 
@@ -232,7 +236,7 @@ class ERPSCBase(object):
 
         # Set given list as erp exclusion words
         for exclude in exclusions:
-            self.exclusions.append(exclude)
+            self.exclusions.append([exclude])
 
         # Check that the number of exclusions matches n_erps
         if len(exclusions) != self.n_erps:
@@ -273,6 +277,7 @@ class ERPSCBase(object):
     def check_exclusions(self):
         """Print out the current list of exclusion words."""
 
+        # Print out header and all exclusion words
         print('List of exclusion words used: \n')
         for i in range(self.n_erps):
             print(self.erps[i][0] + "\t : " +
@@ -280,12 +285,15 @@ class ERPSCBase(object):
 
 
     def unload_exclusions(self):
-        """   """
+        """Unload the current set of exclusion words."""
 
+        # Check if exclusions are loaded. If so, print status and empty.
         if self.exclusions:
 
+            # Print status that exclusion words are being unloaded
             print('Unloading previous exclusion words.')
 
+            # Reset exclusions variables to empty
             self.exclusions = list()
 
 
@@ -302,7 +310,8 @@ class ERPSCBase(object):
         self.unload_terms()
 
         # Set given list as the terms
-        self.terms = terms
+        for term in terms:
+            self.terms.append([term])
 
         # Set the number of terms
         self.n_terms = len(terms)
@@ -341,17 +350,21 @@ class ERPSCBase(object):
     def check_terms(self):
         """Print out the current list of terms."""
 
+        # Print out header and all term words
         print('List of terms used: \n')
         print("\n".join(self.terms))
 
 
     def unload_terms(self):
-        """   """
+        """Unload the current set of terms."""
 
+        # Check if exclusions are loaded, to empty them if so.
         if self.terms:
 
+            # Print status that term words are being unloaded
             print('Unloading previous terms words.')
 
+            # Reset term variables to empty
             self.terms_type = str()
             self.terms = list()
             self.n_terms = list()
