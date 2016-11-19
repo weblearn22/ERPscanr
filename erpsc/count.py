@@ -24,13 +24,13 @@ class ERPSCCount(ERPSCBase):
     Attributes
     ----------
     erp_counts : 1d array
-        xx
+        Counts of how many articles found for each ERP word.
     term_counts : 1d array
-        xx
-    dat_numbers : ?
-        xx
-    dat_percent : ?
-        xx
+        Counts of how many articles found for each term word.
+    dat_numbers : 2d array
+        How many papers found for each ERP / term combination.
+    dat_percent : 2d array
+        Percent of papers that with co-occuring ERP and term words.
     """
 
     def __init__(self):
