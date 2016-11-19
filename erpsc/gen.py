@@ -158,15 +158,15 @@ class ERPSCBase(object):
             List of ERP terms to be used.
         """
 
+        # Unload previous terms if some are already loaded
+        self.unload_erps()
+
         # Set given list as the erps
         for erp in erps:
             self.erps.append(erp)
 
         # Set the number of erps
         self.n_erps = len(erps)
-
-        # Initialize count variable to the correct length
-        self.erp_counts = np.zeros([self.n_erps])
 
 
     def set_erps_file(self, f_name=None):
@@ -178,6 +178,9 @@ class ERPSCBase(object):
             Name of the file to be loaded as ERP terms.
                 Default None, loads standard terms from module.
         """
+
+        # Unload previous terms if some are already loaded
+        self.unload_erps()
 
         # Open file to read from - either input file or default from module
         if f_name:
@@ -195,9 +198,6 @@ class ERPSCBase(object):
         for i in range(self.n_erps):
             self.erps.append(erps[i][3:].split(','))
 
-        # Initialize count variable to the correct length
-        self.erp_counts = np.zeros([self.n_erps])
-
 
     def check_erps(self):
         """Print out the current list of erps."""
@@ -205,6 +205,17 @@ class ERPSCBase(object):
         print('List of ERPs used: \n')
         for i in range(self.n_erps):
             print(", ".join(e for e in self.erps[i]))
+
+
+    def unload_erps(self):
+        """   """
+
+        if self.erps:
+
+            print('Unloading previous ERP words.')
+
+            self.erps = list()
+            self.n_erps = int()
 
 
     def set_exclusions(self, exclusions):
@@ -215,6 +226,9 @@ class ERPSCBase(object):
         exclusions : list of str
             List of exclusion words to be used.
         """
+
+        # Unload previous terms if some are already loaded
+        self.unload_exclusions()
 
         # Set given list as erp exclusion words
         for exclude in exclusions:
@@ -234,6 +248,9 @@ class ERPSCBase(object):
             Name of the file to be loaded as exclusion words.
                 Default None, loads standard exclusion words from module.
         """
+
+        # Unload previous terms if some are already loaded
+        self.unload_exclusions()
 
         # Open file to read from - either input file or default from module
         if f_name:
@@ -262,6 +279,16 @@ class ERPSCBase(object):
                   ", ".join(e for e in self.exclusions[i]))
 
 
+    def unload_exclusions(self):
+        """   """
+
+        if self.exclusions:
+
+            print('Unloading previous exclusion words.')
+
+            self.exclusions = list()
+
+
     def set_terms(self, terms):
         """Sets the given list of strings as term terms to use.
 
@@ -271,14 +298,14 @@ class ERPSCBase(object):
             List of terms to be used.
         """
 
+        # Unload previous terms if some are already loaded
+        self.unload_terms()
+
         # Set given list as the terms
         self.terms = terms
 
         # Set the number of terms
         self.n_terms = len(terms)
-
-        # Initialize count variable to the correct length
-        self.term_counts = np.zeros([self.n_terms])
 
 
     def set_terms_file(self, terms_type, f_name=None):
@@ -291,6 +318,9 @@ class ERPSCBase(object):
         f_name : str, optional (default = None)
             Name of the file to be loaded as terms.
         """
+
+        # Unload previous terms if some are already loaded
+        self.unload_terms()
 
         # Set the type of terms
         self.terms_type = terms_type
@@ -307,12 +337,21 @@ class ERPSCBase(object):
         # Set the number of terms
         self.n_terms = len(self.terms)
 
-        # Initialize count variable to the correct length
-        self.term_counts = np.zeros([self.n_terms])
-
 
     def check_terms(self):
         """Print out the current list of terms."""
 
         print('List of terms used: \n')
         print("\n".join(self.terms))
+
+
+    def unload_terms(self):
+        """   """
+
+        if self.terms:
+
+            print('Unloading previous terms words.')
+
+            self.terms_type = str()
+            self.terms = list()
+            self.n_terms = list()
