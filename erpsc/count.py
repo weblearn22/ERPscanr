@@ -34,21 +34,22 @@ class ERPSCCount(ERPSCBase):
     """
 
     def __init__(self):
+        """   """
 
         # Inherit from the ERPSC base class
         ERPSCBase.__init__(self)
 
-        # Set the esearch url for pubmed
-        #self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pubmed&field=word&term='
-        #self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pmc&field=word&term='
-
         # Initialize vector of counts of number of papers for each term
-        #self.erp_counts = np.zeros(0)
-        #self.term_counts = np.zeros(0)
+        self.erp_counts = np.zeros(0)
+        self.term_counts = np.zeros(0)
 
         # Initialize data output variables
         self.dat_numbers = np.zeros(0)
         self.dat_percent = np.zeros(0)
+
+        # Set the esearch url for pubmed
+        #self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pubmed&field=word&term='
+        #self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pmc&field=word&term='
 
 
     def scrape_data(self):
@@ -65,6 +66,10 @@ class ERPSCCount(ERPSCBase):
         # Get e-utils URLS object
         urls = URLS('pubmed')
 
+        # Initialize count variables to the correct length
+        self.term_counts = np.zeros([self.n_terms])
+        self.erp_counts = np.zeros([self.n_erps])
+
         # Initialize right size matrices to store data
         self.dat_numbers = np.zeros([self.n_erps, self.n_terms])
         self.dat_percent = np.zeros([self.n_erps, self.n_terms])
@@ -80,7 +85,7 @@ class ERPSCCount(ERPSCBase):
                 term_ind = self.terms.index(term)
 
                 # Make URL - Exact Term Version
-                url = urls.search + '"' + erp[0] + '"AND"' + term + '"'
+                url = urls.search + '"' + erp[0] + '"AND"' + term[0] + '"'
 
                 # Make URL - Non-exact term version
                 #url = self.eutils_search + erp + ' erp ' + term
@@ -212,8 +217,8 @@ def load_pickle_counts(f_name):
 
     Returns
     -------
-    results : ?
-        xx
+    ERPSCCount() object
+        Count object loaded from file.
     """
 
     # Get ERPSC database object to set paths
