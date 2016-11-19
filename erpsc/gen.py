@@ -15,12 +15,24 @@ from __future__ import print_function, division
 import os
 import numpy as np
 
-#######################################################################################
-############################## ERPSC - GENERAL - CLASSES ##############################
-#######################################################################################
+###########################################################################################
+################################ ERPSC - GENERAL - CLASSES ################################
+###########################################################################################
 
 class ERPDB(object):
-    """Class to hold database information ERP SCANR project."""
+    """Class to hold database information ERP SCANR project.
+
+    Attributes
+    ----------
+    project_path : str
+        Base path to the ERPSC project.
+    data_path : str
+        Path to the data folder of the ERPSC project.
+    counts_path : str
+        Path to the data folder for counts data.
+    words_path : str
+        Path to the data folder for words data.
+    """
 
     def __init__(self):
 
@@ -32,20 +44,31 @@ class ERPDB(object):
         self.data_path = os.path.join(self.project_path, '2-Data')
 
         # Set paths to different data types
-        self.dict_path = os.path.join(self.data_path, 'dicts')
         self.counts_path = os.path.join(self.data_path, 'counts')
         self.words_path = os.path.join(self.data_path, 'words')
 
 
 class URLS(object):
-    """Class to hold URL information for ERP SCANR project."""
+    """Class to hold URL information for ERP SCANR project.
+
+    Attributes
+    ----------
+    db : ERPDB() object
+        Object that stores all paths for the ERPSC project.
+    eutils : str
+        Base URL for the e-utils tools.
+    search : str
+        URL for searching with e-utils.
+    fetch  : str
+        URL for fetching with e-utils.
+    """
 
     def __init__(self, db_in):
         """Initialize the ncbi e-utils urls.
 
         Parameters
         ----------
-        db : {'pubmed', 'pmc'}
+        db_in : {'pubmed', 'pmc'}
             Which database to use.
         """
 
@@ -83,9 +106,28 @@ class URLS(object):
 ######################################################################################
 
 class ERPSCBase(object):
-    """Base class for ERPSC analyses."""
+    """Base class for ERPSC analyses.
+
+    Attributes
+    ----------
+    terms_type : {'cognitive', 'disease'}
+        Type of terms used.
+    erps : list of str
+        ERP words.
+    exclusions : list of str
+        Exclusion words, used to avoid unwanted articles.
+    terms : list of str
+        Terms words.
+    n_erps : int
+        Number of erps.
+    n_terms : int
+        Number of terms.
+    date : str
+        Date data was collected.
+    """
 
     def __init__(self):
+        """   """
 
         # Initialize variable to keep track of term type used
         self.terms_type = str()
@@ -100,8 +142,8 @@ class ERPSCBase(object):
         self.n_terms = int()
 
         # Initialize vector of counts of number of papers for each term
-        self.erp_counts = np.zeros(0)
-        self.term_counts = np.zeros(0)
+        #self.erp_counts = np.zeros(0)
+        #self.term_counts = np.zeros(0)
 
         # Initialize for date that data is collected
         self.date = ''
