@@ -71,30 +71,39 @@ class Words(object):
         self.freqs = list()
 
     def add_id(self, new_id):
-        """   """
+        """Add a new id to Words object."""
 
         self.ids.append(new_id)
 
     def add_title(self, new_title):
-        """   """
+        """Add a new title to Words object."""
 
         self.titles.append(new_title)
 
     def add_words(self, new_words):
-        """   """
+        """Add new words to Words object."""
 
         self.words.append(new_words)
 
     def add_year(self, new_year):
-        """   """
+        """Add a new year to Words object."""
 
         self.years.append(new_year)
 
     def check_results(self):
-        """   """
+        """Check for consistencty in extracted results.
 
+        If everything worked, each data field (ids, titles, words, years)
+        should have the same length, equal to the number of articles.
+        Some entries may be blank (missing data), but if the lengths are not
+        the same then the data does not line up and cannot be trusted.
+        """
+
+        # Check that all data fields have length n_articles
         if not (self.n_articles == len(self.ids) == len(self.titles)
                 == len(self.words) == len(self.years)):
+
+            # If not, print out error
             print('DATA ERROR')
 
 
