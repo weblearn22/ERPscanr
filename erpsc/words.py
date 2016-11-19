@@ -42,7 +42,7 @@ class Words(object):
     """
 
     def __init__(self, erp):
-        """Initialize
+        """Initialize Words() object.
 
         Parameters
         ----------
@@ -108,9 +108,7 @@ class Words(object):
 
 
 class ERPSCWords(ERPSCBase):
-    """This is a class for searching through words in the abstracts of specified papers.
-
-    XX...
+    """Class for searching through words in the abstracts of specified papers.
 
     Attributes
     ----------
@@ -135,7 +133,7 @@ class ERPSCWords(ERPSCBase):
 
 
     def add_results(self, new_result):
-        """   """
+        """Add a new Words() results object."""
 
         self.results.append(new_result)
 
@@ -147,7 +145,8 @@ class ERPSCWords(ERPSCBase):
         It then loops through all the artciles found about that data.
         For each article, pulls title, year and word data.
 
-        Notes:
+        Notes
+        -----
         - Pulls data using the hierarchical tag structure that organize the articles.
         - Initially, the procedure was to pull all tags of a certain type.
             For example: extract all 'DateCreated' tags.
@@ -234,7 +233,7 @@ class ERPSCWords(ERPSCBase):
                 try:
                     cur_year = int(articles[art].find('DateCreated').find('Year').text)
                 except AttributeError:
-                    cur_year = []
+                    cur_year = np.NaN
                 cur_erp.add_year(cur_year)
 
             # Check consistency of extracted results
@@ -256,12 +255,12 @@ class ERPSCWords(ERPSCBase):
 
 
     def freq_dists(self):
-        """FILL IN DOCSTRING."""
+        """Create a frequency distribution from all the extracted words."""
 
         # Loop through all ERPs
         for erp in range(0, self.n_erps):
 
-            #
+            # Use nltk to create a frequency distribution from all words
             self.results[erp].freqs = nltk.FreqDist(self.results[erp].all_words)
 
             # Remove the ERPs name from list of words
@@ -331,8 +330,8 @@ def load_pickle_words(f_name):
 
     Returns
     -------
-    results : ?
-        xx
+    ERPSC_Words() object
+        Words object loaded from file.
     """
 
     # Get ERPSC database object to set paths
@@ -356,6 +355,11 @@ def _ids_to_str(ids):
     ----------
     ids : list of int
         List of pubmed ids.
+
+    Returns
+    -------
+    ids_str : str
+        A string of all concatenated ids.
     """
 
     # Check how many ids in list
@@ -379,6 +383,11 @@ def _process_words(words):
     ----------
     words : list of str
         List of words.
+
+    Returns
+    -------
+    list of str
+        List of words, after processing.
     """
 
     # Remove stop words, and anything that is only one character (punctuation). Return the result.
