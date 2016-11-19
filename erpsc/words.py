@@ -70,6 +70,33 @@ class Words(object):
         # Initialize to store FreqDists (across all words)
         self.freqs = list()
 
+    def add_id(self, new_id):
+        """   """
+
+        self.ids.append(new_id)
+
+    def add_title(self, new_title):
+        """   """
+
+        self.titles.append(new_title)
+
+    def add_words(self, new_words):
+        """   """
+
+        self.words.append(new_words)
+
+    def add_year(self, new_year):
+        """   """
+
+        self.years.append(new_year)
+
+    def check_results(self):
+        """   """
+
+        if not (self.n_articles == len(self.ids) == len(self.titles)
+                == len(self.words) == len(self.years)):
+            print('DATA ERROR')
+
 
 class ERPSCWords(ERPSCBase):
     """This is a class for searching through words in the abstracts of specified papers.
@@ -96,6 +123,12 @@ class ERPSCWords(ERPSCBase):
 
         # Set the url and settings for the e-fetch utility
         #self.eutils_fetch = self.eutils_url + 'efetch.fcgi?db=pubmed&retmode=xml&id='
+
+
+    def add_results(self, new_result):
+        """   """
+
+        self.results.append(new_result)
 
 
     def scrape_data(self):
@@ -170,29 +203,54 @@ class ERPSCWords(ERPSCBase):
                 # This is why data collections are all in try statements.
 
                 # Add id of current article to object data
-                cur_erp.ids.append(int(ids[art].text))
+                new_id = int(ids[art].text)
+                cur_erp.add_id(new_id)
+                #cur_erp.ids.append(int(ids[art].text))
 
-                # Get Title, if there is one
+                # Get Title of the paper, if available, and add to current results
                 try:
-                    cur_erp.titles.append(articles[art].find('ArticleTitle').text)
+                    cur_title = articles[art].find('ArticleTitle').text
                 except AttributeError:
-                    cur_erp.titles.append([])
+                    cur_title = []
+                cur_erp.add_title(cur_title)
 
-                # Get Words from the Abstract, if available
-                try:
-                    cur_erp.words.append(_process_words(
-                        articles[art].find('AbstractText').text.split()))
-                except AttributeError:
-                    cur_erp.words.append([])
+                #try:
+                #    cur_erp.titles.append(articles[art].find('ArticleTitle').text)
+                #except AttributeError:
+                #    cur_erp.titles.append([])
 
-                # Get the Year of the paper, if available
+                # Get Words from the Abstract, if available, and add to current results
                 try:
-                    cur_erp.years.append(int(articles[art].find('DateCreated').find('Year').text))
+                    cur_words = articles[art].find('AbstractText').text.split()
+                    cur_words = _process_words(cur_words)
                 except AttributeError:
-                    cur_erp.years.append([])
+                    cur_words = []
+                cur_erp.add_words(cur_words)
+
+                #try:
+                #    cur_erp.words.append(_process_words(
+                #        articles[art].find('AbstractText').text.split()))
+                #except AttributeError:
+                #    cur_erp.words.append([])
+
+                # Get the Year of the paper, if available, and add to current results
+                try:
+                    cur_year = int(articles[art].find('DateCreated').find('Year').text)
+                except AttributeError:
+                    cur_year = []
+                cur_erp.add_year(cur_year)
+
+                #try:
+                #    cur_erp.years.append(int(articles[art].find('DateCreated').find('Year').text))
+                #except AttributeError:
+                #    cur_erp.years.append([])
+
+            # Check consistency of extracted results
+            cur_erp.check_results()
 
             # Add the object with current erp data to results list
-            self.results.append(cur_erp)
+            self.add_results(cur_erp)
+            #self.results.append(cur_erp)
 
 
     def combine_words(self):
