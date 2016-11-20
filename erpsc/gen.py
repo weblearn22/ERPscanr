@@ -367,4 +367,4 @@ class ERPSCBase(object):
             # Reset term variables to empty
             self.terms_type = str()
             self.terms = list()
-            self.n_terms = list()
+            self.n_terms = int()
