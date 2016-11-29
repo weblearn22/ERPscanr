@@ -8,4 +8,8 @@ def test_erpsc_count():
     """Test the ERPSCCount object."""
 
     # Check that ERPSCCount returns properly
-    assert ERPSCCount()
+    assert Count()
+
+##
+## TESTS - ERPSC - COUNT -
+##

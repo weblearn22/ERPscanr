@@ -1,11 +1,12 @@
-from erpsc.words import *
+"""   """
 
-#################################################################
-################ TESTS - ERPSC - WORDS - CLASSES ################
-#################################################################
+from erpsc.words import Words
 
-def test_erpsc_words():
-    """Test the ERPSCWords object."""
+##
+##
+##
 
-    # Check that ERPSCWords returns properly.
-    assert ERPSCWords()
+def test_words():
+    """   """
+
+    assert Words()
