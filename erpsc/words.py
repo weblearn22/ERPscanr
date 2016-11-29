@@ -110,9 +110,6 @@ class Words(Base):
             # Pull out articles
             articles = art_page_soup.findAll('PubmedArticle')
 
-            # Check how many articles there are
-            cur_erp.n_articles = len(articles)
-
             # Loop through each article, pulling out desired info
             for art in range(0, cur_erp.n_articles):
 
@@ -128,7 +125,8 @@ class Words(Base):
                 try:
                     cur_title = articles[art].find('ArticleTitle').text
                 except AttributeError:
-                    cur_title = []
+                    cur_title = None
+                    #cur_title = []
                 cur_erp.add_title(cur_title)
 
                 # Get Words from the Abstract, if available, and add to current results
@@ -136,15 +134,20 @@ class Words(Base):
                     cur_words = articles[art].find('AbstractText').text.split()
                     cur_words = _process_words(cur_words)
                 except AttributeError:
-                    cur_words = []
+                    cur_words = None
+                    #cur_words = []
                 cur_erp.add_words(cur_words)
 
                 # Get the Year of the paper, if available, and add to current results
                 try:
                     cur_year = int(articles[art].find('DateCreated').find('Year').text)
                 except AttributeError:
-                    cur_year = np.NaN
+                    cur_year = None
+                    #cur_year = np.NaN
                 cur_erp.add_year(cur_year)
+
+                # Increment number of articles included in ERPWords
+                cur_erp.increment_n_articles()
 
             # Check consistency of extracted results
             cur_erp.check_results()
