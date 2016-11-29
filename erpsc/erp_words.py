@@ -63,8 +63,8 @@ class ERPWords(object):
 
         Parameters
         ----------
-        new_id : ?
-            xx
+        new_id : int
+            The ID number of the current article.
         """
 
         self.ids.append(new_id)
@@ -75,7 +75,7 @@ class ERPWords(object):
         Parameters
         ----------
         new_title : str
-            xx
+            The title of the current article.
         """
 
         self.titles.append(new_title)
@@ -85,8 +85,8 @@ class ERPWords(object):
 
         Parameters
         ----------
-        new_words : ?
-            xx
+        new_words : list of str
+            List of words from the current article.
         """
 
         self.words.append(new_words)
@@ -96,14 +96,14 @@ class ERPWords(object):
 
         Parameters
         ----------
-        new_year : ?
-            xx
+        new_year : int
+            The year the current article was published.
         """
 
         self.years.append(new_year)
 
     def increment_n_articles(self):
-        """   """
+        """Increment the number of articles included in current object."""
 
         self.n_articles += 1
 
