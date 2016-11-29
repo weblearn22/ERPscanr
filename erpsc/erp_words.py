@@ -1,5 +1,7 @@
 """   """
 
+from erpsc.core.errors import InconsistentDataError
+
 ##
 ##
 ##
@@ -43,7 +45,7 @@ class ERPWords(object):
         self.ids = list()
 
         # Initialize to store article count
-        self.n_articles = int()
+        self.n_articles = 0
 
         # Initiliaze to store data pulled from articles
         self.titles = list()
@@ -57,24 +59,53 @@ class ERPWords(object):
         self.freqs = list()
 
     def add_id(self, new_id):
-        """Add a new id to Words object."""
+        """Add a new id to Words object.
+
+        Parameters
+        ----------
+        new_id : ?
+            xx
+        """
 
         self.ids.append(new_id)
 
     def add_title(self, new_title):
-        """Add a new title to Words object."""
+        """Add a new title to Words object.
+
+        Parameters
+        ----------
+        new_title : str
+            xx
+        """
 
         self.titles.append(new_title)
 
     def add_words(self, new_words):
-        """Add new words to Words object."""
+        """Add new words to Words object.
+
+        Parameters
+        ----------
+        new_words : ?
+            xx
+        """
 
         self.words.append(new_words)
 
     def add_year(self, new_year):
-        """Add a new year to Words object."""
+        """Add a new year to Words object.
+
+        Parameters
+        ----------
+        new_year : ?
+            xx
+        """
 
         self.years.append(new_year)
+
+    def increment_n_articles(self):
+        """   """
+
+        self.n_articles += 1
 
     def check_results(self):
         """Check for consistencty in extracted results.
@@ -90,5 +121,4 @@ class ERPWords(object):
                 == len(self.words) == len(self.years)):
 
             # If not, print out error
-            # TODO: Update to real error
-            print 'DATA ERROR'
+            raise InconsistentDataError('ERP Words data is inconsistent.')
