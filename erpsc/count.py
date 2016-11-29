@@ -1,6 +1,4 @@
-"""MODULE DOCSTRING - TO FILL IN.
-
-"""
+"""MODULE DOCSTRING - TO FILL IN."""
 
 from __future__ import print_function, division
 
@@ -11,14 +9,14 @@ import requests
 from bs4 import BeautifulSoup
 
 # Import custom code
-from erpsc.gen import *
+from erpsc.base import Base
 
 #########################################################################################
 ################################ ERPSC - COUNT - CLASSES ################################
 #########################################################################################
 
 
-class ERPSCCount(ERPSCBase):
+class Count(Base):
     """This is a class for counting co-occurence of pre-specified ERPs & terms.
 
     Attributes
@@ -37,7 +35,7 @@ class ERPSCCount(ERPSCBase):
         """   """
 
         # Inherit from the ERPSC base class
-        ERPSCBase.__init__(self)
+        Base.__init__(self)
 
         # Initialize vector of counts of number of papers for each term
         self.erp_counts = np.zeros(0)
@@ -201,32 +199,3 @@ class ERPSCCount(ERPSCBase):
         # Save pickle file
         save_file = os.path.join(db.counts_path, save_name)
         pickle.dump(self, open(save_file, 'wb'))
-
-
-######################################################################################
-######################### ERPSC - COUNT - FUNCTIONS (PUBLIC) #########################
-######################################################################################
-
-def load_pickle_counts(f_name):
-    """Loads a pickle file of an ERPSCCount object.
-
-    Parameters
-    ----------
-    f_name : str
-        File name of the counts file to load.
-
-    Returns
-    -------
-    ERPSCCount() object
-        Count object loaded from file.
-    """
-
-    # Get ERPSC database object to set paths
-    db = ERPDB()
-
-    # Initialize full file name to load
-    file_name = f_name + '_counts.p'
-
-    # Load and return the data
-    return pickle.load(open(os.path.join(db.counts_path, file_name), 'rb'))
-
