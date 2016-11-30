@@ -2,6 +2,8 @@
 
 from __future__ import print_function
 
+import pkg_resources as pkg
+
 ######################################################################################
 ############################### ERPSC - GENERAL - BASE ###############################
 ######################################################################################
@@ -70,27 +72,14 @@ class Base(object):
         self.n_erps = len(erps)
 
 
-    def set_erps_file(self, f_name=None):
-        """Load ERP terms from a txt file.
-
-        Parameters
-        ----------
-        f_name : str, optional (default = None)
-            Name of the file to be loaded as ERP terms.
-                Default None, loads standard terms from module.
-        """
+    def set_erps_file(self):
+        """Load ERP terms from a txt file."""
 
         # Unload previous terms if some are already loaded
         self.unload_erps()
 
-        # Open file to read from - either input file or default from module
-        if f_name:
-            terms_file = open(f_name, 'r')
-        else:
-            terms_file = open('erpsc/terms/erps.txt', 'r')
-
-        # Read file and input ERP terms
-        erps = terms_file.read().splitlines()
+        # Get erps from module data file
+        erps = _terms_load_file('erps')
 
         # Set the number of erps
         self.n_erps = len(erps)
@@ -144,27 +133,14 @@ class Base(object):
             print('Mismatch in number of exclusions and erps!')
 
 
-    def set_exclusions_file(self, f_name=None):
-        """Load exclusion words from a txt file.
-
-        Parameters
-        ----------
-        f_name : str, optional (default = None)
-            Name of the file to be loaded as exclusion words.
-                Default None, loads standard exclusion words from module.
-        """
+    def set_exclusions_file(self):
+        """Load exclusion words from a txt file."""
 
         # Unload previous terms if some are already loaded
         self.unload_exclusions()
 
-        # Open file to read from - either input file or default from module
-        if f_name:
-            terms_file = open(f_name, 'r')
-        else:
-            terms_file = open('erpsc/terms/erps_exclude.txt', 'r')
-
-        # Read file and input exclusion terms
-        exclusions = terms_file.read().splitlines()
+        # Get exclusion words from module data file
+        exclusions = _terms_load_file('erps_exclude')
 
         # Check that the number of exclusions matches n_erps
         if len(exclusions) != self.n_erps:
@@ -218,16 +194,8 @@ class Base(object):
         self.n_terms = len(terms)
 
 
-    def set_terms_file(self, terms_type, f_name=None):
-        """Load terms from a txt file.
-
-        Parameters
-        ----------
-        terms_type : {'cognitive', 'disease'}
-            Type of the terms to be loaded.
-        f_name : str, optional (default = None)
-            Name of the file to be loaded as terms.
-        """
+    def set_terms_file(self, terms_type):
+        """Load terms from a txt file."""
 
         # Unload previous terms if some are already loaded
         self.unload_terms()
@@ -235,14 +203,8 @@ class Base(object):
         # Set the type of terms
         self.terms_type = terms_type
 
-        # Open file to read from - either input file or default from module
-        if f_name:
-            terms_file = open(f_name, 'r')
-        else:
-            terms_file = open('erpsc/terms/' + terms_type + '.txt', 'r')
-
-        # Read file and input ERP terms
-        self.terms = terms_file.read().splitlines()
+        # Get erps from module data file
+        self.terms = _terms_load_file('erps')
 
         # Set the number of terms
         self.n_terms = len(self.terms)
@@ -269,3 +231,26 @@ class Base(object):
             self.terms_type = str()
             self.terms = list()
             self.n_terms = int()
+
+##
+##
+##
+
+def _terms_load_file(dat_name):
+    """Loads a terms data file from within the module
+
+    Parameters
+    ----------
+    dat_name : str
+        Name of the terms data file to load.
+    """
+
+    # Open file
+    f_name = 'terms/' + dat_name + '.txt'
+    f_path = pkg.resource_filename(__name__, f_name)
+    terms_file = open(f_path, 'r')
+
+    # Pull out data from file
+    dat = terms_file.read().splitlines()
+
+    return dat
