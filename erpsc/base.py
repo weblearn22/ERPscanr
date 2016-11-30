@@ -204,7 +204,7 @@ class Base(object):
         self.terms_type = terms_type
 
         # Get erps from module data file
-        self.terms = _terms_load_file('erps')
+        self.terms = _terms_load_file(terms_type)
 
         # Set the number of terms
         self.n_terms = len(self.terms)
