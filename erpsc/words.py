@@ -12,6 +12,7 @@ from nltk.corpus import stopwords
 # Import custom code
 from erpsc.base import Base
 from erpsc.erp_words import ERPWords
+from erpsc.core.urls import URLS
 
 #################################################################################
 ############################ ERPSC - WORDS - Classes ############################
@@ -111,7 +112,7 @@ class Words(Base):
             articles = art_page_soup.findAll('PubmedArticle')
 
             # Loop through each article, pulling out desired info
-            for art in range(0, cur_erp.n_articles):
+            for art in range(len(articles)):
 
                 # NOTE: Pubmed article pages could be missing info.
                 # For example, can have an id that's missing abstract text
@@ -126,7 +127,6 @@ class Words(Base):
                     cur_title = articles[art].find('ArticleTitle').text
                 except AttributeError:
                     cur_title = None
-                    #cur_title = []
                 cur_erp.add_title(cur_title)
 
                 # Get Words from the Abstract, if available, and add to current results
@@ -135,7 +135,6 @@ class Words(Base):
                     cur_words = _process_words(cur_words)
                 except AttributeError:
                     cur_words = None
-                    #cur_words = []
                 cur_erp.add_words(cur_words)
 
                 # Get the Year of the paper, if available, and add to current results
@@ -143,7 +142,6 @@ class Words(Base):
                     cur_year = int(articles[art].find('DateCreated').find('Year').text)
                 except AttributeError:
                     cur_year = None
-                    #cur_year = np.NaN
                 cur_erp.add_year(cur_year)
 
                 # Increment number of articles included in ERPWords
@@ -160,8 +158,8 @@ class Words(Base):
         """Combine the words from each article together."""
 
         # Loop through each erp, and each article
-        for erp in range(0, self.n_erps):
-            for art in range(0, self.results[erp].n_articles):
+        for erp in range(self.n_erps):
+            for art in range(self.results[erp].n_articles):
 
                 # Combine the words from each article into the 'all_words' collection
                 self.results[erp].all_words.extend(self.results[erp].words[art])
@@ -171,7 +169,7 @@ class Words(Base):
         """Create a frequency distribution from all the extracted words."""
 
         # Loop through all ERPs
-        for erp in range(0, self.n_erps):
+        for erp in range(self.n_erps):
 
             # Use nltk to create a frequency distribution from all words
             self.results[erp].freqs = nltk.FreqDist(self.results[erp].all_words)
@@ -194,14 +192,14 @@ class Words(Base):
         """
 
         # Loop through each ERP term
-        for erp in range(0, self.n_erps):
+        for erp in range(self.n_erps):
 
             # Get the requested number of most common words for the ERP
             top_words = self.results[erp].freqs.most_common()[0:n_check]
 
             # Join together the top words into a string
             top_words_str = ''
-            for i in range(0, n_check):
+            for i in range(n_check):
                 top_words_str += top_words[i][0]
                 top_words_str += ' , '
 
