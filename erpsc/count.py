@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 
 # Import custom code
 from erpsc.base import Base
+from erpsc.core.urls import URLS
 
 #########################################################################################
 ################################ ERPSC - COUNT - CLASSES ################################
