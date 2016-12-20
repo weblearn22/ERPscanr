@@ -1,4 +1,4 @@
-"""DOCSTRING
+"""URLs for the ERP-SCANR project.
 
 EUtils Quick Start: http://www.ncbi.nlm.nih.gov/books/NBK25500/
 EUtils in Depth: https://www.ncbi.nlm.nih.gov/books/NBK25499/
@@ -10,17 +10,17 @@ TODO:
   - Figure out 'HTTP POST' for large # of ID fetches
 """
 
-##
-##
-##
+##################################################################################
+##########################################################################################
+##########################################################################################
 
 class URLS(object):
     """Class to hold URL information for ERP SCANR project.
 
     Attributes
     ----------
-    db : ERPDB() object
-        Object that stores all paths for the ERPSC project.
+    lit_db : ?
+        xx
     eutils : str
         Base URL for the e-utils tools.
     search : str
@@ -29,40 +29,67 @@ class URLS(object):
         URL for fetching with e-utils.
     """
 
-    def __init__(self, db_in):
+    def __init__(self, lit_db, auto_gen=True, retmax_val=500, field_val='', retmode_val='xml'):
         """Initialize the ncbi e-utils urls.
 
         Parameters
         ----------
-        db_in : {'pubmed', 'pmc'}
-            Which database to use.
+        lit_db : {'pubmed', 'pmc'}
+            Which literature database to use.
+        retmax_val : int, optional (default: 500)
+            xx
+        field_val : str, optional (default: '')
+            xx
+        retmode_val : {'lxml', 'xml', ?}, optional
+            xx
         """
-
-        # Parameters
-        db = db_in
-        retmax_val = 500
-        field_val = ''
-        retmode_val = 'xml'
-
-        # Parameter
-        db_arg = 'db=' + db
-        retmax_arg = 'retmax=' + str(retmax_val)
-        field_arg = 'field=' + field_val
-        retmode_arg = 'retmode=' + retmode_val
 
         # Set up the base url for ncbi e-utils
         self.eutils = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
 
-        # Set the search url
-        search_base = self.eutils + 'esearch.fcgi?'
-        self.search = search_base + db_arg + '&' + field_arg + '&' + 'term='
+        # Initialize variables to store search and fetch URLs
+        self.search = str()
+        self.fetch = str()
 
-        # Set the fetch url
-        fetch_base = self.eutils + 'efetch.fcgi?'
-        self.fetch = fetch_base + db_arg + '&' + retmode_arg + '&' + 'id='
+        # TODO: Save settings in a dictionary?
+        self.settings = dict()
+
+        # Save settings to object
+        self.lit_db = lit_db
+        self.retmax_val = retmax_val
+        self.field_val = field_val
+        self.retmode_val = retmode_val
+
+        if auto_gen:
+            self.build_param_settings
+            self.build_search_url
+            self.build_fetch_url
 
         # OLD:
         # Set the search url
         #self.search = self.base_url + 'esearch.fcgi?db=pmc&field=word&term='
         #self.fetch = self.base_url + ''
         #self.retmax = ''
+
+    def build_param_settings(self):
+        """   """
+
+        # Parameter
+        self.db_arg = 'db=' + self.lit_db
+        self.retmax_arg = 'retmax=' + str(self.retmax_val)
+        self.field_arg = 'field=' + self.field_val
+        self.retmode_arg = 'retmode=' + self.retmode_val
+
+    def build_search_url(self):
+        """   """
+
+        # Set the search url
+        search_base = self.eutils + 'esearch.fcgi?'
+        self.search = search_base + db_arg + '&' + field_arg + '&' + 'term='
+
+    def build_fetch_url(self):
+        """   """
+
+        # Set the fetch url
+        fetch_base = self.eutils + 'efetch.fcgi?'
+        self.fetch = fetch_base + db_arg + '&' + retmode_arg + '&' + 'id='
