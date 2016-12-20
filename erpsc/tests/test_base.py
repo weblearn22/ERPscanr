@@ -2,12 +2,11 @@
 
 from erpsc.base import Base
 
-########################################################################
-#################### TESTS - ERPSC - GENERAL - BASE ####################
-########################################################################
+########################################################################################
+############################ TESTS - ERPSC - GENERAL - BASE ############################
+########################################################################################
 
 ## NOTES:
-##  - 'check' functions are not tested.
 ##  - Load from file function '_file' are only tested for default (from module) loads.
 
 def test_erpsc_base():
@@ -120,7 +119,6 @@ def test_check_terms():
     """   """
 
     base = Base()
-
     base.set_terms_file('cognitive')
 
     base.check_terms()
