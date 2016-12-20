@@ -12,7 +12,7 @@ def test_erpsc_count():
     # Check that ERPSCCount returns properly
     assert Count()
 
-def test_scrape_data():
+def test_scrape_test_save():
     """   """
 
     counts = Count()
@@ -21,22 +21,25 @@ def test_scrape_data():
     counts.set_erps(['N400', 'P600'])
     counts.set_terms(['language', 'memory'])
 
-def test_check_cooc_erps():
-    """   """
-    pass
+    counts.scrape_data()
 
-def test_check_cooc_terms():
-    """   """
-    pass
+    assert True
 
-def test_check_top():
-    """   """
-    pass
+    check_funcs(counts)
+    save_func(counts)
 
-def test_check_counts():
+def check_funcs(counts):
     """   """
-    pass
 
-def test_save_pickle():
+    # Check that all check functions run
+    counts.check_cooc_erps()
+    counts.check_cooc_terms()
+    counts.check_top()
+    counts.check_counts('erp')
+    counts.check_counts('term')
+
+    assert True
+
+def save_func(counts):
     """   """
     pass
