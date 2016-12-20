@@ -33,7 +33,7 @@ class Count(Base):
     """
 
     def __init__(self):
-        """   """
+        """Initialize ERP-SCANR Count() object."""
 
         # Inherit from the ERPSC base class
         Base.__init__(self)
@@ -91,7 +91,7 @@ class Count(Base):
 
                 # Pull the page, and parse with Beatiful Soup
                 page = requests.get(url)
-                page_soup = BeautifulSoup(page.content)
+                page_soup = BeautifulSoup(page.content, 'lxml')
 
                 # Get all 'count' tags
                 counts = page_soup.find_all('count')
