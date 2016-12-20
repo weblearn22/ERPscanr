@@ -1,8 +1,10 @@
-"""   """
+"""Base object for ERP-SCANR."""
 
 from __future__ import print_function
 
 import pkg_resources as pkg
+
+from erpsc.core.errors import InconsistentDataError
 
 ######################################################################################
 ############################### ERPSC - GENERAL - BASE ###############################
@@ -30,7 +32,7 @@ class Base(object):
     """
 
     def __init__(self):
-        """   """
+        """Initialize ERP-SCANR Base() object."""
 
         # Initialize variable to keep track of term type used
         self.terms_type = str()
@@ -130,7 +132,8 @@ class Base(object):
 
         # Check that the number of exclusions matches n_erps
         if len(exclusions) != self.n_erps:
-            print('Mismatch in number of exclusions and erps!')
+            raise InconsistentDataError('Mismatch in number of exclusions and erps!')
+            #print('Mismatch in number of exclusions and erps!')
 
 
     def set_exclusions_file(self):
@@ -144,7 +147,8 @@ class Base(object):
 
         # Check that the number of exclusions matches n_erps
         if len(exclusions) != self.n_erps:
-            print('Mismatch in number of exclusions and erps!')
+            raise InconsistentDataError('Mismatch in number of exclusions and erps!')
+            #print('Mismatch in number of exclusions and erps!')
 
         # Drop number indices for exclusions, and set as list
         for i in range(self.n_erps):
@@ -232,9 +236,9 @@ class Base(object):
             self.terms = list()
             self.n_terms = int()
 
-##
-##
-##
+##########################################################################################
+##########################################################################################
+##########################################################################################
 
 def _terms_load_file(dat_name):
     """Loads a terms data file from within the module
