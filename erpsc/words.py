@@ -1,5 +1,4 @@
 """MODULE DOCSTRING: TO FILL IN."""
-
 from __future__ import print_function, division
 
 import pickle
@@ -23,11 +22,12 @@ class Words(Base):
 
     Attributes
     ----------
-    results : list of Words() objects
+    results : list of ERPWords() objects
         Results for each ERP, stored in custom Words object.
     """
 
     def __init__(self):
+        """Initialize ERP-SCANR Words() object."""
 
         # Inherit from ERPSC Base Class
         Base.__init__(self)
@@ -101,6 +101,9 @@ class Words(Base):
 
             # Convert ids to string
             ids_str = _ids_to_str(ids)
+            print(type(ids))
+            print(type(ids[0]))
+            print(ids[0])
 
             # Get article page
             #art_url = self.eutils_fetch + ids_str
@@ -235,7 +238,7 @@ def _ids_to_str(ids):
 
     Parameters
     ----------
-    ids : list of int
+    ids : BeautifulSoup ResultSet
         List of pubmed ids.
 
     Returns
