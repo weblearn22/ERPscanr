@@ -1,6 +1,9 @@
 """   """
 
+from py.test import raises
+
 from erpsc.base import Base
+from erpsc.core.errors import InconsistentDataError
 
 ########################################################################################
 ############################ TESTS - ERPSC - GENERAL - BASE ############################
@@ -59,6 +62,13 @@ def test_set_exclusions():
     base.set_exclusions(['not', 'this'])
 
     assert base.exclusions
+
+    # Check error with improper # of exclusion words
+    base = Base()
+    base.set_erps(['N100', 'P100'])
+
+    with raises(InconsistentDataError):
+        base.set_exclusions(['bad'])
 
 def test_set_exclusions_file():
     """Test the set_exclusions_file method of Base."""
