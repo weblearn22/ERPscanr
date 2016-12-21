@@ -32,3 +32,7 @@
 32-SEP,somatosensory evoked potential
 33-VsEP,vestibular evoked potential
 34-BP, pre-motor potential, readiness potential, Bereitschaftspotential
+35-Pe, error positivity, post-error positivity
+36-CRN, correct-related negativity, correct response negativity
+37-N240
+38-P340
