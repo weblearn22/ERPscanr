@@ -104,12 +104,8 @@ class Words(Base):
 
             # Convert ids to string
             ids_str = _ids_to_str(ids)
-            #print(type(ids))
-            #print(type(ids[0]))
-            #print(ids[0])
 
             # Get article page
-            #art_url = self.eutils_fetch + ids_str
             art_url = urls.fetch + ids_str
             art_page = requests.get(art_url)
             art_page_soup = BeautifulSoup(art_page.content, "xml")
@@ -117,9 +113,18 @@ class Words(Base):
             # Pull out articles
             articles = art_page_soup.findAll('PubmedArticle')
 
-            # Loop through each article, pulling out desired info
-            for art in range(len(articles)):
+            # Loop through each article, extracting relevant information
+            for ind, art in enumerate(articles):
 
+                # Get ID of current article
+                new_id = int(ids[ind].text)
+
+                # Extract and add all relevant info from current articles to ERPWords object
+                cur_erp = self.extract_add_info(cur_erp, new_id, art)
+
+            """
+            # Loop through each article, pulling out desired info
+            #for art in range(len(articles)):
                 # NOTE: Pubmed article pages could be missing info.
                 # For example, can have an id that's missing abstract text
                 # This is why data collections are all in try statements.
@@ -152,12 +157,63 @@ class Words(Base):
 
                 # Increment number of articles included in ERPWords
                 cur_erp.increment_n_articles()
+                """
 
             # Check consistency of extracted results
             cur_erp.check_results()
 
             # Add the object with current erp data to results list
             self.add_results(cur_erp)
+
+
+    def extract_add_info(self, cur_erp, new_id, art):
+        """
+
+        Parameters
+        ----------
+        cur_erp : ERPWords() object
+            xx
+        new_id : ?
+            xx
+        art : ?
+            xx
+
+        NOTES
+        -----
+        Pubmed article pages could be missing info.
+        For example, can have an id that's missing abstract text
+        This is why data collections are all in try statements.
+        """
+
+        # Add ID of current article
+        cur_erp.add_id(new_id)
+
+        # Get Title of the paper, if available, and add to current results
+        try:
+            cur_title = art.find('ArticleTitle').text
+        except AttributeError:
+            cur_title = None
+        cur_erp.add_title(cur_title)
+
+        # Get Words from the Abstract, if available, and add to current results
+        try:
+            cur_words = art.find('AbstractText').text.split()
+            cur_words = _process_words(cur_words)
+        except AttributeError:
+            cur_words = None
+        cur_erp.add_words(cur_words)
+
+        # Get the Year of the paper, if available, and add to current results
+        try:
+            cur_year = int(art.find('DateCreated').find('Year').text)
+        except AttributeError:
+            cur_year = None
+        cur_erp.add_year(cur_year)
+
+        # Increment number of articles included in ERPWords
+        cur_erp.increment_n_articles()
+
+        return cur_erp
 
 
     def combine_words(self):
