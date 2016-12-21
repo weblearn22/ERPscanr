@@ -47,3 +47,27 @@ class ERPDB(object):
         # Set paths to different data types
         self.counts_path = os.path.join(self.data_path, 'counts')
         self.words_path = os.path.join(self.data_path, 'words')
+
+##########################################################################################
+##########################################################################################
+##########################################################################################
+
+def check_db(db):
+    """Check if ERPDB object is initialized, if not, return a ERPDB object.
+
+    Parameters
+    ----------
+    db : ERPDB() object, or None
+        Database object for ERP-SCANR project.
+
+    Returns
+    -------
+    db : ERPDB() object
+        Database object for ERP-SCANR project.
+    """
+
+    # If db is currently None, initialize as ERPDB
+    if not db:
+        db = ERPDB()
+
+    return db
