@@ -39,7 +39,6 @@ def test_scrape():
     comb_words(words)
     freq_dists(words)
     check_words(words)
-    save_pickle(words)
 
 def comb_words(words):
 

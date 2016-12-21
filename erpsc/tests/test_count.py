@@ -26,7 +26,6 @@ def test_scrape_test_save():
     assert True
 
     check_funcs(counts)
-    save_func(counts)
 
 def check_funcs(counts):
     """   """
