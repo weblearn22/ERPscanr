@@ -12,6 +12,7 @@ from nltk.corpus import stopwords
 from erpsc.base import Base
 from erpsc.erp_words import ERPWords
 from erpsc.core.urls import URLS
+from erpsc.core.db import ERPDB
 
 #################################################################################
 ############################ ERPSC - WORDS - Classes ############################
@@ -94,16 +95,16 @@ class Words(Base):
 
             # Get page and parse
             page = requests.get(url)
-            page_soup = BeautifulSoup(page.content)
+            page_soup = BeautifulSoup(page.content, 'lxml')
 
             # Get all ids
             ids = page_soup.find_all('id')
 
             # Convert ids to string
             ids_str = _ids_to_str(ids)
-            print(type(ids))
-            print(type(ids[0]))
-            print(ids[0])
+            #print(type(ids))
+            #print(type(ids[0]))
+            #print(ids[0])
 
             # Get article page
             #art_url = self.eutils_fetch + ids_str
@@ -209,15 +210,15 @@ class Words(Base):
             # Print out the top words for the current ERP
             print(self.erps[erp][0], ': ', top_words_str)
 
-
+    """
     def save_pickle(self, f_name):
-        """Saves out a pickle file of the ERPSC_Word object.
+        "Saves out a pickle file of the ERPSC_Word object.
 
         Parameters
         ----------
         f_name : str
             String to append to beginning of file to save out.
-        """
+        "
 
         # Get ERPSC database object to set paths
         db = ERPDB()
@@ -228,6 +229,7 @@ class Words(Base):
         # Save pickle file
         save_file = os.path.join(db.words_path, save_name)
         pickle.dump(self, open(save_file, 'wb'))
+    """
 
 #######################################################################################
 ######################### ERPSC - WORDS - FUNCTIONS (PRIVATE) #########################
