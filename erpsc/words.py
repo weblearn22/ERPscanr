@@ -73,7 +73,9 @@ class Words(Base):
         self.date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
         # Get e-utils URLS object
-        urls = URLS('pubmed')
+        urls = URLS(db='pubmed', retmode='xml', auto_gen=False)
+        urls.build_search(['db', 'retmode'])
+        urls.build_fetch(['db', 'retmode'])
 
         # Loop through all the erps
         for ind, erp in enumerate(self.erps):

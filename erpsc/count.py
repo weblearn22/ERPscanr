@@ -17,7 +17,6 @@ from erpsc.core.db import ERPDB
 ################################ ERPSC - COUNT - CLASSES ################################
 #########################################################################################
 
-
 class Count(Base):
     """This is a class for counting co-occurence of pre-specified ERPs & terms.
 
@@ -64,7 +63,9 @@ class Count(Base):
         self.date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
         # Get e-utils URLS object
-        urls = URLS('pubmed')
+        urls = URLS(db='pubmed', retmode='lxml')
+        urls.build_search(['db', 'retmode'])
+        urls.build_fetch(['db', 'retmode'])
 
         # Initialize count variables to the correct length
         self.term_counts = np.zeros([self.n_terms])
