@@ -39,7 +39,3 @@ def check_funcs(counts):
     counts.check_counts('term')
 
     assert True
-
-def save_func(counts):
-    """   """
-    pass
