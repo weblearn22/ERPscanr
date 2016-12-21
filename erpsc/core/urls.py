@@ -10,6 +10,8 @@ TODO:
   - Figure out 'HTTP POST' for large # of ID fetches
 """
 
+from erpsc.core.errors import InconsistentDataError
+
 ##################################################################################
 ##########################################################################################
 ##########################################################################################
@@ -19,28 +21,35 @@ class URLS(object):
 
     Attributes
     ----------
-    lit_db : str
-        The literature database to use.
     eutils : str
         Base URL for the e-utils tools.
     search : str
         URL for searching with e-utils.
     fetch  : str
         URL for fetching with e-utils.
+    settings : dict()
+        Dictionary of all defined settings and their values.
+    args : dict()
+        Dictionary of all arguments (settings & values) that can be used in e-utirls URL.
     """
 
-    def __init__(self, lit_db, auto_gen=True, retmax_val=500, field_val='', retmode_val='xml'):
+    def __init__(self, db=None, retmax=None, field=None, retmode=None, auto_gen=False):
         """Initialize the ncbi e-utils urls.
+
+        NOTE:
+        defaults: retmax: 500, field: '', retmode:'xml'
 
         Parameters
         ----------
-        lit_db : {'pubmed', 'pmc'}
+        db : {'pubmed', 'pmc'}, optional
             Which literature database to use.
-        retmax_val : int, optional (default: 500)
-            xx
-        field_val : str, optional (default: '')
-            xx
-        retmode_val : {'lxml', 'xml', ?}, optional
+        retmax : str, optional
+            The maximum number of papers to return.
+        field : str, optional
+            ?
+        retmode : {'lxml', 'xml', ?}, optional
+            The return format for the results.
+        auto_gen : boolean, optional
             xx
         """
 
@@ -53,15 +62,15 @@ class URLS(object):
 
         # Initialize dictionary to save settings, and add settings to it
         self.settings = dict()
-        self.save_settings(lit_db, str(retmax_val), field_val, retmode_val)
+        self.save_settings(db=db, retmax=retmax, field=field, retmode=retmode)
 
         # Initialize dictionary to save url arguments, and populate it from settings
         self.args = dict()
         self.save_args()
 
         if auto_gen:
-            self.build_search_url(['db', 'retmode'])
-            self.build_fetch_url(['db', 'retmode'])
+            self.build_search([])
+            self.build_fetch([])
 
         # OLD:
         # Set the search url
@@ -71,7 +80,7 @@ class URLS(object):
 
 
     def save_settings(self, db=None, retmax=None, field=None, retmode=None):
-        """
+        """TODO
 
         Parameters
         ----------
@@ -104,38 +113,64 @@ class URLS(object):
 
 
     def save_args(self):
-        """   """
+        """TODO"""
 
         # For each parameter in settings, create the url argument
         for param in self.settings.keys():
             self.args[param] = param + '=' + self.settings[param]
 
 
-    def build_search_url(self, args_to_use):
-        """
+    def check_args(self, args_to_use):
+        """Checks whether the requested arguments are defined, so that they can be used.
 
         Parameters
         ----------
-        args_to_use : ?
-            xx
+        args_to_use : list of str
+            Requested arguments to check that they are defined.
         """
+
+        # Check that all requested arguments are available. Catch and raise custom error if not
+        try:
+            [self.args[arg] for arg in args_to_use]
+        except KeyError:
+            raise InconsistentDataError('Not all requested settings provided - can not proceed.')
+
+
+    def build_search(self, args_to_use):
+        """Create the e-utils search URL, with specified arguments.
+
+        Parameters
+        ----------
+        args_to_use : list of str
+            Arguments to use to build the search URL.
+
+        Notes
+        old: self.search = search_base + self.db_arg + '&' + self.field_arg + '&' + 'term='
+        """
+
+        # Check requested args are defined in settings
+        self.check_args(args_to_use)
 
         # Set the search url
         search_base = self.eutils + 'esearch.fcgi?'
-        #self.search = search_base + self.db_arg + '&' + self.field_arg + '&' + 'term='
         self.search = search_base + '&'.join([self.args[arg] for arg in args_to_use]) + '&term='
 
 
-    def build_fetch_url(self, args_to_use):
-        """
+    def build_fetch(self, args_to_use):
+        """Create the e-utils fetch URL, with specified arguments.
 
         Parameters
         ----------
-        args_to_use : ?
-            xx
+        args_to_use : list of str
+            Arguments to use to build the fetch URL.
+
+        Notes
+        old: self.fetch = fetch_base + self.db_arg + '&' + self.retmode_arg + '&' + 'id='
         """
+
+        # Check requested args are defined in settings
+        self.check_args(args_to_use)
 
         # Set the fetch url
         fetch_base = self.eutils + 'efetch.fcgi?'
-        #self.fetch = fetch_base + self.db_arg + '&' + self.retmode_arg + '&' + 'id='
         self.fetch = fetch_base + '&'.join([self.args[arg] for arg in args_to_use]) + '&id='
