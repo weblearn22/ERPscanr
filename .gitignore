@@ -8,3 +8,5 @@
 *_old*
 # Ignore coverage report files
 **/.coverage
+# Ignore test data files
+**/tests/data/**
