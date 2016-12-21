@@ -1,7 +1,26 @@
 """Helper functions for testing ERPSC."""
 
+import pkg_resources as pkg
+
 from erpsc.base import Base
 from erpsc.erp_words import ERPWords
+from erpsc.core.db import ERPDB
+
+##################################################################################
+##################################################################################
+##################################################################################
+
+class TestDB(ERPDB):
+    """   """
+
+    def __init__(self):
+
+        # Initialize from OMDB object
+        ERPDB.__init__(self, auto_gen=False)
+
+        # Set up the base path to tests data
+        self.project_path = pkg.resource_filename(__name__, 'data')
+        self.gen_paths()
 
 ##################################################################################
 ##################################################################################
