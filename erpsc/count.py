@@ -63,7 +63,7 @@ class Count(Base):
         self.date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
         # Get e-utils URLS object
-        urls = URLS(db='pubmed', retmode='lxml')
+        urls = URLS(db='pubmed', retmode='xml')
         urls.build_search(['db', 'retmode'])
         urls.build_fetch(['db', 'retmode'])
 
@@ -102,7 +102,7 @@ class Count(Base):
                 vec = []
 
                 # Loop through counts, extracting into vec
-                for i in range(0, len(counts)):
+                for i in range(len(counts)):
                     count = counts[i]
                     ext = count.text
                     vec.append(int(ext))
