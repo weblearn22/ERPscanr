@@ -210,27 +210,6 @@ class Words(Base):
             # Print out the top words for the current ERP
             print(self.erps[erp][0], ': ', top_words_str)
 
-    """
-    def save_pickle(self, f_name):
-        "Saves out a pickle file of the ERPSC_Word object.
-
-        Parameters
-        ----------
-        f_name : str
-            String to append to beginning of file to save out.
-        "
-
-        # Get ERPSC database object to set paths
-        db = ERPDB()
-
-        # Initialize full file name
-        save_name = f_name + '_words.p'
-
-        # Save pickle file
-        save_file = os.path.join(db.words_path, save_name)
-        pickle.dump(self, open(save_file, 'wb'))
-    """
-
 #######################################################################################
 ######################### ERPSC - WORDS - FUNCTIONS (PRIVATE) #########################
 #######################################################################################

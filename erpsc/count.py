@@ -181,24 +181,3 @@ class Count(Base):
             for term in self.terms:
                 term_ind = self.terms.index(term)
                 print('{:18} - {:10.0f}'.format(term, self.term_counts[term_ind]))
-
-    """
-    def save_pickle(self, f_name):
-        "Saves out a pickle file of the ERPSCCount object.
-
-        Parameters
-        ----------
-        f_name : str
-            String to add to the beginning of the saved out file.
-        "
-
-        # Get ERPSC database object to set paths
-        db = ERPDB()
-
-        # Initialize full file name
-        save_name = f_name + '_counts.p'
-
-        # Save pickle file
-        save_file = os.path.join(db.counts_path, save_name)
-        pickle.dump(self, open(save_file, 'wb'))
-    """
