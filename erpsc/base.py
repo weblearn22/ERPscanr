@@ -133,7 +133,6 @@ class Base(object):
         # Check that the number of exclusions matches n_erps
         if len(exclusions) != self.n_erps:
             raise InconsistentDataError('Mismatch in number of exclusions and erps!')
-            #print('Mismatch in number of exclusions and erps!')
 
 
     def set_exclusions_file(self):
@@ -148,7 +147,6 @@ class Base(object):
         # Check that the number of exclusions matches n_erps
         if len(exclusions) != self.n_erps:
             raise InconsistentDataError('Mismatch in number of exclusions and erps!')
-            #print('Mismatch in number of exclusions and erps!')
 
         # Drop number indices for exclusions, and set as list
         for i in range(self.n_erps):
