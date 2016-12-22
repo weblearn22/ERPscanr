@@ -30,7 +30,7 @@ class ERPWords(object):
     """
 
     def __init__(self, erp):
-        """Initialize Words() object.
+        """Initialize ERPWords() object.
 
         Parameters
         ----------
@@ -50,6 +50,7 @@ class ERPWords(object):
         # Initiliaze to store data pulled from articles
         self.titles = list()
         self.words = list()
+        self.kws = list()
         self.years = list()
 
         # Initialize a list to store all words (across all papers)
@@ -60,7 +61,7 @@ class ERPWords(object):
 
 
     def add_id(self, new_id):
-        """Add a new id to Words object.
+        """Add a new ID to ERPWords object.
 
         Parameters
         ----------
@@ -72,7 +73,7 @@ class ERPWords(object):
 
 
     def add_title(self, new_title):
-        """Add a new title to Words object.
+        """Add a new title to ERPWords object.
 
         Parameters
         ----------
@@ -84,7 +85,7 @@ class ERPWords(object):
 
 
     def add_words(self, new_words):
-        """Add new words to Words object.
+        """Add new words to ERPWords object.
 
         Parameters
         ----------
@@ -95,8 +96,20 @@ class ERPWords(object):
         self.words.append(new_words)
 
 
+    def add_kws(self, new_kws):
+        """Add new keywords to ERPWords object.
+
+        Parameters
+        ----------
+        new_kws : list of str
+            List of keywords from current article.
+        """
+
+        self.kws.append(new_kws)
+
+
     def add_year(self, new_year):
-        """Add a new year to Words object.
+        """Add a new year to ERPWords object.
 
         Parameters
         ----------
