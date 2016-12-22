@@ -7,6 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 import nltk
 from nltk.corpus import stopwords
+from types import StringType
 
 # Import custom code
 from erpsc.base import Base
@@ -160,11 +161,19 @@ class Words(Base):
 
         # Get Words from the Abstract, if available, and add to current results
         try:
-            cur_words = art.find('AbstractText').text.split()
-            cur_words = _process_words(cur_words)
+            abstract_text = art.find('AbstractText').text
+            cur_words = _process_words(abstract_text)
         except AttributeError:
             cur_words = None
         cur_erp.add_words(cur_words)
+
+        # Get keywords, if available, and add to current results
+        try:
+            keywords = art.findAll('Keyword')
+            kws = [kw.text for kw in keywords]
+        except AttributeError:
+            kws = None
+        cur_erp.add_kws(kws)
 
         # Get the Year of the paper, if available, and add to current results
         try:
@@ -263,13 +272,13 @@ def _ids_to_str(ids):
     return ids_str
 
 
-def _process_words(words):
+def _process_words(text):
     """Takes a list of words, sets to lower case, and removes all stopwords.
 
     Parameters
     ----------
-    words : list of str
-        List of words.
+    text : ?
+        xx
 
     Returns
     -------
@@ -277,6 +286,11 @@ def _process_words(words):
         List of words, after processing.
     """
 
-    # Remove stop words, and anything that is only one character (punctuation). Return the result.
-    return [word.lower() for word in words if ((not word.lower() in stopwords.words('english'))
-                                               & (len(word) > 1))]
+    # Tokenize input text
+    words = nltk.word_tokenize(text)
+
+    # Remove stop words, and non-alphabetical tokens (punctuation). Return the result.
+    words_cleaned = [word.lower() for word in words if ((not word.lower() in stopwords.words('english'))
+                                                         & word.isalpha())]
+
+    return words_cleaned
