@@ -1,19 +1,15 @@
 """MODULE DOCSTRING: TO FILL IN."""
 from __future__ import print_function, division
 
-import pickle
 import datetime
-import requests
 from bs4 import BeautifulSoup
 import nltk
 from nltk.corpus import stopwords
-from types import StringType
 
 # Import custom code
 from erpsc.base import Base
 from erpsc.erp_words import ERPWords
 from erpsc.core.urls import URLS
-from erpsc.core.db import ERPDB
 
 #################################################################################
 ############################ ERPSC - WORDS - Classes ############################
@@ -36,13 +32,6 @@ class Words(Base):
 
         # Initialize a list to store results for all the erps
         self.results = list()
-
-        # Set url and setting for e-search. Retmax is maximum number of ids to return
-        #self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pubmed&field=word&term='
-        #self.search_retmax = '&retmax=500'
-
-        # Set the url and settings for the e-fetch utility
-        #self.eutils_fetch = self.eutils_url + 'efetch.fcgi?db=pubmed&retmode=xml&id='
 
 
     def add_results(self, new_result):
@@ -108,7 +97,7 @@ class Words(Base):
 
             # Get article page
             art_url = urls.fetch + ids_str
-            art_page = requests.get(art_url)
+            art_page = self.req.get_url(art_url)
             art_page_soup = BeautifulSoup(art_page.content, "xml")
 
             # Pull out articles
@@ -131,7 +120,7 @@ class Words(Base):
 
 
     def extract_add_info(self, cur_erp, new_id, art):
-        """
+        """Extract information from article web page and add to
 
         Parameters
         ----------
@@ -144,9 +133,8 @@ class Words(Base):
 
         NOTES
         -----
-        Pubmed article pages could be missing info.
-        For example, can have an id that's missing abstract text
-        This is why data collections are all in try statements.
+        - Data extraction is all in try/except statements in order to
+        deal with missing data, since fields may be missing.
         """
 
         # Add ID of current article
@@ -273,7 +261,7 @@ def _ids_to_str(ids):
 
 
 def _process_words(text):
-    """Takes a list of words, sets to lower case, and removes all stopwords.
+    """Takes a text, sets to lower case, and removes all stopwords and punctuation.
 
     Parameters
     ----------
@@ -282,7 +270,7 @@ def _process_words(text):
 
     Returns
     -------
-    list of str
+    words_cleaned : list of str
         List of words, after processing.
     """
 
