@@ -3,15 +3,12 @@
 from __future__ import print_function, division
 
 import datetime
-import pickle
 import numpy as np
-import requests
 from bs4 import BeautifulSoup
 
 # Import custom code
 from erpsc.base import Base
 from erpsc.core.urls import URLS
-from erpsc.core.db import ERPDB
 
 #########################################################################################
 ################################ ERPSC - COUNT - CLASSES ################################
