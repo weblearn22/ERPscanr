@@ -71,7 +71,7 @@ def test_ids_to_str():
 def test_process_words():
     """   """
 
-    words = ['The', 'Last', 'wOrd', 'in', 'they', 'eRp']
+    words = 'The Last wOrd, in they eRp!'
 
     words_out = _process_words(words)
     exp_out = ['last', 'word', 'erp']
