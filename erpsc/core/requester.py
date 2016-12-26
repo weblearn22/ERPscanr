@@ -1,6 +1,5 @@
-"""
+"""DOCSTRING"""
 
-"""
 from __future__ import division
 
 import time
@@ -17,19 +16,22 @@ class Requester(object):
 
     Attributes
     ----------
+    is_active : bool
+        Status of the requester, whether currently being used to make requests.
     n_requests : int
         Number of requests that have been completed.
     st_time : str
-        xx
+        Time when request session started.
     en_time : str
-        xx
+        Time when request session ended.
     time_last_req : float
-        xx
+        Time at which last request was sent.
     """
 
-    def __init__():
-        """   """
+    def __init__(self):
+        """Initialize Requester object."""
 
+        self.is_active = False
         self.n_requests = int()
 
         self.st_time = time.strftime('%H:%M %A %d %B')
@@ -38,32 +40,19 @@ class Requester(object):
         self.time_last_req = str()
 
 
-    def get_url(self, url):
-        """   """
+    def throttle(self):
+        """Slow down rate of requests by waiting if a new request is initiated too soon."""
 
-        self.check_last_req_time()
-
-        out = requests.get(url)
-
-        self.time_last_req = time.time()
-        self.n_requests += 1
-
-        return out
-
-
-    def check_last_req_time(self):
-        """   """
-
-        #
+        # Check how long it has been since last request was sent
         time_since_req = time.time() - self.time_last_req
 
-        #
+        # If last request was too recent, pause
         if time_since_req < REST_TIME:
-            self.wait(time_since_req - REST_TIME)
+            self.wait(REST_TIME - time_since_req)
 
 
     def wait(self, wait_time):
-        """Wait for specified time.
+        """Pause for specified amount of  time.
 
         Parameters
         ----------
@@ -74,6 +63,45 @@ class Requester(object):
         time.sleep(wait_time)
 
 
+    def get_url(self, url):
+        """Request a URL.
+
+        Parameters
+        ----------
+        url : str
+            Web address to
+
+        Returns
+        -------
+        out : requests.models.Response() object
+            Object containing the requested web page.
+        """
+
+        #
+        if self.is_active:
+            self.throttle()
+        else:
+            self.open()
+
+        #
+        out = requests.get(url)
+
+        #
+        self.time_last_req = time.time()
+        self.n_requests += 1
+
+        return out
+
+
+    def open(self):
+        """Set the current object as active."""
+
+        self.st_time = time.strftime('%H:%M %A %d %B')
+        self.is_active = True
+
+
     def close(self):
-        """   """
-        pass
+        """Set the current object as inactive."""
+
+        self.en_time = time.strftime('%H:%M %A %d %B')
+        self.is_active = False
