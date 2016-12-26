@@ -1,16 +1,38 @@
 """URLs for the ERP-SCANR project.
 
+External Documentation
+----------------------
 EUtils Quick Start: http://www.ncbi.nlm.nih.gov/books/NBK25500/
 EUtils in Depth: https://www.ncbi.nlm.nih.gov/books/NBK25499/
-
-A list of all the valid databases is here:
+Usage Policies and Disclaimers:
+    https://www.ncbi.nlm.nih.gov/home/about/policies.shtml
+A list of all the valid databases:
     https://eutils.ncbi.nlm.nih.gov/entrez/eutils/einfo.fcgi
 
-Most relevant database are: 'pubmed' & 'pmc'
-- pubmed: is a database of over 25 million references
-- pmc: an archive of freely available full text papers, of around 3 million papers
-More info here: https://www.nlm.nih.gov/pubs/factsheets/dif_med_pub.html
-FAQ on PMC: https://www.ncbi.nlm.nih.gov/pmc/about/faq/#q1
+Tools
+-----
+EInfo :
+    args - db
+EGQuery : Provides the number of records in all databases by a single query.
+    args -
+ESearch :
+    args -
+EFetch :
+    args -
+
+Settings
+--------
+db : The target database.
+    Most relevant database are: 'pubmed' & 'pmc'
+        - pubmed: is a database of over 25 million references
+        - pmc: an archive of freely available full text papers, of around 3 million papers
+    More info here: https://www.nlm.nih.gov/pubs/factsheets/dif_med_pub.html
+    FAQ on PMC: https://www.ncbi.nlm.nih.gov/pmc/about/faq/#q1
+
+field :
+retmax :
+retmode :
+
 
 TODO:
   - Figure out 'HTTP POST' for large # of ID fetches
@@ -18,7 +40,7 @@ TODO:
 
 from erpsc.core.errors import InconsistentDataError
 
-##################################################################################
+##########################################################################################
 ##########################################################################################
 ##########################################################################################
 
@@ -38,7 +60,7 @@ class URLS(object):
     settings : dict()
         Dictionary of all defined settings and their values.
     args : dict()
-        Dictionary of all arguments (settings & values) that can be used in e-utirls URL.
+        Dictionary of all arguments (settings & values) that can be used in e-utils URL.
     """
 
     def __init__(self, db=None, retmax=None, field=None, retmode=None, auto_gen=False):
@@ -65,6 +87,7 @@ class URLS(object):
         self.eutils = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
 
         # Initialize variables to store search and fetch URLs
+        self.query = str()
         self.search = str()
         self.fetch = str()
 
