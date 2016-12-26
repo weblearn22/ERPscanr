@@ -97,7 +97,7 @@ class Words(Base):
             #url = self.eutils_search + '"' + erp + '"NOT"' + '"cell"' + self.search_retmax
 
             # Get page and parse
-            page = requests.get(url)
+            page = self.req.get_url(url)
             page_soup = BeautifulSoup(page.content, 'lxml')
 
             # Get all ids

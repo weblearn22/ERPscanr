@@ -91,8 +91,8 @@ class Count(Base):
                 # Make URL - Non-exact term version
                 #url = self.eutils_search + erp + ' erp ' + term
 
-                # Pull the page, and parse with Beatiful Soup
-                page = requests.get(url)
+                # Pull the page, and parse with Beautiful Soup
+                page = self.req.get_url(url)
                 page_soup = BeautifulSoup(page.content, 'lxml')
 
                 # Get all 'count' tags
