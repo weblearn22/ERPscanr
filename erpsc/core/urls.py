@@ -29,6 +29,8 @@ class URLS(object):
     ----------
     eutils : str
         Base URL for the e-utils tools.
+    query : str
+        URL for querying with e-utils.
     search : str
         URL for searching with e-utils.
     fetch  : str
@@ -86,7 +88,7 @@ class URLS(object):
 
 
     def save_settings(self, db=None, retmax=None, field=None, retmode=None):
-        """TODO
+        """Save provided setting values into a dictionary object.
 
         Parameters
         ----------
@@ -119,7 +121,7 @@ class URLS(object):
 
 
     def save_args(self):
-        """TODO"""
+        """Create the arguments that can be added to the e-utils urls."""
 
         # For each parameter in settings, create the url argument
         for param in self.settings.keys():
@@ -140,6 +142,23 @@ class URLS(object):
             [self.args[arg] for arg in args_to_use]
         except KeyError:
             raise InconsistentDataError('Not all requested settings provided - can not proceed.')
+
+
+    def build_query(self, args_to_use):
+        """Create the e-utils EGQuery URL, with specified arguments.
+
+        Parameters
+        ----------
+        args_to_use : list of str
+            Arguments to use to build the search URL.
+        """
+
+        # Check requested args are defined in settings
+        self.check_args(args_to_use)
+
+        # Set the eg query search url
+        query_base = self.eutils + 'egquery.fcgi?'
+        self.query = query_base + '&'.join([self.args[arg] for arg in args_to_use]) + '&term='
 
 
     def build_search(self, args_to_use):
