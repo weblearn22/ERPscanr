@@ -37,7 +37,7 @@ class Requester(object):
         self.st_time = time.strftime('%H:%M %A %d %B')
         self.en_time = str()
 
-        self.time_last_req = str()
+        self.time_last_req = float()
 
 
     def throttle(self):
@@ -77,16 +77,16 @@ class Requester(object):
             Object containing the requested web page.
         """
 
-        #
+        # Check if current object is active, and throttle is required
         if self.is_active:
             self.throttle()
         else:
             self.open()
 
-        #
+        # Get the requested URL
         out = requests.get(url)
 
-        #
+        # Update data on requests
         self.time_last_req = time.time()
         self.n_requests += 1
 
