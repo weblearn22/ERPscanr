@@ -53,7 +53,7 @@ class Base(object):
         self.req = Requester()
 
         # Initialize for date that data is collected
-        self.date = ''
+        self.date = str()
 
         # Initialize vector of counts of number of papers for each term
         #self.erp_counts = np.zeros(0)
