@@ -6,6 +6,12 @@ EUtils in Depth: https://www.ncbi.nlm.nih.gov/books/NBK25499/
 A list of all the valid databases is here:
     https://eutils.ncbi.nlm.nih.gov/entrez/eutils/einfo.fcgi
 
+Most relevant database are: 'pubmed' & 'pmc'
+- pubmed: is a database of over 25 million references
+- pmc: an archive of freely available full text papers, of around 3 million papers
+More info here: https://www.nlm.nih.gov/pubs/factsheets/dif_med_pub.html
+FAQ on PMC: https://www.ncbi.nlm.nih.gov/pmc/about/faq/#q1
+
 TODO:
   - Figure out 'HTTP POST' for large # of ID fetches
 """
