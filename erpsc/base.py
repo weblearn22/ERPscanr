@@ -4,6 +4,7 @@ from __future__ import print_function
 
 import pkg_resources as pkg
 
+from erpsc.core.requester import Requester
 from erpsc.core.errors import InconsistentDataError
 
 ######################################################################################
@@ -27,6 +28,8 @@ class Base(object):
         Number of erps.
     n_terms : int
         Number of terms.
+    req : Requester() object
+        Object to handle URL requests.
     date : str
         Date data was collected.
     """
@@ -45,6 +48,9 @@ class Base(object):
         # Initialize counters for numbers of terms
         self.n_erps = int()
         self.n_terms = int()
+
+        # Requester object for handling URL calls
+        self.req = Requester()
 
         # Initialize for date that data is collected
         self.date = ''
