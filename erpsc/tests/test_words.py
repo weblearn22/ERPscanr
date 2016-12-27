@@ -1,5 +1,8 @@
 """   """
 
+import requests
+from bs4 import BeautifulSoup
+
 from erpsc.erp_words import ERPWords
 from erpsc.words import Words
 from erpsc.words import _ids_to_str, _process_words
@@ -22,6 +25,36 @@ def test_add_results():
     words.add_results(new_word)
 
     assert words.results
+
+def test_extract_add_info():
+    """  """
+
+    words = Words()
+
+    # Check page with all fields defined - check data extraction
+    erp_word = ERPWords('test')
+    page = requests.get(("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
+                         "efetch.fcgi?&db=pubmed&retmode=xml&id=28000963"))
+    page_soup = BeautifulSoup(page.content, "xml")
+    art = page_soup.findAll('PubmedArticle')[0]
+    words.extract_add_info(erp_word, 111111, art)
+
+    assert erp_word.ids[0] == 111111
+    assert erp_word.titles[0] == ("A Neurocomputational Model of the N400"
+                                  " and the P600 in Language Processing.")
+    assert erp_word.words[0][0] == "ten"
+    assert erp_word.kws[0][0] == "Computational modeling"
+    assert erp_word.years[0] == 2016
+
+    # Check page with all fields missing - check error handling
+    page = requests.get('http://www.google.com')
+    erp_word = words.extract_add_info(erp_word, 999999, page)
+
+    assert erp_word.ids[1] == 999999
+    assert erp_word.titles[1] == None
+    assert erp_word.words[1] == None
+    assert erp_word.kws[1] == None
+    assert erp_word.years[1] == None
 
 def test_scrape():
 
