@@ -2,6 +2,7 @@
 
 from __future__ import print_function
 
+from types import StringType, ListType
 import pkg_resources as pkg
 
 from erpsc.core.requester import Requester
@@ -65,16 +66,16 @@ class Base(object):
 
         Parameters
         ----------
-        erps : list of str
+        erps : list of str OR list of list of str
             List of ERP terms to be used.
         """
 
         # Unload previous terms if some are already loaded
         self.unload_erps()
 
-        # Set given list as the erps
+        # Set given list as erp words
         for erp in erps:
-            self.erps.append([erp])
+            self.erps.append(_check_type(erp))
 
         # Set the number of erps
         self.n_erps = len(erps)
@@ -125,7 +126,7 @@ class Base(object):
 
         Parameters
         ----------
-        exclusions : list of str
+        exclusions : list of str OR list of list of str
             List of exclusion words to be used.
         """
 
@@ -134,7 +135,7 @@ class Base(object):
 
         # Set given list as erp exclusion words
         for exclude in exclusions:
-            self.exclusions.append([exclude])
+            self.exclusions.append(_check_type(exclude))
 
         # Check that the number of exclusions matches n_erps
         if len(exclusions) != self.n_erps:
@@ -187,7 +188,7 @@ class Base(object):
 
         Parameters
         ----------
-        terms : list of str
+        terms : list of str OR list of list of str
             List of terms to be used.
         """
 
@@ -196,7 +197,7 @@ class Base(object):
 
         # Set given list as the terms
         for term in terms:
-            self.terms.append([term])
+            self.terms.append(_check_type(term))
 
         # Set the number of terms
         self.n_terms = len(terms)
@@ -243,6 +244,26 @@ class Base(object):
 ##########################################################################################
 ##########################################################################################
 ##########################################################################################
+
+def _check_type(term):
+    """Check type of input term, and return as a list.
+
+    Parameters
+    ----------
+    term : str OR list of str
+        New term to add to the object.
+
+    Returns
+    -------
+    list of str
+        New term, set as a list.
+    """
+
+    # Check the type of the given item, return as list
+    if isinstance(term, StringType):
+        return [term]
+    elif isinstance(term, ListType):
+        return term
 
 def _terms_load_file(dat_name):
     """Loads a terms data file from within the module
