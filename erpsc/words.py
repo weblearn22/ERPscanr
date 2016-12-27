@@ -36,7 +36,13 @@ class Words(Base):
 
 
     def add_results(self, new_result):
-        """Add a new Words() results object."""
+        """Add a new Words() results object.
+
+        Parameters
+        ----------
+        new_result : ERPWords() object
+            Object with information about current ERP term.
+        """
 
         self.results.append(new_result)
 
@@ -47,11 +53,11 @@ class Words(Base):
         Parameters
         ----------
         cur_erp : ERPWords() object
-            xx
-        new_id : ?
-            xx
-        art : ?
-            xx
+            Object to store information for the current ERP term.
+        new_id : int
+            Paper ID of the new paper.
+        art : bs4.element.tag() object
+            Extracted pubmed article.
 
         NOTES
         -----
@@ -200,8 +206,7 @@ class Words(Base):
             # Use nltk to create a frequency distribution from all words
             self.results[erp].freqs = nltk.FreqDist(self.results[erp].all_words)
 
-            # Remove the ERPs name from list of words
-            #  Do this so that the erp itself isn't trivially the most common word
+            # Remove the ERPs name from list of words - so ERP isn't trivially most common
             try:
                 self.results[erp].freqs.pop(self.erps[erp][0].lower())
             except KeyError:
