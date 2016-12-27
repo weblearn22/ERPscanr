@@ -87,6 +87,7 @@ class URLS(object):
         self.eutils = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
 
         # Initialize variables to store search and fetch URLs
+        self.info = str()
         self.query = str()
         self.search = str()
         self.fetch = str()
@@ -167,13 +168,30 @@ class URLS(object):
             raise InconsistentDataError('Not all requested settings provided - can not proceed.')
 
 
+    def build_info(self, args_to_use):
+        """Create the e-utils info URL, with specified arguments.
+
+        Parameters
+        ----------
+        args_to_use : list of str
+            Arguments to use to build the info URL.
+        """
+
+        # Check requested args are defined in settings
+        self.check_args(args_to_use)
+
+        # Set the eg query search url
+        info_base = self.eutils + 'einfo.fcgi?'
+        self.info = info_base + '&'.join([self.args[arg] for arg in args_to_use]) + '&term='
+
+
     def build_query(self, args_to_use):
         """Create the e-utils EGQuery URL, with specified arguments.
 
         Parameters
         ----------
         args_to_use : list of str
-            Arguments to use to build the search URL.
+            Arguments to use to build the query URL.
         """
 
         # Check requested args are defined in settings
