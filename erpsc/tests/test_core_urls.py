@@ -1,4 +1,4 @@
-"""Tests for URL functions and classes from erpsc.core"""
+"""Tests for URL functions and classes from erpsc.core."""
 
 from py.test import raises
 
@@ -32,6 +32,24 @@ def test_check_args():
     # Check error
     with raises(InconsistentDataError):
         urls.check_args(['db', 'retmax', 'field'])
+
+def test_build_info():
+    """   """
+
+    urls = URLS()
+
+    urls.build_info([])
+
+    assert urls.info
+
+def test_build_query():
+    """Test the build_query() method from URLS()."""
+
+    urls = URLS(db='pubmed')
+
+    urls.build_query(['db'])
+
+    assert urls.query
 
 def test_build_search():
     """Test the buid_search() method form URLS()."""
