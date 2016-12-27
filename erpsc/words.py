@@ -173,6 +173,9 @@ class Words(Base):
             # Add the object with current erp data to results list
             self.add_results(cur_erp)
 
+        # Set Requester object as finished being used
+        self.req.close()
+
 
     def combine_words(self):
         """Combine the words from each article together."""

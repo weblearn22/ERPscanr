@@ -112,6 +112,9 @@ class Count(Base):
                 self.dat_numbers[erp_ind, term_ind] = vec[0]
                 self.dat_percent[erp_ind, term_ind] = vec[0]/vec[1]
 
+        # Set Requester object as finished being used
+        self.req.close()
+
 
     def check_cooc_erps(self):
         """"Prints out the terms most associatied with each ERP."""
