@@ -9,6 +9,7 @@ from nltk.corpus import stopwords
 # Import custom code
 from erpsc.base import Base
 from erpsc.erp_words import ERPWords
+from erpsc.core.utils import comb_terms
 from erpsc.core.urls import URLS
 
 #################################################################################
@@ -131,11 +132,12 @@ class Words(Base):
             cur_erp = ERPWords(erp)
 
             # Set up search terms - add exclusions, if there are any
-            # TODO: fix how it adds exclusions, to use all available
             if self.exclusions[ind][0]:
-                term_arg = '"' + erp[0] + '"' + 'NOT' + '"' + self.exclusions[ind][0] + '"'
+                #term_arg = '"' + erp[0] + '"' + 'NOT' + '"' + self.exclusions[ind][0] + '"'
+                term_arg = comb_terms(erp, 'or') + comb_terms(self.exclusions[ind], 'not')
             else:
-                term_arg = '"' + erp[0] + '"'
+                #term_arg = '"' + erp[0] + '"'
+                term_arg = comb_terms(erp, 'or')
 
             # Create the url for the erp search term
             url = urls.search + term_arg
