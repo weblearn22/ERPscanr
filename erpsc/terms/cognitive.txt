@@ -1,21 +1,20 @@
-language
-memory
 attention
-motor
-decision making
-vision
-pain
-auditory
-emotion
+auditory,audition
+awareness
 categorization
+cognitive
+decision making
+emotion
+face,facial
+language
+learning
+memory
+motor
+pain
+reasoning
 reward
 spatial
-somatosensory
-face
-cognitive
-awareness
-tactile
-pain
-learning
-reasoning
 social
+somatosensory
+tactile
+vision,visual
