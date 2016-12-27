@@ -21,7 +21,7 @@ def test_scrape_test_save():
     counts.set_erps(['N400', 'P600'])
     counts.set_terms(['language', 'memory'])
 
-    counts.scrape_data()
+    counts.scrape_data(db='pubmed')
 
     assert True
 

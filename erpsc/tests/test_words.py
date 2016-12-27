@@ -65,7 +65,7 @@ def test_scrape():
     words.set_terms(['language', 'memory'])
     words.set_exclusions(['cell', ''])
 
-    words.scrape_data()
+    words.scrape_data(db='pubmed', retmax='5')
 
     assert True
 
