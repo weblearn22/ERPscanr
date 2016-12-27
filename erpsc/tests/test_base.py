@@ -6,10 +6,24 @@ NOTES
 """
 
 from py.test import raises
+from types import ListType
 
-from erpsc.base import Base
+from erpsc.base import Base, _check_type
 from erpsc.tests.utils import load_base
 from erpsc.core.errors import InconsistentDataError
+
+#######################################################################################
+###################### TESTS - ERPSC - BASE - PRIVATE FUNCTIONS  ######################
+#######################################################################################
+
+def test_check_type():
+    """Test that the check_type function works properly."""
+
+    out = _check_type('string')
+    assert isinstance(out, ListType)
+
+    out = _check_type(['list'])
+    assert isinstance(out, ListType)
 
 ########################################################################################
 ############################ TESTS - ERPSC - GENERAL - BASE ############################
