@@ -97,7 +97,7 @@ class Words(Base):
         return cur_erp
 
 
-    def scrape_data(self):
+    def scrape_data(self, db=None, retmax=None):
         """Search through pubmed for all abstracts referring to a given ERP.
 
         The scraping does an exact word search for the ERP term given.
@@ -120,9 +120,9 @@ class Words(Base):
         self.date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
         # Get e-utils URLS object
-        urls = URLS(db='pubmed', retmode='xml', auto_gen=False)
-        urls.build_search(['db', 'retmode'])
-        urls.build_fetch(['db', 'retmode'])
+        urls = URLS(db=db, retmax=retmax, retmode='xml', auto_gen=False)
+        urls.build_search(['db', 'retmax', 'retmode'])
+        urls.build_fetch(['db', 'retmax', 'retmode'])
 
         # Loop through all the erps
         for ind, erp in enumerate(self.erps):
@@ -131,6 +131,7 @@ class Words(Base):
             cur_erp = ERPWords(erp)
 
             # Set up search terms - add exclusions, if there are any
+            # TODO: fix how it adds exclusions, to use all available
             if self.exclusions[ind][0]:
                 term_arg = '"' + erp[0] + '"' + 'NOT' + '"' + self.exclusions[ind][0] + '"'
             else:
@@ -138,9 +139,6 @@ class Words(Base):
 
             # Create the url for the erp search term
             url = urls.search + term_arg
-            #url = urls.search + '"' + erp[0] + '"'
-            #url = urls.search + '"' + erp + '"' + self.search_retmax
-            #url = self.eutils_search + '"' + erp + '"NOT"' + '"cell"' + self.search_retmax
 
             # Get page and parse
             page = self.req.get_url(url)
@@ -184,7 +182,8 @@ class Words(Base):
             for art in range(self.results[erp].n_articles):
 
                 # Combine the words from each article into the 'all_words' collection
-                self.results[erp].all_words.extend(self.results[erp].words[art])
+                if self.results[erp].words[art]:
+                    self.results[erp].all_words.extend(self.results[erp].words[art])
 
 
     def freq_dists(self):
@@ -279,6 +278,6 @@ def _process_words(text):
 
     # Remove stop words, and non-alphabetical tokens (punctuation). Return the result.
     words_cleaned = [word.lower() for word in words if ((not word.lower() in stopwords.words('english'))
-                                                         & word.isalpha())]
+                                                         & word.isalnum())]
 
     return words_cleaned
