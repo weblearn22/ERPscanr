@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 
 # Import custom code
 from erpsc.base import Base
+from erpsc.core.utils import comb_terms
 from erpsc.core.urls import URLS
 
 #########################################################################################
@@ -83,7 +84,8 @@ class Count(Base):
                 term_ind = self.terms.index(term)
 
                 # Make URL - Exact Term Version
-                url = urls.search + '"' + erp[0] + '"AND"' + term[0] + '"'
+                #url = urls.search + '"' + erp[0] + '"AND"' + term[0] + '"'
+                url = urls.search + comb_terms(erp, 'or') + '"AND"' + comb_terms(term, 'or')
 
                 # Make URL - Non-exact term version
                 #url = self.eutils_search + erp + ' erp ' + term
