@@ -25,7 +25,7 @@ def comb_terms(lst, jt):
 
     # Join together using requested join term
     if jt == 'or':
-        out = 'OR'.join(lst)
+        out = '(' + 'OR'.join(lst) + ')'
     elif jt == 'not':
         out = 'NOT' + 'NOT'.join(lst)
 
