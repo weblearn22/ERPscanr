@@ -48,7 +48,7 @@ class Count(Base):
         #self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pmc&field=word&term='
 
 
-    def scrape_data(self):
+    def scrape_data(self, db=None):
         """Search through pubmed for all abstracts with co-occurence of ERP & terms.
 
         The scraping does an exact word search for two terms (one ERP and one term)
@@ -60,7 +60,7 @@ class Count(Base):
         self.date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
         # Get e-utils URLS object
-        urls = URLS(db='pubmed', retmode='xml')
+        urls = URLS(db=db, retmode='xml')
         urls.build_search(['db', 'retmode'])
         urls.build_fetch(['db', 'retmode'])
 
