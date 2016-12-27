@@ -40,6 +40,63 @@ class Words(Base):
         self.results.append(new_result)
 
 
+    def extract_add_info(self, cur_erp, new_id, art):
+        """Extract information from article web page and add to
+
+        Parameters
+        ----------
+        cur_erp : ERPWords() object
+            xx
+        new_id : ?
+            xx
+        art : ?
+            xx
+
+        NOTES
+        -----
+        - Data extraction is all in try/except statements in order to
+        deal with missing data, since fields may be missing.
+        """
+
+        # Add ID of current article
+        cur_erp.add_id(new_id)
+
+        # Get Title of the paper, if available, and add to current results
+        try:
+            cur_title = art.find('ArticleTitle').text
+        except AttributeError:
+            cur_title = None
+        cur_erp.add_title(cur_title)
+
+        # Get Words from the Abstract, if available, and add to current results
+        try:
+            abstract_text = art.find('AbstractText').text
+            cur_words = _process_words(abstract_text)
+        except AttributeError:
+            cur_words = None
+        cur_erp.add_words(cur_words)
+
+        # Get keywords, if available, and add to current results
+        try:
+            keywords = art.findAll('Keyword')
+            kws = [kw.text for kw in keywords]
+        except AttributeError:
+            kws = None
+        cur_erp.add_kws(kws)
+
+        # Get the Year of the paper, if available, and add to current results
+        try:
+            cur_year = int(art.find('DateCreated').find('Year').text)
+        except AttributeError:
+            cur_year = None
+        cur_erp.add_year(cur_year)
+
+        # Increment number of articles included in ERPWords
+        cur_erp.increment_n_articles()
+
+        return cur_erp
+
+
     def scrape_data(self):
         """Search through pubmed for all abstracts referring to a given ERP.
 
@@ -117,63 +174,6 @@ class Words(Base):
 
             # Add the object with current erp data to results list
             self.add_results(cur_erp)
-
-
-    def extract_add_info(self, cur_erp, new_id, art):
-        """Extract information from article web page and add to
-
-        Parameters
-        ----------
-        cur_erp : ERPWords() object
-            xx
-        new_id : ?
-            xx
-        art : ?
-            xx
-
-        NOTES
-        -----
-        - Data extraction is all in try/except statements in order to
-        deal with missing data, since fields may be missing.
-        """
-
-        # Add ID of current article
-        cur_erp.add_id(new_id)
-
-        # Get Title of the paper, if available, and add to current results
-        try:
-            cur_title = art.find('ArticleTitle').text
-        except AttributeError:
-            cur_title = None
-        cur_erp.add_title(cur_title)
-
-        # Get Words from the Abstract, if available, and add to current results
-        try:
-            abstract_text = art.find('AbstractText').text
-            cur_words = _process_words(abstract_text)
-        except AttributeError:
-            cur_words = None
-        cur_erp.add_words(cur_words)
-
-        # Get keywords, if available, and add to current results
-        try:
-            keywords = art.findAll('Keyword')
-            kws = [kw.text for kw in keywords]
-        except AttributeError:
-            kws = None
-        cur_erp.add_kws(kws)
-
-        # Get the Year of the paper, if available, and add to current results
-        try:
-            cur_year = int(art.find('DateCreated').find('Year').text)
-        except AttributeError:
-            cur_year = None
-        cur_erp.add_year(cur_year)
-
-        # Increment number of articles included in ERPWords
-        cur_erp.increment_n_articles()
-
-        return cur_erp
 
 
     def combine_words(self):
