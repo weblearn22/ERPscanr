@@ -4,16 +4,19 @@ awareness
 categorization
 cognitive
 decision making
-emotion
+emotion, emotional
 face,facial
 language
 learning
 memory
 motor
 pain
+phonology,phonological
 reasoning
 reward
+semantic, semantics
 spatial
+speech
 social
 somatosensory
 tactile

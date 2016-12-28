@@ -9,7 +9,7 @@ bipolar
 dementia
 depression
 dyslexia
-epilepsy
+epilepsy,seizure
 insomnia
 migraine
 parkinson
