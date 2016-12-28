@@ -1,4 +1,4 @@
-"""   """
+"""Tests for the ERPWords() class and related functions from erpsc."""
 
 from py.test import raises
 

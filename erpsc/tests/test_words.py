@@ -1,4 +1,4 @@
-"""   """
+"""Tests for the Words() class and related functions from erpsc."""
 
 import requests
 from bs4 import BeautifulSoup

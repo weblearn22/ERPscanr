@@ -1,4 +1,4 @@
-"""   """
+"""Tests for the Count() class and related functions from erpsc."""
 
 from erpsc.count import *
 
