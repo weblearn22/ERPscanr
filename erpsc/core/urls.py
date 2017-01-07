@@ -2,8 +2,10 @@
 
 External Documentation
 ----------------------
-EUtils Quick Start: http://www.ncbi.nlm.nih.gov/books/NBK25500/
-EUtils in Depth: https://www.ncbi.nlm.nih.gov/books/NBK25499/
+EUtils Quick Start:
+    http://www.ncbi.nlm.nih.gov/books/NBK25500/
+EUtils in Depth:
+    https://www.ncbi.nlm.nih.gov/books/NBK25499/
 Usage Policies and Disclaimers:
     https://www.ncbi.nlm.nih.gov/home/about/policies.shtml
 A list of all the valid databases:
@@ -11,14 +13,14 @@ A list of all the valid databases:
 
 Tools
 -----
-EInfo :
-    args - db
+EInfo : Provides a list of all databases, and some basic data about them.
+    args - db, retmode
 EGQuery : Provides the number of records in all databases by a single query.
-    args -
-ESearch :
-    args -
-EFetch :
-    args -
+    args - ?
+ESearch : Returns UIDs matching a text query, or posts to / gets from history server.
+    args - db, term, field
+EFetch : Returns formatted data records for a list of UIDs.
+    args - ?
 
 Settings
 --------
@@ -28,10 +30,11 @@ db : The target database.
         - pmc: an archive of freely available full text papers, of around 3 million papers
     More info here: https://www.nlm.nih.gov/pubs/factsheets/dif_med_pub.html
     FAQ on PMC: https://www.ncbi.nlm.nih.gov/pmc/about/faq/#q1
-
+term : word(s) to search for.
+id : list of UIDs (comma separated).
 field :
-retmax :
-retmode :
+retmax : Maximum number of records to return.
+retmode : Format to return.
 
 
 TODO:
@@ -100,6 +103,7 @@ class URLS(object):
         self.args = dict()
         self.save_args()
 
+        # ?
         if auto_gen:
             self.build_search([])
             self.build_fetch([])
