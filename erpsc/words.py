@@ -75,6 +75,23 @@ class Words(Base):
             cur_title = None
         cur_erp.add_title(cur_title)
 
+        # Get Author List of the paper, if available, and add to current results
+        try:
+            author_list = art.find('AuthorList')
+            cur_authors = _process_authors(author_list)
+        except AttributeError:
+            cur_authors = None
+        cur_erp.add_authors(cur_authors)
+
+        # Get Journal of the paper, if available, and add to current results
+        try:
+            cur_journal = art.find('Title').text
+            cur_iso_abbrev = art.find('ISOAbbreviation').text
+        except AttributeError:
+            cur_journal = None
+            cur_iso_abbrev = None
+        cur_erp.add_journal(cur_journal, cur_iso_abbrev)
+
         # Get Words from the Abstract, if available, and add to current results
         try:
             abstract_text = art.find('AbstractText').text
@@ -86,7 +103,8 @@ class Words(Base):
         # Get keywords, if available, and add to current results
         try:
             keywords = art.findAll('Keyword')
-            kws = [kw.text for kw in keywords]
+            kws = _process_kws(keywords)
+            #kws = [kw.text for kw in keywords]
         except AttributeError:
             kws = None
         cur_erp.add_kws(kws)
@@ -291,3 +309,70 @@ def _process_words(text):
                                                          & word.isalnum())]
 
     return words_cleaned
+
+
+def _process_kws(keywords):
+    """
+
+    Parameters
+    ----------
+    kws : ?
+        xx
+
+    Returns
+    -------
+    list of str
+        xx
+    """
+
+    return [kw.text for kw in keywords]
+
+
+def _process_authors(author_list):
+    """
+
+    Parameters
+    ----------
+    authors : ?
+        xx
+
+    Returns
+    -------
+    out : list of tuple of (str, str, str, str)
+        List of authors, each as (LastName, FirstName, Initials, Affiliation).
+    """
+
+    out = []
+
+    authors = author_list.findAll('Author')
+
+    for author in authors:
+        out.append((_extract(author, 'LastName'), _extract(author, 'ForeName'),
+            _extract(author, 'Initials'), _extract(author, 'Affiliation')))
+
+    return out
+
+
+def _extract(tag, label):
+    """
+
+    Parameters
+    ----------
+    tag : bs4.element.tag
+        HTML tag.
+    label : str
+        Field to extract from the tag.
+
+    Returns
+    -------
+    out : str
+        xx
+    """
+
+    try:
+        out = tag.find(label).text
+        out = out.encode('ascii', 'ignore')
+    except AttributeError:
+        out = None
+
+    return out
