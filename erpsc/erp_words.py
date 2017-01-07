@@ -17,12 +17,18 @@ class ERPWords(object):
         Pubmed article ids for all articles included in object.
     n_articles : int
         Number of articles included in object.
-    years : list of int
-        Publication year of each article included in object.
     titles : list of unicode
         Titles of all articles included in object.
+    journals : list of tuple of (str, str)
+        List of journals articles come from. (Journal Name, ISO abbreviation).
+    authors : list of list of str
+        Authors of all articles included in object.
     words : list of list of unicode
         Words extracted from each article.
+    years : list of int
+        Publication year of each article included in object.
+    kws : list of list of str
+        List of keywords for each article included in the object.
     all_words : list of unicode
         All words from all articles.
     freqs : nltk FreqDist
@@ -49,6 +55,8 @@ class ERPWords(object):
 
         # Initiliaze to store data pulled from articles
         self.titles = list()
+        self.journals = list()
+        self.authors = list()
         self.words = list()
         self.kws = list()
         self.years = list()
@@ -82,6 +90,32 @@ class ERPWords(object):
         """
 
         self.titles.append(new_title)
+
+
+    def add_authors(self, new_authors):
+        """Add a new set of authors to ERPWords object.
+
+        Parameters
+        ----------
+        new_authors : list of str
+            Author list of the current article.
+        """
+
+        self.authors.append(new_authors)
+
+
+    def add_journal(self, new_journal, new_iso_abbrev):
+        """Add a new journal name and ISO abbreviation to ERPWords object.
+
+        Parameters
+        ----------
+        new_journal : str
+            Name of the journal current article comes from.
+        new_iso_abbrev : str
+            Standardized abbreviation of journal name article comes from.
+        """
+
+        self.journals.append((new_journal, new_iso_abbrev))
 
 
     def add_words(self, new_words):
@@ -136,8 +170,8 @@ class ERPWords(object):
         """
 
         # Check that all data fields have length n_articles
-        if not (self.n_articles == len(self.ids) == len(self.titles)
-                == len(self.words) == len(self.years)):
+        if not (self.n_articles == len(self.ids) == len(self.titles) == len(self.words)
+                == len(self.journals) == len(self.authors) == len(self.kws) == len(self.years)):
 
             # If not, print out error
             raise InconsistentDataError('ERP Words data is inconsistent.')
