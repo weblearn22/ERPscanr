@@ -1,5 +1,4 @@
-"""DOCSTRING"""
-
+"""Object to handle URL requests."""
 from __future__ import division
 
 import time

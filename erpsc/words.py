@@ -1,4 +1,4 @@
-"""MODULE DOCSTRING: TO FILL IN."""
+"""Classes and functions for Word analysis (text analysis of abstract texts)."""
 from __future__ import print_function, division
 
 import datetime

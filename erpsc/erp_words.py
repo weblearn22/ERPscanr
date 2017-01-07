@@ -1,4 +1,4 @@
-"""   """
+"""Classes and functions to store and process extracted paper data."""
 
 from erpsc.core.errors import InconsistentDataError
 
