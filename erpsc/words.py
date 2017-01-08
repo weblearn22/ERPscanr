@@ -288,7 +288,7 @@ def _ids_to_str(ids):
 
 
 def _process_words(text):
-    """Takes a text, sets to lower case, and removes all stopwords and punctuation.
+    """Processes abstract text - sets to lower case, and removes stopwords and punctuation.
 
     Parameters
     ----------
@@ -306,13 +306,13 @@ def _process_words(text):
 
     # Remove stop words, and non-alphabetical tokens (punctuation). Return the result.
     words_cleaned = [word.lower() for word in words if ((not word.lower() in stopwords.words('english'))
-                                                         & word.isalnum())]
+                                                        & word.isalnum())]
 
     return words_cleaned
 
 
 def _process_kws(keywords):
-    """
+    """Processes keywords -
 
     Parameters
     ----------
@@ -325,7 +325,7 @@ def _process_kws(keywords):
         xx
     """
 
-    return [kw.text for kw in keywords]
+    return [kw.text.encode('ascii', 'ignore') for kw in keywords]
 
 
 def _process_authors(author_list):
@@ -333,7 +333,7 @@ def _process_authors(author_list):
 
     Parameters
     ----------
-    authors : ?
+    author_list : ?
         xx
 
     Returns
@@ -342,13 +342,16 @@ def _process_authors(author_list):
         List of authors, each as (LastName, FirstName, Initials, Affiliation).
     """
 
-    out = []
-
+    # Pull out all author tags from the input
     authors = author_list.findAll('Author')
 
+    # Initialize list to return
+    out = []
+
+    # Extract data for each author
     for author in authors:
         out.append((_extract(author, 'LastName'), _extract(author, 'ForeName'),
-            _extract(author, 'Initials'), _extract(author, 'Affiliation')))
+                    _extract(author, 'Initials'), _extract(author, 'Affiliation')))
 
     return out
 
@@ -370,8 +373,7 @@ def _extract(tag, label):
     """
 
     try:
-        out = tag.find(label).text
-        out = out.encode('ascii', 'ignore')
+        out = tag.find(label).text.encode('ascii', 'ignore')
     except AttributeError:
         out = None
 
