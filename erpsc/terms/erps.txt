@@ -23,38 +23,37 @@
 23-N2c
 24-N240
 25-N270
-26-N2pb
-27-N2pc
-28-N300
-29-N400
-30-N450
-31-N600
-32-C1
-33-LPC,late positive component
-34-LPP, late Positive Potential
-35-MRPC,movement-related cortical potential
-36-CNV,contingent negative variation
-37-PINV,post-imperative negative variation
-38-ERN,Ne,error related negativity
-39-ELAN,early left anterior negativity
-40-CPS,closure positive shift
-41-LRP,lateralized readiness potential
-42-LDN,late difference negativity
-43-ORN,object related negativity
-44-SEP,somatosensory evoked potential
-45-VsEP,vestibular evoked potential
-46-BP,pre-motor potential,readiness potential,Bereitschaftspotential
-47-Pe,error-related positivity,error positivity,post-error positivity
-48-CRN,correct-related negativity,correct response negativity
-49-MFN,Medial frontal negativity
-50-SPN,Stimulus-Preceding Negativity
-51-ADAN,Anterior directed-attention negativity
-52-FRN,Feedback-related negativity
-53-Nc,Negative central component
-54-Pd,Distractor Positivity
-55-EDAN,early directing attention negativity
-56-ADAN,anterior directing attention negativity
-57-NSW,negative slow wave
-58-PSW,positive slow wave
-59-EPN,early posterior negativity
-60-SN,selection negativity
+26-N2pc
+27-N300
+28-N400
+29-N450
+30-N600
+31-C1
+32-LPC,late positive component
+33-LPP, late Positive Potential
+34-MRPC,movement-related cortical potential
+35-CNV,contingent negative variation
+36-PINV,post-imperative negative variation
+37-ERN,Ne,error related negativity
+38-ELAN,early left anterior negativity
+39-CPS,closure positive shift
+40-LRP,lateralized readiness potential
+41-LDN,late difference negativity
+42-ORN,object related negativity
+43-SEP,somatosensory evoked potential
+44-VsEP,vestibular evoked potential
+45-BP,pre-motor potential,readiness potential,Bereitschaftspotential
+46-Pe,error-related positivity,error positivity,post-error positivity
+47-CRN,correct-related negativity,correct response negativity
+48-MFN,Medial frontal negativity
+49-SPN,Stimulus-Preceding Negativity
+50-ADAN,Anterior directed-attention negativity
+51-FRN,Feedback-related negativity
+52-Nc,Negative central component
+53-Pd,Distractor Positivity
+54-EDAN,early directing attention negativity
+55-ADAN,anterior directing attention negativity
+56-NSW,negative slow wave
+57-PSW,positive slow wave
+58-EPN,early posterior negativity
+59-SN,selection negativity
