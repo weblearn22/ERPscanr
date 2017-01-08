@@ -4,7 +4,7 @@ awareness
 categorization
 cognitive
 decision making
-emotion, emotional
+emotion,emotional
 face,facial
 language
 learning
@@ -14,7 +14,7 @@ pain
 phonology,phonological
 reasoning
 reward
-semantic, semantics
+semantic,semantics
 spatial
 speech
 social
