@@ -16,7 +16,7 @@ def test_erp_words():
     erp = 'test'
     assert ERPWords(erp)
 
-def test_add_ids():
+def test_add_id():
     """   """
 
     words = load_erp_words()
@@ -34,6 +34,24 @@ def test_add_title():
 
     assert words.titles
 
+def test_add_authors():
+    """   """
+
+    words = load_erp_words()
+
+    words.add_authors(('Last', 'First', 'IN', 'School'))
+
+    assert words.authors
+
+def test_add_journal():
+    """   """
+
+    words = load_erp_words()
+
+    words.add_journal('Journal name', 'J abbrev')
+
+    assert words.journals
+
 def test_add_words():
     """   """
 
@@ -42,6 +60,15 @@ def test_add_words():
     words.add_words(['new', 'words'])
 
     assert words.words
+
+def test_add_kws():
+    """   """
+
+    words = load_erp_words()
+
+    words.add_kws(['list', 'of', 'kws'])
+
+    assert words.kws
 
 def test_add_year():
     """   """
