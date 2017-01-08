@@ -9,8 +9,8 @@ from nltk.corpus import stopwords
 # Import custom code
 from erpsc.base import Base
 from erpsc.erp_words import ERPWords
-from erpsc.core.utils import comb_terms
 from erpsc.core.urls import URLS
+from erpsc.core.utils import CatchNone, comb_terms
 
 #################################################################################
 ############################ ERPSC - WORDS - Classes ############################
@@ -67,10 +67,17 @@ class Words(Base):
 
         # Add ID of current article
         cur_erp.add_id(new_id)
+        cur_erp.add_title(_extract(art, 'ArticleTitle', 'str'))
+        cur_erp.add_authors(_process_authors(_extract(art, 'AuthorList', 'raw')))
+        cur_erp.add_journal(_extract(art, 'Title', 'str'), _extract(art, 'ISOAbbreviation', 'str'))
+        cur_erp.add_words(_process_words(_extract(art, 'AbstractText', 'str')))
+        cur_erp.add_kws(_process_kws(_extract(art, 'Keyword', 'all')))
+        cur_erp.add_year(_extract(_extract(art, 'DateCreated', 'raw'), 'Year', 'str'))
 
+        """
         # Get Title of the paper, if available, and add to current results
         try:
-            cur_title = art.find('ArticleTitle').text
+            cur_title = art.find('ArticleTitle').text.encode('ascii', 'ignore')
         except AttributeError:
             cur_title = None
         cur_erp.add_title(cur_title)
@@ -85,8 +92,8 @@ class Words(Base):
 
         # Get Journal of the paper, if available, and add to current results
         try:
-            cur_journal = art.find('Title').text
-            cur_iso_abbrev = art.find('ISOAbbreviation').text
+            cur_journal = art.find('Title').text.encode('ascii', 'ignore')
+            cur_iso_abbrev = art.find('ISOAbbreviation').text.encode('ascii', 'ignore')
         except AttributeError:
             cur_journal = None
             cur_iso_abbrev = None
@@ -104,7 +111,6 @@ class Words(Base):
         try:
             keywords = art.findAll('Keyword')
             kws = _process_kws(keywords)
-            #kws = [kw.text for kw in keywords]
         except AttributeError:
             kws = None
         cur_erp.add_kws(kws)
@@ -115,6 +121,7 @@ class Words(Base):
         except AttributeError:
             cur_year = None
         cur_erp.add_year(cur_year)
+        """
 
         # Increment number of articles included in ERPWords
         cur_erp.increment_n_articles()
@@ -286,7 +293,7 @@ def _ids_to_str(ids):
     # Return string of ids
     return ids_str
 
-
+@CatchNone
 def _process_words(text):
     """Processes abstract text - sets to lower case, and removes stopwords and punctuation.
 
@@ -311,6 +318,7 @@ def _process_words(text):
     return words_cleaned
 
 
+@CatchNone
 def _process_kws(keywords):
     """Processes keywords -
 
@@ -322,12 +330,13 @@ def _process_kws(keywords):
     Returns
     -------
     list of str
-        xx
+        List of all the keywords.
     """
 
     return [kw.text.encode('ascii', 'ignore') for kw in keywords]
 
 
+@CatchNone
 def _process_authors(author_list):
     """
 
@@ -343,21 +352,58 @@ def _process_authors(author_list):
     """
 
     # Pull out all author tags from the input
-    authors = author_list.findAll('Author')
+    authors = _extract(author_list, 'Author', 'all')
+    #authors = author_list.findAll('Author')
 
     # Initialize list to return
     out = []
 
     # Extract data for each author
     for author in authors:
-        out.append((_extract(author, 'LastName'), _extract(author, 'ForeName'),
-                    _extract(author, 'Initials'), _extract(author, 'Affiliation')))
+        out.append((_extract(author, 'LastName', 'str'), _extract(author, 'ForeName', 'str'),
+                    _extract(author, 'Initials', 'str'), _extract(author, 'Affiliation', 'str')))
 
     return out
 
 
-def _extract(tag, label):
+def _extract(dat, tag, how):
     """
+
+    Parameters
+    ----------
+    dat : bs4.element.tag
+        HTML data to pull specific tag out of.
+    tag : str
+        Label of the tag to extract.
+    how : {'raw', 'txt', 'str', 'all'}
+        Method to extract the data.
+            raw -
+            txt -
+            str -
+            all -
+
+    Returns
+    -------
+    {bs4.element.tag, unicode, str}
+        Requested data from the tag.
+    """
+
+    try:
+        if how is 'raw':
+            return dat.find(tag)
+        elif how is 'txt':
+            return dat.find(tag).text
+        elif how is 'str':
+            return dat.find(tag).text.encode('ascii', 'ignore')
+        elif how is 'all':
+            return dat.findAll(tag)
+
+    except AttributeError:
+        return None
+
+"""
+def _extract_old(tag, label):
+    "
 
     Parameters
     ----------
@@ -370,7 +416,7 @@ def _extract(tag, label):
     -------
     out : str
         xx
-    """
+    "
 
     try:
         out = tag.find(label).text.encode('ascii', 'ignore')
@@ -378,3 +424,4 @@ def _extract(tag, label):
         out = None
 
     return out
+"""
