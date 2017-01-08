@@ -59,10 +59,9 @@ class Count(Base):
         # Set date of when data was scraped
         self.date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
-        # Get e-utils URLS object
-        urls = URLS(db=db, retmode='xml')
-        urls.build_search(['db', 'retmode'])
-        urls.build_fetch(['db', 'retmode'])
+        # Get e-utils URLS object. Set retmax as 0, since not using UIDs in this analysis
+        urls = URLS(db=db, retmax='0', retmode='xml')
+        urls.build_search(['db', 'retmax', 'retmode'])
 
         # Initialize count variables to the correct length
         self.term_counts = np.zeros([self.n_terms])
@@ -73,18 +72,18 @@ class Count(Base):
         self.dat_percent = np.zeros([self.n_erps, self.n_terms])
 
         # Loop through each ERP term
-        for erp in self.erps:
+        for erp_ls in self.erps:
 
             # For each ERP, loop through each term term
-            for term in self.terms:
+            for term_ls in self.terms:
 
                 # Get the indices of the current erp & term terms
-                erp_ind = self.erps.index(erp)
-                term_ind = self.terms.index(term)
+                erp_ind = self.erps.index(erp_ls)
+                term_ind = self.terms.index(term_ls)
 
-                # Make URL - Exact Term Version
-                #url = urls.search + '"' + erp[0] + '"AND"' + term[0] + '"'
-                url = urls.search + comb_terms(erp, 'or') + 'AND' + comb_terms(term, 'or')
+                # Make URL - Exact Term Version, using double quotes
+                url = urls.search + '"' + erp_ls[0] + '"AND"' + term_ls[0] + '"'
+                #url = urls.search + comb_terms(erp_ls, 'or') + 'AND' + comb_terms(term_ls, 'or')
 
                 # Make URL - Non-exact term version
                 #url = self.eutils_search + erp + ' erp ' + term
@@ -100,10 +99,14 @@ class Count(Base):
                 vec = []
 
                 # Loop through counts, extracting into vec
-                for i in range(len(counts)):
-                    count = counts[i]
-                    ext = count.text
-                    vec.append(int(ext))
+                # There should be n+1 count fields, where n is the number of search terms
+                #   The number of search terms includes all of them, including 'OR's & 'NOT's
+                # Example: term=("N400"OR"N4")AND("language")NOT("cancer"OR"histone")
+                #   Here there are 5 search terms, and so 6 count tags
+                # The 1st count tag is the number of articles meeting the full search term
+                #   Each subsequent count tag is each search term, in order.
+                for count in counts:
+                    vec.append(int(count.text))
 
                 # Add the total number of papers for erp & term
                 self.erp_counts[erp_ind] = vec[1]
@@ -121,15 +124,15 @@ class Count(Base):
         """"Prints out the terms most associatied with each ERP."""
 
         # Loop through each erp term, find maximally associated term term and print out
-        for erp in self.erps:
+        for erp_ls in self.erps:
 
             # Find the index of the most common term for current erp
-            erp_ind = self.erps.index(erp)
+            erp_ind = self.erps.index(erp_ls)
             term_ind = np.argmax(self.dat_percent[erp_ind, :])
 
             # Print out the results
             print("For the  {:5} the most common association is \t {:10} with \t %{:05.2f}"
-                  .format(erp[0], self.terms[term_ind], \
+                  .format(erp_ls[0], self.terms[term_ind][0], \
                   self.dat_percent[erp_ind, term_ind]*100))
 
 
@@ -137,15 +140,15 @@ class Count(Base):
         """Prints out the ERP terms most associated with each term."""
 
         # Loop through each cig term, find maximally associated erp term and print out
-        for term in self.terms:
+        for term_ls in self.terms:
 
             # Find the index of the most common erp for current term
-            term_ind = self.terms.index(term)
+            term_ind = self.terms.index(term_ls)
             erp_ind = np.argmax(self.dat_percent[:, term_ind])
 
             # Print out the results
-            print("For  {:20} the strongest associated ERP is \t {:5} with \t %{:05.2f}"
-                  .format(term, self.erps[erp_ind][0], \
+            print("For  {:12} the strongest associated ERP is \t {:5} with \t %{:05.2f}"
+                  .format(term_ls[0], self.erps[erp_ind][0], \
                   self.dat_percent[erp_ind, term_ind]*100))
 
 
@@ -154,12 +157,12 @@ class Count(Base):
 
         # Find and print the erp term for which the most papers were found
         print("The most studied ERP is  {:6}  with {:8.0f} papers"
-              .format(self.erps[np.argmax(self.erp_counts)], \
+              .format(self.erps[np.argmax(self.erp_counts)][0], \
               self.erp_counts[np.argmax(self.erp_counts)]))
 
         # Find and print the term term for which the most papers were found
         print("The most studied term is  {:6}  with {:8.0f}  papers"
-              .format(self.terms[np.argmax(self.term_counts)], \
+              .format(self.terms[np.argmax(self.term_counts)][0], \
               self.term_counts[np.argmax(self.term_counts)]))
 
 
@@ -174,12 +177,12 @@ class Count(Base):
 
         # Check counts for all ERP terms
         if dat is 'erp':
-            for erp in self.erps:
-                erp_ind = self.erps.index(erp)
-                print('{:5} - {:8.0f}'.format(erp[0], self.erp_counts[erp_ind]))
+            for erp_ls in self.erps:
+                erp_ind = self.erps.index(erp_ls)
+                print('{:5} - {:8.0f}'.format(erp_ls[0], self.erp_counts[erp_ind]))
 
         # Check counts for all term terms
         elif dat is 'term':
-            for term in self.terms:
-                term_ind = self.terms.index(term)
-                print('{:18} - {:10.0f}'.format(term, self.term_counts[term_ind]))
+            for term_ls in self.terms:
+                term_ind = self.terms.index(term_ls)
+                print('{:18} - {:10.0f}'.format(term_ls[0], self.term_counts[term_ind]))
