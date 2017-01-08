@@ -103,8 +103,8 @@ class Base(object):
 
         # Print out header and all current ERPs
         print('List of ERPs used: \n')
-        for i in range(self.n_erps):
-            print(", ".join(e for e in self.erps[i]))
+        for erps_ls in self.erps:
+            print(", ".join(erp for erp in erps_ls))
 
 
     def unload_erps(self):
@@ -167,7 +167,7 @@ class Base(object):
         print('List of exclusion words used: \n')
         for i in range(self.n_erps):
             print(self.erps[i][0] + "\t : " +
-                  ", ".join(e for e in self.exclusions[i]))
+                  ", ".join(exclude for exclude in self.exclusions[i]))
 
 
     def unload_exclusions(self):
@@ -228,7 +228,8 @@ class Base(object):
 
         # Print out header and all term words
         print('List of terms used: \n')
-        print("\n".join(self.terms))
+        for terms_ls in self.terms:
+            print(", ".join(term for term in terms_ls))
 
 
     def unload_terms(self):
