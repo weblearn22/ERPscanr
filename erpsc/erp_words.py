@@ -17,7 +17,7 @@ class ERPWords(object):
         Pubmed article ids for all articles included in object.
     n_articles : int
         Number of articles included in object.
-    titles : list of unicode
+    titles : list of str
         Titles of all articles included in object.
     journals : list of tuple of (str, str)
         List of journals articles come from. (Journal Name, ISO abbreviation).
