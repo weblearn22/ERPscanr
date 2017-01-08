@@ -74,55 +74,6 @@ class Words(Base):
         cur_erp.add_kws(_process_kws(_extract(art, 'Keyword', 'all')))
         cur_erp.add_year(_extract(_extract(art, 'DateCreated', 'raw'), 'Year', 'str'))
 
-        """
-        # Get Title of the paper, if available, and add to current results
-        try:
-            cur_title = art.find('ArticleTitle').text.encode('ascii', 'ignore')
-        except AttributeError:
-            cur_title = None
-        cur_erp.add_title(cur_title)
-
-        # Get Author List of the paper, if available, and add to current results
-        try:
-            author_list = art.find('AuthorList')
-            cur_authors = _process_authors(author_list)
-        except AttributeError:
-            cur_authors = None
-        cur_erp.add_authors(cur_authors)
-
-        # Get Journal of the paper, if available, and add to current results
-        try:
-            cur_journal = art.find('Title').text.encode('ascii', 'ignore')
-            cur_iso_abbrev = art.find('ISOAbbreviation').text.encode('ascii', 'ignore')
-        except AttributeError:
-            cur_journal = None
-            cur_iso_abbrev = None
-        cur_erp.add_journal(cur_journal, cur_iso_abbrev)
-
-        # Get Words from the Abstract, if available, and add to current results
-        try:
-            abstract_text = art.find('AbstractText').text
-            cur_words = _process_words(abstract_text)
-        except AttributeError:
-            cur_words = None
-        cur_erp.add_words(cur_words)
-
-        # Get keywords, if available, and add to current results
-        try:
-            keywords = art.findAll('Keyword')
-            kws = _process_kws(keywords)
-        except AttributeError:
-            kws = None
-        cur_erp.add_kws(kws)
-
-        # Get the Year of the paper, if available, and add to current results
-        try:
-            cur_year = int(art.find('DateCreated').find('Year').text)
-        except AttributeError:
-            cur_year = None
-        cur_erp.add_year(cur_year)
-        """
-
         # Increment number of articles included in ERPWords
         cur_erp.increment_n_articles()
 
@@ -293,6 +244,7 @@ def _ids_to_str(ids):
     # Return string of ids
     return ids_str
 
+
 @CatchNone
 def _process_words(text):
     """Processes abstract text - sets to lower case, and removes stopwords and punctuation.
@@ -353,7 +305,6 @@ def _process_authors(author_list):
 
     # Pull out all author tags from the input
     authors = _extract(author_list, 'Author', 'all')
-    #authors = author_list.findAll('Author')
 
     # Initialize list to return
     out = []
@@ -400,28 +351,3 @@ def _extract(dat, tag, how):
 
     except AttributeError:
         return None
-
-"""
-def _extract_old(tag, label):
-    "
-
-    Parameters
-    ----------
-    tag : bs4.element.tag
-        HTML tag.
-    label : str
-        Field to extract from the tag.
-
-    Returns
-    -------
-    out : str
-        xx
-    "
-
-    try:
-        out = tag.find(label).text.encode('ascii', 'ignore')
-    except AttributeError:
-        out = None
-
-    return out
-"""
