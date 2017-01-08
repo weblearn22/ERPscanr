@@ -184,7 +184,7 @@ class Base(object):
 
 
     def set_terms(self, terms):
-        """Sets the given list of strings as term terms to use.
+        """Sets the given list of strings as terms to use.
 
         Parameters
         ----------
@@ -212,11 +212,15 @@ class Base(object):
         # Set the type of terms
         self.terms_type = terms_type
 
-        # Get erps from module data file
-        self.terms = _terms_load_file(terms_type)
+        # Get terms from module data file
+        terms = _terms_load_file(terms_type)
 
         # Set the number of terms
-        self.n_terms = len(self.terms)
+        self.n_terms = len(terms)
+
+        # Set as list, and attach to object
+        for i in range(self.n_terms):
+            self.terms.append(terms[i][:].split(','))
 
 
     def check_terms(self):
@@ -272,6 +276,11 @@ def _terms_load_file(dat_name):
     ----------
     dat_name : str
         Name of the terms data file to load.
+
+    Returns
+    -------
+    dat : list of str
+        Data from the file.
     """
 
     # Open file
