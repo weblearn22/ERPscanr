@@ -84,7 +84,7 @@ class Count(Base):
 
                 # Make URL - Exact Term Version
                 #url = urls.search + '"' + erp[0] + '"AND"' + term[0] + '"'
-                url = urls.search + comb_terms(erp, 'or') + '"AND"' + comb_terms(term, 'or')
+                url = urls.search + comb_terms(erp, 'or') + 'AND' + comb_terms(term, 'or')
 
                 # Make URL - Non-exact term version
                 #url = self.eutils_search + erp + ' erp ' + term
