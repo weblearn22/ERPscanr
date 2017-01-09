@@ -1,18 +1,19 @@
 """Tests for the Words() class and related functions from erpsc."""
 
 import requests
+import bs4
 from bs4 import BeautifulSoup
 
 from erpsc.erp_data import ERPData
 from erpsc.words import Words
-from erpsc.words import _ids_to_str, _process_words
+from erpsc.words import _ids_to_str, _process_words, _process_kws, _process_authors
 
 #######################################################################################
 ################################ TESTS - ERPSC - WORDS ################################
 #######################################################################################
 
 def test_words():
-    """   """
+    """Test the Words object."""
 
     assert Words()
 
@@ -51,10 +52,10 @@ def test_extract_add_info():
     erp_word = words.extract_add_info(erp_word, 999999, page)
 
     assert erp_word.ids[1] == 999999
-    assert erp_word.titles[1] == None
-    assert erp_word.words[1] == None
-    assert erp_word.kws[1] == None
-    assert erp_word.years[1] == None
+    assert erp_word.titles[1] is None
+    assert erp_word.words[1] is None
+    assert erp_word.kws[1] is None
+    assert erp_word.years[1] is None
 
 def test_scrape():
 
@@ -96,10 +97,25 @@ def check_words(words):
 #######################################################################################
 
 def test_ids_to_str():
+    """Test the _ids_to_str function."""
+
+    # Initialize id ResultSet
+    idd = bs4.element.Tag(name='id')
+    idd.append('1111')
+    ids = bs4.element.ResultSet(source=None, result=(idd, idd))
+
+    out = _ids_to_str(ids)
+
+    assert out == '1111,1111'
+
+def test_none_process():
+    """The _process functions have a decorator to catch & return None inputs.
+    Test that this is working - returns None when given None.
     """
-    NOTE: unclear how to initialize bs4 tag objects.
-    """
-    pass
+
+    assert _process_words(None) is None
+    assert _process_kws(None) is None
+    assert _process_authors(None) is None
 
 def test_process_words():
     """   """
@@ -110,3 +126,18 @@ def test_process_words():
     exp_out = ['last', 'word', 'erp']
 
     assert words_out == exp_out
+
+def test_process_kws():
+    """   """
+
+    pass
+
+def test_process_authors():
+    """   """
+
+    pass
+
+def test_extract():
+    """   """
+
+    pass
