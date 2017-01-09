@@ -2,7 +2,7 @@
 
 from py.test import raises
 
-from erpsc.erp_words import *
+from erpsc.erp_data import *
 from erpsc.tests.utils import load_erp_words
 
 ###################################################################################
