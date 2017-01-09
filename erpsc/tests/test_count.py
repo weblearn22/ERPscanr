@@ -1,5 +1,7 @@
 """Tests for the Count() class and related functions from erpsc."""
 
+import numpy as np
+
 from erpsc.count import Count
 
 #######################################################################################
@@ -23,8 +25,8 @@ def test_scrape():
 
     counts.scrape_data(db='pubmed')
 
-    assert counts.dat_numbers
-    assert counts.dat_percent
+    assert np.all(counts.dat_numbers)
+    assert np.all(counts.dat_percent)
 
     check_funcs(counts)
 
