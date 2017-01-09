@@ -56,7 +56,7 @@ class Words(Base):
             Object to store information for the current ERP term.
         new_id : int
             Paper ID of the new paper.
-        art : bs4.element.tag() object
+        art : bs4.element.Tag() object
             Extracted pubmed article.
 
         NOTES
@@ -251,8 +251,8 @@ def _process_words(text):
 
     Parameters
     ----------
-    text : ?
-        xx
+    text : str
+        Text as one long string.
 
     Returns
     -------
@@ -264,20 +264,18 @@ def _process_words(text):
     words = nltk.word_tokenize(text)
 
     # Remove stop words, and non-alphabetical tokens (punctuation). Return the result.
-    words_cleaned = [word.lower() for word in words if ((not word.lower() in stopwords.words('english'))
-                                                        & word.isalnum())]
-
-    return words_cleaned
+    return [word.lower() for word in words if ((not word.lower() in stopwords.words('english'))
+                                               & word.isalnum())]
 
 
 @CatchNone
 def _process_kws(keywords):
-    """Processes keywords -
+    """Processes keywords - extract the keywords from tags and converts to strings.
 
     Parameters
     ----------
-    kws : ?
-        xx
+    kws : bs4.element.ResultSet
+        List of all the keyword tags.
 
     Returns
     -------
@@ -294,8 +292,8 @@ def _process_authors(author_list):
 
     Parameters
     ----------
-    author_list : ?
-        xx
+    author_list : bs4.element.Tag
+        AuthorList tag, which contains tags related to author data.
 
     Returns
     -------
@@ -318,27 +316,28 @@ def _process_authors(author_list):
 
 
 def _extract(dat, tag, how):
-    """
+    """Extract data from HTML tag.
 
     Parameters
     ----------
-    dat : bs4.element.tag
+    dat : bs4.element.Tag
         HTML data to pull specific tag out of.
     tag : str
         Label of the tag to extract.
-    how : {'raw', 'txt', 'str', 'all'}
+    how : {'raw', 'all' , 'txt', 'str'}
         Method to extract the data.
-            raw -
-            txt -
-            str -
-            all -
+            raw - extract an embedded tag
+            all - extract all embedded tags
+            txt - extract text as unicode
+            str - extract text and convert to string
 
     Returns
     -------
-    {bs4.element.tag, unicode, str}
-        Requested data from the tag.
+    {bs4.element.Tag, bs4.element.ResultSet, unicode, str, None}
+        Requested data from the tag. Returns None is requested tag is unavailable.
     """
 
+    # Use try to be robust to missing tag
     try:
         if how is 'raw':
             return dat.find(tag)
