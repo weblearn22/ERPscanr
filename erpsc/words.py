@@ -8,7 +8,7 @@ from nltk.corpus import stopwords
 
 # Import custom code
 from erpsc.base import Base
-from erpsc.erp_words import ERPWords
+from erpsc.erp_data import ERPData
 from erpsc.core.urls import URLS
 from erpsc.core.utils import CatchNone, comb_terms
 
@@ -21,7 +21,7 @@ class Words(Base):
 
     Attributes
     ----------
-    results : list of ERPWords() objects
+    results : list of ERPData() objects
         Results for each ERP, stored in custom Words object.
     """
 
@@ -40,7 +40,7 @@ class Words(Base):
 
         Parameters
         ----------
-        new_result : ERPWords() object
+        new_result : ERPData() object
             Object with information about current ERP term.
         """
 
@@ -52,7 +52,7 @@ class Words(Base):
 
         Parameters
         ----------
-        cur_erp : ERPWords() object
+        cur_erp : ERPData() object
             Object to store information for the current ERP term.
         new_id : int
             Paper ID of the new paper.
@@ -74,7 +74,7 @@ class Words(Base):
         cur_erp.add_kws(_process_kws(_extract(art, 'Keyword', 'all')))
         cur_erp.add_year(_extract(_extract(art, 'DateCreated', 'raw'), 'Year', 'str'))
 
-        # Increment number of articles included in ERPWords
+        # Increment number of articles included in ERPData
         cur_erp.increment_n_articles()
 
         return cur_erp
@@ -111,7 +111,7 @@ class Words(Base):
         for ind, erp in enumerate(self.erps):
 
             # Initiliaze object to store data for current erp papers
-            cur_erp = ERPWords(erp)
+            cur_erp = ERPData(erp)
 
             # Set up search terms - add exclusions, if there are any
             if self.exclusions[ind][0]:
@@ -148,7 +148,7 @@ class Words(Base):
                 # Get ID of current article
                 new_id = int(ids[ind].text)
 
-                # Extract and add all relevant info from current articles to ERPWords object
+                # Extract and add all relevant info from current articles to ERPData object
                 cur_erp = self.extract_add_info(cur_erp, new_id, art)
 
             # Check consistency of extracted results

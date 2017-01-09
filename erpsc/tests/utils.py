@@ -3,7 +3,7 @@
 import pkg_resources as pkg
 
 from erpsc.base import Base
-from erpsc.erp_words import ERPWords
+from erpsc.erp_data import ERPData
 from erpsc.core.db import ERPDB
 
 ##################################################################################
@@ -43,10 +43,10 @@ def load_base(set_erps=False, set_excl=False, set_terms=None):
     return base
 
 def load_erp_words(add_dat=False):
-    """Helper function to load ERPWords() object for testing."""
+    """Helper function to load ERPData() object for testing."""
 
     test_erp = 'test'
-    words = ERPWords(test_erp)
+    words = ERPData(test_erp)
 
     if add_dat:
         words.add_id(1)

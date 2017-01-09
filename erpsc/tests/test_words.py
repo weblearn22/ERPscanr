@@ -3,7 +3,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-from erpsc.erp_words import ERPWords
+from erpsc.erp_data import ERPData
 from erpsc.words import Words
 from erpsc.words import _ids_to_str, _process_words
 
@@ -20,7 +20,7 @@ def test_add_results():
     """   """
 
     words = Words()
-    new_word = ERPWords('test')
+    new_word = ERPData('test')
 
     words.add_results(new_word)
 
@@ -32,7 +32,7 @@ def test_extract_add_info():
     words = Words()
 
     # Check page with all fields defined - check data extraction
-    erp_word = ERPWords('test')
+    erp_word = ERPData('test')
     page = requests.get(("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
                          "efetch.fcgi?&db=pubmed&retmode=xml&id=28000963"))
     page_soup = BeautifulSoup(page.content, "xml")

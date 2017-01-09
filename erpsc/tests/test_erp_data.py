@@ -1,4 +1,4 @@
-"""Tests for the ERPWords() class and related functions from erpsc."""
+"""Tests for the ERPData() class and related functions from erpsc."""
 
 from py.test import raises
 
@@ -14,7 +14,7 @@ def test_erp_words():
 
     # Check that ERPSCWords returns properly.
     erp = 'test'
-    assert ERPWords(erp)
+    assert ERPData(erp)
 
 def test_add_id():
     """   """

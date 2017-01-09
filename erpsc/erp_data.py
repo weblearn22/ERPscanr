@@ -6,7 +6,7 @@ from erpsc.core.errors import InconsistentDataError
 ############################ ERPSC - ERPWords ############################
 ##########################################################################
 
-class ERPWords(object):
+class ERPData(object):
     """An object to hold the word results for a given ERP or term.
 
     Attributes
