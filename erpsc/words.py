@@ -222,7 +222,7 @@ def _ids_to_str(ids):
 
     Parameters
     ----------
-    ids : BeautifulSoup ResultSet
+    ids : bs4.element.ResultSet
         List of pubmed ids.
 
     Returns
