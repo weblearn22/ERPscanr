@@ -7,7 +7,7 @@ from erpsc.count import Count
 #######################################################################################
 
 def test_erpsc_count():
-    """Test the ERPSCCount object."""
+    """Test the Count object."""
 
     # Check that ERPSCCount returns properly
     assert Count()
