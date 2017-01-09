@@ -1,6 +1,6 @@
 """Tests for the Count() class and related functions from erpsc."""
 
-from erpsc.count import *
+from erpsc.count import Count
 
 #######################################################################################
 ################################ TESTS - ERPSC - COUNT ################################
@@ -12,8 +12,8 @@ def test_erpsc_count():
     # Check that ERPSCCount returns properly
     assert Count()
 
-def test_scrape_test_save():
-    """   """
+def test_scrape():
+    """Test that Count object successful scrapes data."""
 
     counts = Count()
 
@@ -23,12 +23,13 @@ def test_scrape_test_save():
 
     counts.scrape_data(db='pubmed')
 
-    assert True
+    assert counts.dat_numbers
+    assert counts.dat_percent
 
     check_funcs(counts)
 
 def check_funcs(counts):
-    """   """
+    """Given object with scraped data, test all the check functions."""
 
     # Check that all check functions run
     counts.check_cooc_erps()
