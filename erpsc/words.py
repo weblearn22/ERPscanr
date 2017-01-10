@@ -47,7 +47,8 @@ class Words(Base):
         self.results.append(new_result)
 
 
-    def extract_add_info(self, cur_erp, new_id, art):
+    @staticmethod
+    def extract_add_info(cur_erp, new_id, art):
         """Extract information from article web page and add to
 
         Parameters
