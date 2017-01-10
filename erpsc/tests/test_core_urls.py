@@ -34,7 +34,7 @@ def test_check_args():
         urls.check_args(['db', 'retmax', 'field'])
 
 def test_build_info():
-    """   """
+    """Test the build_info() method from URLS()."""
 
     urls = URLS()
 
