@@ -4,7 +4,9 @@ from __future__ import print_function
 
 from types import StringType, ListType
 import pkg_resources as pkg
+from bs4 import BeautifulSoup
 
+from erpsc.core.utils import extract
 from erpsc.core.requester import Requester
 from erpsc.core.errors import InconsistentDataError
 
@@ -17,6 +19,8 @@ class Base(object):
 
     Attributes
     ----------
+    db_info : dict()
+        Stores info about the database used for scarping data.
     terms_type : {'cognitive', 'disease'}
         Type of terms used.
     erps : list of str
@@ -38,6 +42,9 @@ class Base(object):
     def __init__(self):
         """Initialize ERP-SCANR Base() object."""
 
+        # Initialize dictionary to store db info
+        self.db_info = dict()
+
         # Initialize variable to keep track of term type used
         self.terms_type = str()
 
@@ -55,10 +62,6 @@ class Base(object):
 
         # Initialize for date that data is collected
         self.date = str()
-
-        # Initialize vector of counts of number of papers for each term
-        #self.erp_counts = np.zeros(0)
-        #self.term_counts = np.zeros(0)
 
 
     def set_erps(self, erps):
@@ -245,6 +248,27 @@ class Base(object):
             self.terms_type = str()
             self.terms = list()
             self.n_terms = int()
+
+
+    def get_db_info(self, info_url):
+        """Calls EInfo to get info and status of db to be used for scraping.
+
+        Parameters
+        ----------
+        info_url : str
+            URL to request db information from.
+        """
+
+        # Get the info page and parse with BeautifulSoup
+        info_page = self.req.get_url(info_url)
+        info_page_soup = BeautifulSoup(info_page.content, 'lxml')
+
+        # Set list of fields to extract from eInfo
+        fields = ['dbname', 'menuname', 'description', 'dbbuild', 'count', 'lastupdate']
+
+        # Extract basic infomation into a dictionary
+        for field in fields:
+            self.db_info[field] = extract(info_page_soup, field, 'str')
 
 ##########################################################################################
 ##########################################################################################
