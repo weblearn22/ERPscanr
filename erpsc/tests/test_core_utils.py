@@ -7,7 +7,7 @@ from erpsc.core.utils import comb_terms
 ##########################################################################
 
 def test_comb_terms():
-    """   """
+    """Test the comb_terms function."""
 
     out = comb_terms(['one', 'two'], 'or')
     assert out == '("one"OR"two")'
