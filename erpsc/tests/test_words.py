@@ -18,7 +18,7 @@ def test_words():
     assert Words()
 
 def test_add_results():
-    """   """
+    """Test the add_results method."""
 
     words = Words()
     new_word = ERPData('test')
@@ -28,7 +28,7 @@ def test_add_results():
     assert words.results
 
 def test_extract_add_info():
-    """  """
+    """Tset the extract_add_info method."""
 
     words = Words()
 
@@ -57,7 +57,8 @@ def test_extract_add_info():
     assert erp_word.kws[1] is None
     assert erp_word.years[1] is None
 
-def test_scrape():
+def test_scrape_data():
+    """Test the scrape_data method."""
 
     words = Words()
 
@@ -75,18 +76,21 @@ def test_scrape():
     check_words(words)
 
 def comb_words(words):
+    """Run the combine_words method for testing."""
 
     words.combine_words()
 
     assert True
 
 def freq_dists(words):
+    """Run the freq_dists method for testing."""
 
     words.freq_dists()
 
     assert True
 
 def check_words(words):
+    """Run the check_words method for testing."""
 
     words.check_words()
 
@@ -118,7 +122,7 @@ def test_none_process():
     assert _process_authors(None) is None
 
 def test_process_words():
-    """   """
+    """Test the _process_words function."""
 
     words = 'The Last wOrd, in they eRp!'
 
@@ -128,16 +132,16 @@ def test_process_words():
     assert words_out == exp_out
 
 def test_process_kws():
-    """   """
+    """Test the _process_kws function."""
 
     pass
 
 def test_process_authors():
-    """   """
+    """Test the _process_authors function."""
 
     pass
 
 def test_extract():
-    """   """
+    """Test the _extract function."""
 
     pass
