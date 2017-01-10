@@ -9,12 +9,12 @@ from erpsc.core.requester import Requester
 ##################################################################################
 
 def test_requester():
-    """   """
+    """Test the Requester object returns properly."""
 
     assert Requester()
 
 def test_throttle():
-    """   """
+    """Test the throttle method."""
 
     req = Requester()
     req.time_last_req = time.time()
@@ -24,7 +24,7 @@ def test_throttle():
     assert True
 
 def test_wait():
-    """   """
+    """Test the wait method."""
 
     req = Requester()
 
@@ -33,7 +33,7 @@ def test_wait():
     assert True
 
 def test_get_url():
-    """   """
+    """Test the get_url method."""
 
     req = Requester()
 
@@ -42,7 +42,7 @@ def test_get_url():
     assert web_page
 
 def test_open():
-    """   """
+    """Test the open method."""
 
     req = Requester()
 
@@ -51,7 +51,7 @@ def test_open():
     assert req.is_active
 
 def test_close():
-    """   """
+    """Test the close method."""
 
     req = Requester()
 
