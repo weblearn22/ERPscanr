@@ -11,7 +11,7 @@ from erpsc.core.db import ERPDB
 ##################################################################################
 
 class TestDB(ERPDB):
-    """   """
+    """Overloads the ERPDB object as database object for test data."""
 
     def __init__(self):
 
