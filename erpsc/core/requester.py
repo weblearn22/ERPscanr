@@ -50,7 +50,8 @@ class Requester(object):
             self.wait(REST_TIME - time_since_req)
 
 
-    def wait(self, wait_time):
+    @staticmethod
+    def wait(wait_time):
         """Pause for specified amount of  time.
 
         Parameters
