@@ -7,12 +7,12 @@ from bs4 import BeautifulSoup
 
 # Import custom code
 from erpsc.base import Base
-from erpsc.core.utils import comb_terms
+from erpsc.core.utils import comb_terms, extract
 from erpsc.core.urls import URLS
 
-#########################################################################################
-################################ ERPSC - COUNT - CLASSES ################################
-#########################################################################################
+#################################################################################################
+#################################### ERPSC - COUNT - CLASSES ####################################
+#################################################################################################
 
 class Count(Base):
     """This is a class for counting co-occurence of pre-specified ERPs & terms.
@@ -43,10 +43,6 @@ class Count(Base):
         self.dat_numbers = np.zeros(0)
         self.dat_percent = np.zeros(0)
 
-        # Set the esearch url for pubmed
-        #self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pubmed&field=word&term='
-        #self.eutils_search = self.eutils_url + 'esearch.fcgi?db=pmc&field=word&term='
-
 
     def scrape_data(self, db=None):
         """Search through pubmed for all abstracts with co-occurence of ERP & terms.
@@ -61,7 +57,11 @@ class Count(Base):
 
         # Get e-utils URLS object. Set retmax as 0, since not using UIDs in this analysis
         urls = URLS(db=db, retmax='0', retmode='xml')
+        urls.build_info(['db'])
         urls.build_search(['db', 'retmax', 'retmode'])
+
+        # Get current information about database being used
+        self.get_db_info(urls.info)
 
         # Initialize count variables to the correct length
         self.term_counts = np.zeros([self.n_terms])
@@ -93,7 +93,8 @@ class Count(Base):
                 page_soup = BeautifulSoup(page.content, 'lxml')
 
                 # Get all 'count' tags
-                counts = page_soup.find_all('count')
+                #counts = page_soup.find_all('count')
+                counts = extract(page_soup, 'count', 'all')
 
                 # Initialize empty temp vector to hold counts
                 vec = []

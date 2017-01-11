@@ -10,11 +10,11 @@ from nltk.corpus import stopwords
 from erpsc.base import Base
 from erpsc.erp_data import ERPData
 from erpsc.core.urls import URLS
-from erpsc.core.utils import CatchNone, comb_terms
+from erpsc.core.utils import CatchNone, comb_terms, extract
 
-#################################################################################
-############################ ERPSC - WORDS - Classes ############################
-#################################################################################
+#################################################################################################
+#################################### ERPSC - WORDS - Classes ####################################
+#################################################################################################
 
 class Words(Base):
     """Class for searching through words in the abstracts of specified papers.
@@ -68,12 +68,12 @@ class Words(Base):
 
         # Add ID of current article
         cur_erp.add_id(new_id)
-        cur_erp.add_title(_extract(art, 'ArticleTitle', 'str'))
-        cur_erp.add_authors(_process_authors(_extract(art, 'AuthorList', 'raw')))
-        cur_erp.add_journal(_extract(art, 'Title', 'str'), _extract(art, 'ISOAbbreviation', 'str'))
-        cur_erp.add_words(_process_words(_extract(art, 'AbstractText', 'str')))
-        cur_erp.add_kws(_process_kws(_extract(art, 'Keyword', 'all')))
-        cur_erp.add_year(_extract(_extract(art, 'DateCreated', 'raw'), 'Year', 'str'))
+        cur_erp.add_title(extract(art, 'ArticleTitle', 'str'))
+        cur_erp.add_authors(_process_authors(extract(art, 'AuthorList', 'raw')))
+        cur_erp.add_journal(extract(art, 'Title', 'str'), extract(art, 'ISOAbbreviation', 'str'))
+        cur_erp.add_words(_process_words(extract(art, 'AbstractText', 'str')))
+        cur_erp.add_kws(_process_kws(extract(art, 'Keyword', 'all')))
+        cur_erp.add_year(extract(extract(art, 'DateCreated', 'raw'), 'Year', 'str'))
 
         # Increment number of articles included in ERPData
         cur_erp.increment_n_articles()
@@ -105,8 +105,12 @@ class Words(Base):
 
         # Get e-utils URLS object
         urls = URLS(db=db, retmax=retmax, retmode='xml', auto_gen=False)
+        urls.build_info(['db'])
         urls.build_search(['db', 'retmax', 'retmode'])
         urls.build_fetch(['db', 'retmax', 'retmode'])
+
+        # Get current information about database being used
+        self.get_db_info(urls.info)
 
         # Loop through all the erps
         for ind, erp in enumerate(self.erps):
@@ -214,9 +218,9 @@ class Words(Base):
             # Print out the top words for the current ERP
             print(self.erps[erp][0], ': ', top_words_str)
 
-#######################################################################################
-######################### ERPSC - WORDS - FUNCTIONS (PRIVATE) #########################
-#######################################################################################
+#######################################################################################################
+################################# ERPSC - WORDS - FUNCTIONS (PRIVATE) #################################
+#######################################################################################################
 
 def _ids_to_str(ids):
     """Takes a list of pubmed ids, returns a str of the ids separated by commas.
@@ -303,51 +307,14 @@ def _process_authors(author_list):
     """
 
     # Pull out all author tags from the input
-    authors = _extract(author_list, 'Author', 'all')
+    authors = extract(author_list, 'Author', 'all')
 
     # Initialize list to return
     out = []
 
     # Extract data for each author
     for author in authors:
-        out.append((_extract(author, 'LastName', 'str'), _extract(author, 'ForeName', 'str'),
-                    _extract(author, 'Initials', 'str'), _extract(author, 'Affiliation', 'str')))
+        out.append((extract(author, 'LastName', 'str'), extract(author, 'ForeName', 'str'),
+                    extract(author, 'Initials', 'str'), extract(author, 'Affiliation', 'str')))
 
     return out
-
-
-def _extract(dat, tag, how):
-    """Extract data from HTML tag.
-
-    Parameters
-    ----------
-    dat : bs4.element.Tag
-        HTML data to pull specific tag out of.
-    tag : str
-        Label of the tag to extract.
-    how : {'raw', 'all' , 'txt', 'str'}
-        Method to extract the data.
-            raw - extract an embedded tag
-            all - extract all embedded tags
-            txt - extract text as unicode
-            str - extract text and convert to string
-
-    Returns
-    -------
-    {bs4.element.Tag, bs4.element.ResultSet, unicode, str, None}
-        Requested data from the tag. Returns None is requested tag is unavailable.
-    """
-
-    # Use try to be robust to missing tag
-    try:
-        if how is 'raw':
-            return dat.find(tag)
-        elif how is 'txt':
-            return dat.find(tag).text
-        elif how is 'str':
-            return dat.find(tag).text.encode('ascii', 'ignore')
-        elif how is 'all':
-            return dat.findAll(tag)
-
-    except AttributeError:
-        return None
