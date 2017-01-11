@@ -31,6 +31,43 @@ def comb_terms(lst, jt):
 
     return out
 
+
+def extract(dat, tag, how):
+    """Extract data from HTML tag.
+
+    Parameters
+    ----------
+    dat : bs4.element.Tag
+        HTML data to pull specific tag out of.
+    tag : str
+        Label of the tag to extract.
+    how : {'raw', 'all' , 'txt', 'str'}
+        Method to extract the data.
+            raw - extract an embedded tag
+            all - extract all embedded tags
+            txt - extract text as unicode
+            str - extract text and convert to string
+
+    Returns
+    -------
+    {bs4.element.Tag, bs4.element.ResultSet, unicode, str, None}
+        Requested data from the tag. Returns None is requested tag is unavailable.
+    """
+
+    # Use try to be robust to missing tag
+    try:
+        if how is 'raw':
+            return dat.find(tag)
+        elif how is 'txt':
+            return dat.find(tag).text
+        elif how is 'str':
+            return dat.find(tag).text.encode('ascii', 'ignore')
+        elif how is 'all':
+            return dat.findAll(tag)
+
+    except AttributeError:
+        return None
+
 ################################################################################################
 ################################## ERPSC - UTILS - DECORATORS ##################################
 ################################################################################################
