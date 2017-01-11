@@ -32,9 +32,10 @@ db : The target database.
     FAQ on PMC: https://www.ncbi.nlm.nih.gov/pmc/about/faq/#q1
 term : word(s) to search for.
 id : list of UIDs (comma separated).
-field :
+field : the search field to search within.
 retmax : Maximum number of records to return.
 retmode : Format to return.
+usehistory : Whether to store findings on remote server.
 
 
 TODO:
@@ -54,6 +55,8 @@ class URLS(object):
     ----------
     eutils : str
         Base URL for the e-utils tools.
+    info  : str
+        URL for getting database information from e-utils.
     query : str
         URL for querying with e-utils.
     search : str
@@ -79,11 +82,11 @@ class URLS(object):
         retmax : str, optional
             The maximum number of papers to return.
         field : str, optional
-            ?
-        retmode : {'lxml', 'xml', ?}, optional
+            The search field to search within.
+        retmode : {'lxml', 'xml'}, optional
             The return format for the results.
         auto_gen : boolean, optional
-            xx
+            Whether to automatically generate URLs (without extra arguments).
         """
 
         # Set up the base url for ncbi e-utils
@@ -120,6 +123,14 @@ class URLS(object):
 
         Parameters
         ----------
+        db : str, optional
+            Which database to use.
+        retmax : str, optional
+            Maximum number of items to return.
+        field : str, optional
+            The search field to search within.
+        retmode :  {'lxml', 'xml'}, optional
+            The return format for the results.
 
         Notes
         -----
@@ -186,7 +197,7 @@ class URLS(object):
 
         # Set the eg query search url
         info_base = self.eutils + 'einfo.fcgi?'
-        self.info = info_base + '&'.join([self.args[arg] for arg in args_to_use]) + '&term='
+        self.info = info_base + '&'.join([self.args[arg] for arg in args_to_use])
 
 
     def build_query(self, args_to_use):
