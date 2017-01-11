@@ -169,3 +169,12 @@ def test_unload_terms():
     assert not base.terms_type
     assert not base.terms
     assert not base.n_terms
+
+def test_get_db_info():
+    """Test the get_db_info method of Base()."""
+
+    base = load_base()
+
+    base.get_db_info('https://eutils.ncbi.nlm.nih.gov/entrez/eutils/einfo.fcgi?db=pubmed')
+
+    assert base.db_info
