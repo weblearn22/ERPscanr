@@ -14,3 +14,8 @@ def test_comb_terms():
 
     out = comb_terms(['one', 'two'], 'not')
     assert out == 'NOT"one"NOT"two"'
+
+def test_extract():
+    """   """
+
+    pass

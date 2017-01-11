@@ -140,8 +140,3 @@ def test_process_authors():
     """Test the _process_authors function."""
 
     pass
-
-def test_extract():
-    """Test the _extract function."""
-
-    pass
