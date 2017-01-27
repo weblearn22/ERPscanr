@@ -10,6 +10,8 @@ from erpsc.core.utils import extract
 from erpsc.core.requester import Requester
 from erpsc.core.errors import InconsistentDataError
 
+# I HAVE MADE REALLY USEFUL ADDITIONS
+
 ######################################################################################
 ############################### ERPSC - GENERAL - BASE ###############################
 ######################################################################################
