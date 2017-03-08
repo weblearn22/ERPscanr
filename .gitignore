@@ -12,3 +12,5 @@
 **/tests/data/**
 # Ignore Apple Desktop Services files
 *.DS_Store*
+# Ignore swap files
+*.swp*
