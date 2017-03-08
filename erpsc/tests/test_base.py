@@ -5,7 +5,7 @@ NOTES
 - Load from file method '_file' are only tested for default (from module) loads.
 """
 
-from types import StringType, ListType
+#from types import StringType, ListType
 from py.test import raises
 
 from erpsc.base import Base, _check_type, _terms_load_file
@@ -20,10 +20,12 @@ def test_check_type():
     """Test that the _check_type function works properly."""
 
     out = _check_type('string')
-    assert isinstance(out, ListType)
+    #assert isinstance(out, ListType)
+    assert isinstance(out, list)
 
     out = _check_type(['list'])
-    assert isinstance(out, ListType)
+    #assert isinstance(out, ListType)
+    assert isinstance(out, list)
 
 def test_terms_load_file():
     """Test that the _terms_load_file function returns properly."""
@@ -37,8 +39,10 @@ def test_terms_load_file():
 
     for dat in all_dat:
         assert dat
-        assert isinstance(dat, ListType)
-        assert isinstance(dat[0], StringType)
+        assert isinstance(dat, list)
+        assert isinstance(dat[0], str)
+        #assert isinstance(dat, ListType)
+        #assert isinstance(dat[0], StringType)
 
 ########################################################################################
 ############################ TESTS - ERPSC - GENERAL - BASE ############################

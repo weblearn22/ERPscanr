@@ -2,7 +2,7 @@
 
 from __future__ import print_function
 
-from types import StringType, ListType
+#from types import StringType, ListType
 import pkg_resources as pkg
 from bs4 import BeautifulSoup
 
@@ -289,9 +289,11 @@ def _check_type(term):
     """
 
     # Check the type of the given item, return as list
-    if isinstance(term, StringType):
+    #if isinstance(term, StringType):
+    if isinstance(term, str):
         return [term]
-    elif isinstance(term, ListType):
+    #elif isinstance(term, ListType):
+    elif isinstance(term, list):
         return term
 
 def _terms_load_file(dat_name):

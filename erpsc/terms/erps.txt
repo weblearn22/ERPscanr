@@ -57,3 +57,5 @@
 57-PSW,positive slow wave
 58-EPN,early posterior negativity
 59-SN,selection negativity
+60-SPN,sustained posterior negativity
+61-SPCN,sustained posterior contralateral negativity
