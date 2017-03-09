@@ -1,6 +1,6 @@
 ---
-layout: home
+layout: default
 ---
 
 
-This is the ERP-SCANR wesbsite. 
+This is the ERP-SCANR wesbsite.
