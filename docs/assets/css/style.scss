@@ -4,11 +4,11 @@
 @import "{{ site.theme }}";
 
 aside#sidebar {
-  float: left;
+  float: right;
   width: 140px;
   min-height: 504px;
   padding-left: 20px;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.3;
   background: transparent url(../images/sidebar-bg.jpg) 0 0 no-repeat;
 }
