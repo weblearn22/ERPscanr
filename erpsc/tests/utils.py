@@ -55,7 +55,8 @@ def load_erp_words(add_dat=False):
         words.add_authors(('A', 'B', 'C', 'D'))
         words.add_words(['new', 'words'])
         words.add_kws(['lots', 'of', 'erps'])
-        words.add_year(2112)
+        words.add_pub_date((2112, 'Jan'))
+        #words.add_year(2112)
         words.increment_n_articles()
 
     return words

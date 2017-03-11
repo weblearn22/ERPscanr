@@ -83,3 +83,16 @@ def CatchNone(func):
             return None
 
     return wrapper
+
+
+def CatchNone2(func):
+    """Decorator function to catch and return None, None if given as argument."""
+
+    def wrapper(arg):
+
+        if arg is not None:
+            return func(arg)
+        else:
+            return None, None
+
+    return wrapper

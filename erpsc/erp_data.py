@@ -27,6 +27,8 @@ class ERPData(object):
         Words extracted from each article.
     years : list of int
         Publication year of each article included in object.
+    months : list of int
+        Publication month of each article included in object.
     kws : list of list of str
         List of keywords for each article included in the object.
     all_words : list of unicode
@@ -60,6 +62,7 @@ class ERPData(object):
         self.words = list()
         self.kws = list()
         self.years = list()
+        self.months = list()
 
         # Initialize a list to store all words (across all papers)
         self.all_words = list()
@@ -142,16 +145,42 @@ class ERPData(object):
         self.kws.append(new_kws)
 
 
+    def add_pub_date(self, new_pub_date):
+        """Add publication date information to ERPWords object.
+
+        Parameters
+        ----------
+        new_pub_date : tuple of (int, str)
+            Publication year and month of current article.
+        """
+
+        self.years.append(new_pub_date[0])
+        self.months.append(new_pub_date[1])
+
+    """
     def add_year(self, new_year):
-        """Add a new year to ERPWords object.
+        ""Add a new year to ERPWords object.
 
         Parameters
         ----------
         new_year : int
             The year the current article was published.
-        """
+        "
 
         self.years.append(new_year)
+
+
+    def add_month(self, new_month):
+        ""Add a new month of ERPWords object.
+
+        Parameters
+        ----------
+        new_month : int
+            The month the current article was published.
+        "
+
+        self.months.append(new_month)
+    """
 
 
     def increment_n_articles(self):
@@ -171,7 +200,8 @@ class ERPData(object):
 
         # Check that all data fields have length n_articles
         if not (self.n_articles == len(self.ids) == len(self.titles) == len(self.words)
-                == len(self.journals) == len(self.authors) == len(self.kws) == len(self.years)):
+                == len(self.journals) == len(self.authors) == len(self.kws)
+                == len(self.years) == len(self.months)):
 
             # If not, print out error
             raise InconsistentDataError('ERP Words data is inconsistent.')

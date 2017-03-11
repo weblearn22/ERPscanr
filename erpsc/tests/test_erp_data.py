@@ -70,14 +70,26 @@ def test_add_kws():
 
     assert words.kws
 
-def test_add_year():
+def test_add_pub_date():
     """   """
+
+    words = load_erp_words()
+
+    words.add_pub_date((2000, 'Feb'))
+
+    assert words.years
+    assert words.months
+
+"""
+def test_add_year():
+    "   ""
 
     words = load_erp_words()
 
     words.add_year(2112)
 
     assert words.years
+"""
 
 def test_increment_n_articles():
     """   """

@@ -10,7 +10,7 @@ from nltk.corpus import stopwords
 from erpsc.base import Base
 from erpsc.erp_data import ERPData
 from erpsc.core.urls import URLS
-from erpsc.core.utils import CatchNone, comb_terms, extract
+from erpsc.core.utils import CatchNone, CatchNone2, comb_terms, extract
 
 #################################################################################################
 #################################### ERPSC - WORDS - Classes ####################################
@@ -64,6 +64,8 @@ class Words(Base):
         -----
         - Data extraction is all in try/except statements in order to
         deal with missing data, since fields may be missing.
+
+        TODO: Add DOI extraction
         """
 
         # Add ID of current article
@@ -73,7 +75,10 @@ class Words(Base):
         cur_erp.add_journal(extract(art, 'Title', 'str'), extract(art, 'ISOAbbreviation', 'str'))
         cur_erp.add_words(_process_words(extract(art, 'AbstractText', 'str')))
         cur_erp.add_kws(_process_kws(extract(art, 'Keyword', 'all')))
-        cur_erp.add_year(extract(extract(art, 'DateCreated', 'raw'), 'Year', 'str'))
+        cur_erp.add_pub_date(_process_pub_date(extract(art, 'PubDate', 'raw')))
+
+        # Old year extraction - was the wrong field
+        #cur_erp.add_year(extract(extract(art, 'DateCreated', 'raw'), 'Year', 'str'))
 
         # Increment number of articles included in ERPData
         cur_erp.increment_n_articles()
@@ -318,3 +323,26 @@ def _process_authors(author_list):
                     extract(author, 'Initials', 'str'), extract(author, 'Affiliation', 'str')))
 
     return out
+
+
+@CatchNone2
+def _process_pub_date(pub_date):
+    """
+
+    Parameters
+    ----------
+    pub_date : bs4.element.Tag
+        PubDate tag, which contains tags with publication date information.
+
+    Returns
+    -------
+    year : int
+        xx
+    month : str
+        xx
+    """
+
+    year = int(extract(pub_date, 'Year', 'str'))
+    month = extract(pub_date, 'Month', 'str')
+
+    return year, month
