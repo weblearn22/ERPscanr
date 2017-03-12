@@ -45,7 +45,9 @@ def test_extract_add_info():
                                   " and the P600 in Language Processing.")
     assert erp_word.words[0][0] == "ten"
     assert erp_word.kws[0][0] == "Computational modeling"
-    assert erp_word.years[0] == '2016'
+    assert erp_word.years[0] == 2016
+    assert erp_word.months[0] == 'Dec'
+    assert erp_word.dois[0] == '10.1111/cogs.12461'
 
     # Check page with all fields missing - check error handling
     page = requests.get('http://www.google.com')
@@ -56,6 +58,8 @@ def test_extract_add_info():
     assert erp_word.words[1] is None
     assert erp_word.kws[1] is None
     assert erp_word.years[1] is None
+    assert erp_word.months[1] is None
+    assert erp_word.dois[1] is None
 
 def test_scrape_data():
     """Test the scrape_data method."""
@@ -138,5 +142,15 @@ def test_process_kws():
 
 def test_process_authors():
     """Test the _process_authors function."""
+
+    pass
+
+def test_process_pub_date():
+    """   """
+
+    pass
+
+def test_process_ids():
+    """   """
 
     pass

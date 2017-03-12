@@ -76,6 +76,7 @@ class Words(Base):
         cur_erp.add_words(_process_words(extract(art, 'AbstractText', 'str')))
         cur_erp.add_kws(_process_kws(extract(art, 'Keyword', 'all')))
         cur_erp.add_pub_date(_process_pub_date(extract(art, 'PubDate', 'raw')))
+        cur_erp.add_doi(_process_ids(extract(art, 'ArticleId', 'all')))
 
         # Old year extraction - was the wrong field
         #cur_erp.add_year(extract(extract(art, 'DateCreated', 'raw'), 'Year', 'str'))
@@ -346,3 +347,23 @@ def _process_pub_date(pub_date):
     month = extract(pub_date, 'Month', 'str')
 
     return year, month
+
+@CatchNone
+def _process_ids(ids):
+    """
+
+    Parameters
+    ----------
+    ids : bs4.element.ResultSet
+        All the ArticleId tags, with all IDs for the article.
+
+    Returns
+    -------
+    str or None
+        The DOI if available, otherwise None.
+    """
+
+    lst = [str(i.contents[0]) for i in ids if i.attrs == {'IdType' : 'doi'}]
+
+    if lst == []: return None
+    else: return lst[0]

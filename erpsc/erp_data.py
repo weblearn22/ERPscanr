@@ -25,12 +25,14 @@ class ERPData(object):
         Authors of all articles included in object.
     words : list of list of unicode
         Words extracted from each article.
+    kws : list of list of str
+        List of keywords for each article included in the object.
     years : list of int
         Publication year of each article included in object.
     months : list of int
         Publication month of each article included in object.
-    kws : list of list of str
-        List of keywords for each article included in the object.
+    dois : list of str
+        DOIs of each article included in object.
     all_words : list of unicode
         All words from all articles.
     freqs : nltk FreqDist
@@ -63,6 +65,7 @@ class ERPData(object):
         self.kws = list()
         self.years = list()
         self.months = list()
+        self.dois = list()
 
         # Initialize a list to store all words (across all papers)
         self.all_words = list()
@@ -156,6 +159,18 @@ class ERPData(object):
 
         self.years.append(new_pub_date[0])
         self.months.append(new_pub_date[1])
+
+
+    def add_doi(self, new_doi):
+        """Add DOI to ERPWords object.
+
+        Parameters
+        ----------
+        new_doi : str
+            DOI for the current article.
+        """
+
+        self.dois.append(new_doi)
 
     """
     def add_year(self, new_year):

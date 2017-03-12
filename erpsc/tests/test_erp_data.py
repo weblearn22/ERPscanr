@@ -80,6 +80,15 @@ def test_add_pub_date():
     assert words.years
     assert words.months
 
+def test_add_doi():
+    """   """
+
+    words = load_erp_words()
+
+    words.add_doi('doi_str')
+
+    assert words.dois
+
 """
 def test_add_year():
     "   ""
