@@ -1,5 +1,7 @@
 """Classes and functions to store and process extracted paper data."""
 
+import json
+
 from erpsc.core.errors import InconsistentDataError
 
 ##########################################################################
@@ -241,7 +243,21 @@ class ERPData(object):
             raise InconsistentDataError('ERP Words data is inconsistent.')
 
 
-    def empty(self):
+    def save(self):
+        """   """
+
+        with open(self.erp[0] + '.json', 'w') as outfile:
+            for art in self:
+                json.dump(art, outfile)
+                outfile.write('\n')
+
+        #for art in self:
+        #    f_name = art['erp'][0] + '-' + str(art['id']) + '.json'
+        #    with open(f_name, 'w') as outfile:
+        #        json.dump(art, outfile)
+
+
+    def clear(self):
         """   """
 
         # Re-initiliaze all data lists to be empty
@@ -258,3 +274,9 @@ class ERPData(object):
         # Re-initialize article count to zero
         self.n_articles = 0
 
+
+    def save_n_clear(self):
+        """   """
+
+        self.save()
+        self.empty()
