@@ -45,8 +45,7 @@ def load_base(set_erps=False, set_excl=False, set_terms=None):
 def load_erp_words(add_dat=False):
     """Helper function to load ERPData() object for testing."""
 
-    test_erp = 'test'
-    words = ERPData(test_erp)
+    words = ERPData('test')
 
     if add_dat:
         words.add_id(1)
@@ -56,7 +55,7 @@ def load_erp_words(add_dat=False):
         words.add_words(['new', 'words'])
         words.add_kws(['lots', 'of', 'erps'])
         words.add_pub_date((2112, 'Jan'))
-        #words.add_year(2112)
+        words.add_doi('doi_str')
         words.increment_n_articles()
 
     return words
