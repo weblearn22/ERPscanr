@@ -74,6 +74,25 @@ class ERPData(object):
         self.freqs = list()
 
 
+    def __iter__(self):
+        """   """
+
+        for ind in range(self.n_articles):
+
+            yield {
+                'erp': self.erp,
+                'id': self.ids[ind],
+                'title': self.titles[ind],
+                'journal': self.journals[ind],
+                'authors': self.authors[ind],
+                'words': self.words[ind],
+                'kws': self.kws[ind],
+                'year': self.years[ind],
+                'month': self.months[ind],
+                'doi': self.dois[ind]
+            }
+
+
     def add_id(self, new_id):
         """Add a new ID to ERPWords object.
 
@@ -216,7 +235,26 @@ class ERPData(object):
         # Check that all data fields have length n_articles
         if not (self.n_articles == len(self.ids) == len(self.titles) == len(self.words)
                 == len(self.journals) == len(self.authors) == len(self.kws)
-                == len(self.years) == len(self.months)):
+                == len(self.years) == len(self.months) == len(self.dois)):
 
             # If not, print out error
             raise InconsistentDataError('ERP Words data is inconsistent.')
+
+
+    def empty(self):
+        """   """
+
+        # Re-initiliaze all data lists to be empty
+        self.ids = list()
+        self.titles = list()
+        self.journals = list()
+        self.authors = list()
+        self.words = list()
+        self.kws = list()
+        self.years = list()
+        self.months = list()
+        self.dois = list()
+
+        # Re-initialize article count to zero
+        self.n_articles = 0
+
