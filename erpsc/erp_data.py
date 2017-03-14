@@ -77,7 +77,7 @@ class ERPData(object):
 
 
     def __iter__(self):
-        """   """
+        """Iterate through extracted ERP papers."""
 
         for ind in range(self.n_articles):
 
@@ -193,31 +193,6 @@ class ERPData(object):
 
         self.dois.append(new_doi)
 
-    """
-    def add_year(self, new_year):
-        ""Add a new year to ERPWords object.
-
-        Parameters
-        ----------
-        new_year : int
-            The year the current article was published.
-        "
-
-        self.years.append(new_year)
-
-
-    def add_month(self, new_month):
-        ""Add a new month of ERPWords object.
-
-        Parameters
-        ----------
-        new_month : int
-            The month the current article was published.
-        "
-
-        self.months.append(new_month)
-    """
-
 
     def increment_n_articles(self):
         """Increment the number of articles included in current object."""
@@ -250,11 +225,6 @@ class ERPData(object):
             for art in self:
                 json.dump(art, outfile)
                 outfile.write('\n')
-
-        #for art in self:
-        #    f_name = art['erp'][0] + '-' + str(art['id']) + '.json'
-        #    with open(f_name, 'w') as outfile:
-        #        json.dump(art, outfile)
 
 
     def clear(self):
