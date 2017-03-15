@@ -3,23 +3,23 @@
 from py.test import raises
 
 from erpsc.erp_data import *
-from erpsc.tests.utils import load_erp_words
+from erpsc.tests.utils import load_erp_data
 
-###################################################################################
-############################## TESTS - ERPSC - WORDS ##############################
-###################################################################################
+######################################################################################
+############################## TESTS - ERPSC - ERP_DATA ##############################
+######################################################################################
 
-def test_erp_words():
-    """Test the Words object."""
+def test_erp_data():
+    """Test the ERPData object."""
 
-    # Check that ERPSCWords returns properly.
+    # Check that ERPData returns properly.
     erp = 'test'
     assert ERPData(erp)
 
 def test_add_id():
     """   """
 
-    words = load_erp_words()
+    words = load_erp_data()
 
     words.add_id(1)
 
@@ -28,7 +28,7 @@ def test_add_id():
 def test_add_title():
     """   """
 
-    words = load_erp_words()
+    words = load_erp_data()
 
     words.add_title('title')
 
@@ -37,7 +37,7 @@ def test_add_title():
 def test_add_authors():
     """   """
 
-    words = load_erp_words()
+    words = load_erp_data()
 
     words.add_authors(('Last', 'First', 'IN', 'School'))
 
@@ -46,7 +46,7 @@ def test_add_authors():
 def test_add_journal():
     """   """
 
-    words = load_erp_words()
+    words = load_erp_data()
 
     words.add_journal('Journal name', 'J abbrev')
 
@@ -55,7 +55,7 @@ def test_add_journal():
 def test_add_words():
     """   """
 
-    words = load_erp_words()
+    words = load_erp_data()
 
     words.add_words(['new', 'words'])
 
@@ -64,7 +64,7 @@ def test_add_words():
 def test_add_kws():
     """   """
 
-    words = load_erp_words()
+    words = load_erp_data()
 
     words.add_kws(['list', 'of', 'kws'])
 
@@ -73,7 +73,7 @@ def test_add_kws():
 def test_add_pub_date():
     """   """
 
-    words = load_erp_words()
+    words = load_erp_data()
 
     words.add_pub_date((2000, 'Feb'))
 
@@ -83,7 +83,7 @@ def test_add_pub_date():
 def test_add_doi():
     """   """
 
-    words = load_erp_words()
+    words = load_erp_data()
 
     words.add_doi('doi_str')
 
@@ -93,7 +93,7 @@ def test_add_doi():
 def test_add_year():
     "   ""
 
-    words = load_erp_words()
+    words = load_erp_data()
 
     words.add_year(2112)
 
@@ -103,7 +103,7 @@ def test_add_year():
 def test_increment_n_articles():
     """   """
 
-    words = load_erp_words()
+    words = load_erp_data()
 
     words.increment_n_articles()
 
@@ -112,7 +112,7 @@ def test_increment_n_articles():
 def test_check_results():
     """   """
 
-    words = load_erp_words(add_dat=True)
+    words = load_erp_data(add_dat=True)
 
     words.check_results()
 
