@@ -171,9 +171,9 @@ class Words(Base):
         # Set Requester object as finished being used
         self.req.close()
 
-
+    """
     def combine_words(self):
-        """Combine the words from each article together."""
+        ""Combine the words from each article together.""
 
         # Loop through each erp, and each article
         for erp in range(self.n_erps):
@@ -185,7 +185,7 @@ class Words(Base):
 
 
     def freq_dists(self):
-        """Create a frequency distribution from all the extracted words."""
+        ""Create a frequency distribution from all the extracted words.""
 
         # Loop through all ERPs
         for erp in range(self.n_erps):
@@ -194,20 +194,18 @@ class Words(Base):
             self.results[erp].freqs = nltk.FreqDist(self.results[erp].all_words)
 
             # Remove the ERPs name from list of words - so ERP isn't trivially most common
-            try:
-                self.results[erp].freqs.pop(self.erps[erp][0].lower())
-            except KeyError:
-                pass
+            try: self.results[erp].freqs.pop(self.erps[erp][0].lower())
+            except KeyError: pass
 
 
     def check_words(self, n_check=20):
-        """Check the most common words for each ERP.
+        ""Check the most common words for each ERP.
 
         Parameters
         ----------
         n_check : int, optional (default=20)
             Number of top words, for each ERP, to print out.
-        """
+        ""
 
         # Loop through each ERP term
         for erp in range(self.n_erps):
@@ -223,6 +221,7 @@ class Words(Base):
 
             # Print out the top words for the current ERP
             print(self.erps[erp][0], ': ', top_words_str)
+    """
 
 #######################################################################################################
 ################################# ERPSC - WORDS - FUNCTIONS (PRIVATE) #################################
@@ -343,10 +342,15 @@ def _process_pub_date(pub_date):
         xx
     """
 
-    year = int(extract(pub_date, 'Year', 'str'))
+    # Extract year, convert to int if not None
+    year = extract(pub_date, 'Year', 'str')
+    if year: year = int(year)
+
+    # Extract month
     month = extract(pub_date, 'Month', 'str')
 
     return year, month
+
 
 @CatchNone
 def _process_ids(ids):
