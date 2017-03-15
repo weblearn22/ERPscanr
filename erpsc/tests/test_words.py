@@ -75,30 +75,33 @@ def test_scrape_data():
 
     assert True
 
+"""
     comb_words(words)
     freq_dists(words)
     check_words(words)
 
+
 def comb_words(words):
-    """Run the combine_words method for testing."""
+    ""Run the combine_words method for testing.""
 
     words.combine_words()
 
     assert True
 
 def freq_dists(words):
-    """Run the freq_dists method for testing."""
+    ""Run the freq_dists method for testing.""
 
     words.freq_dists()
 
     assert True
 
 def check_words(words):
-    """Run the check_words method for testing."""
+    ""Run the check_words method for testing.""
 
     words.check_words()
 
     assert True
+"""
 
 #######################################################################################
 ###################### TEST - ERPSC - WORDS - PRIVATE FUNCTIONS  ######################
