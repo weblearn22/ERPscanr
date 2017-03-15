@@ -13,8 +13,8 @@ class ERPData(object):
 
     Attributes
     ----------
-    erp : str
-        Name of the ERP word data relates to.
+    erp : list of str
+        Name(s) of the ERP word data relates to.
     ids : list of int
         Pubmed article ids for all articles included in object.
     n_articles : int
@@ -22,9 +22,11 @@ class ERPData(object):
     titles : list of str
         Titles of all articles included in object.
     journals : list of tuple of (str, str)
-        List of journals articles come from. (Journal Name, ISO abbreviation).
+        List of journals articles come from.
+            (Journal Name, ISO abbreviation).
     authors : list of list of str
         Authors of all articles included in object.
+            (Last Name, First Name, Initials, Affiliation)
     words : list of list of unicode
         Words extracted from each article.
     kws : list of list of str
@@ -35,10 +37,6 @@ class ERPData(object):
         Publication month of each article included in object.
     dois : list of str
         DOIs of each article included in object.
-    all_words : list of unicode
-        All words from all articles.
-    freqs : nltk FreqDist
-        Frequency distribution of all words.
     """
 
     def __init__(self, erp):
@@ -70,10 +68,10 @@ class ERPData(object):
         self.dois = list()
 
         # Initialize a list to store all words (across all papers)
-        self.all_words = list()
+        #self.all_words = list()
 
         # Initialize to store FreqDists (across all words)
-        self.freqs = list()
+        #self.freqs = list()
 
 
     def __iter__(self):
@@ -219,7 +217,7 @@ class ERPData(object):
 
 
     def save(self):
-        """   """
+        """Save out json file with all attached data."""
 
         with open(self.erp[0] + '.json', 'w') as outfile:
             for art in self:
@@ -228,7 +226,7 @@ class ERPData(object):
 
 
     def clear(self):
-        """   """
+        """Clear all data attached to object."""
 
         # Re-initiliaze all data lists to be empty
         self.ids = list()
@@ -246,7 +244,7 @@ class ERPData(object):
 
 
     def save_n_clear(self):
-        """   """
+        """Save out the attached data and clear the object."""
 
         self.save()
         self.empty()
