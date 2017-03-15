@@ -1,4 +1,5 @@
 """Classes and functions to store aggregated ERP paper data."""
+from __future__ import print_function
 
 import nltk
 
@@ -93,6 +94,17 @@ class ERPDataAll(object):
         """Create frequency distribution of all keywords."""
 
         self.kw_freqs = nltk.FreqDist(self.all_kws)
+
+
+    def print_summary(self):
+        """Print out a summary of the scraped ERP paper data."""
+
+        print('The number of articles is', str(self.n_articles))
+        print('The most common author is', self.author_counts[0][1][1],
+              self.author_counts[0][1][0], 'with', self.author_counts[0][0],
+              'articles.')
+        print('The most common journal is', self.journal_counts[0][1],
+              'with', self.journal_counts[0][0], 'articles.')
 
 ##########################################################################################
 ##########################################################################################
