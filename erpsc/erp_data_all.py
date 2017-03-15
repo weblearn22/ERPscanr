@@ -156,9 +156,11 @@ def _proc_fst_authors(a_lst):
 
     names = [(author[0], author[2]) for author in [authors[0] for authors in a_lst]]
 
-    #
-    names = [(ee[0].split(' ')[1], ee[0].split(' ')[0][0])
-             if ee[1] is None else ee for ee in names]
+    # Sometimes full author name ends up in the last name field
+    #  If first name is None, assume this happened
+    #   Split up the text in first name, and grab the first name initial
+    names = [(name[0].split(' ')[1], name[0].split(' ')[0][0])
+             if name[1] is None else name for name in names]
 
     counts = [(names.count(i), i) for i in set(names)]
 
@@ -181,11 +183,13 @@ def _proc_authors(a_lst):
         Number of publications per author - (n, (Last Name, Initials)).
     """
 
-    names = [(d[0], d[2]) for c in a_lst for d in c]
+    names = [(author[0], author[2]) for authors in a_lst for author in authors]
 
-    #
-    names = [(ee[0].split(' ')[1], ee[0].split(' ')[0][0])
-             if ee[1] is None else ee for ee in names]
+    # Sometimes full author name ends up in the last name field
+    #  If first name is None, assume this happened
+    #   Split up the text in first name, and grab the first name initial
+    names = [(name[0].split(' ')[1], name[0].split(' ')[0][0])
+             if name[1] is None else name for name in names]
 
     counts = [(names.count(i), i) for i in set(names)]
 
