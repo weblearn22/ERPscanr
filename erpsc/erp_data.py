@@ -123,7 +123,8 @@ class ERPData(object):
         Parameters
         ----------
         new_authors : list of tuple of (str, str, str, str)
-            Author list of the current article, as (LastName, FirstName, Initials, Affiliation).
+            Author list of the current article.
+                (LastName, FirstName, Initials, Affiliation)
         """
 
         self.authors.append(new_authors)
