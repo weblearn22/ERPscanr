@@ -96,6 +96,50 @@ class ERPDataAll(object):
         self.kw_freqs = nltk.FreqDist(self.all_kws)
 
 
+    def check_words(self, n_check):
+        """Check the most common words for the ERP.
+
+        Parameters
+        ----------
+        n_check : int, optional (default=20)
+            Number of top words to print out.
+        """
+
+        # Get the requested number of most common words for the ERP
+        top_words = self.word_freqs.most_common()[0:n_check]
+
+        # Join together the top words into a string
+        top_words_str = ''
+        for i in range(n_check):
+            top_words_str += top_words[i][0]
+            top_words_str += ' , '
+
+        # Print out the top words for the current ERP
+        print(self.erp[0], ': ', top_words_str)
+
+
+    def check_kws(self, n_check):
+        """Check the most common kws for the ERP.
+
+        Parameters
+        ----------
+        n_check : int, optional (default=20)
+            Number of top words to print out.
+        """
+
+        # Get the requested number of most common kws for the ERP
+        top_words = self.kw_freqs.most_common()[0:n_check]
+
+        # Join together the top words into a string
+        top_words_str = ''
+        for i in range(n_check):
+            top_words_str += top_words[i][0]
+            top_words_str += ' , '
+
+        # Print out the top words for the current ERP
+        print(self.erp[0], ': ', top_words_str)
+
+
     def print_summary(self):
         """Print out a summary of the scraped ERP paper data."""
 
