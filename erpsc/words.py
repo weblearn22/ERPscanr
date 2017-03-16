@@ -32,7 +32,22 @@ class Words(Base):
         Base.__init__(self)
 
         # Initialize a list to store results for all the erps
+        self.keys = list()
         self.results = list()
+
+
+    def __getitem__(self, key):
+        """   """
+
+        if len(self.keys) == 0:
+            raise IndexError('Object is empty - cannot index.')
+
+        try:
+            ind = self.keys.index(key)
+        except ValueError:
+            raise IndexError('Requested key not available in object.')
+
+        return self.results[ind]
 
 
     def add_results(self, new_result):
@@ -44,6 +59,7 @@ class Words(Base):
             Object with information about current ERP term.
         """
 
+        self.keys.append(new_result.erp[0])
         self.results.append(new_result)
 
 
