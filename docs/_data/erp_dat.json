@@ -1,0 +1,11 @@
+{
+  "testERP": {
+    "n_art": 999,
+    "com_journal": "J. ERPs",
+    "com_author": "E.R Potential",
+    "f_pub": "2112",
+    "kws": ["kw-1", "kw-2", "kw-3"],
+    "sim": "P7549",
+    "diff": "N125.6",
+  }
+}
