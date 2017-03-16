@@ -171,58 +171,6 @@ class Words(Base):
         # Set Requester object as finished being used
         self.req.close()
 
-    """
-    def combine_words(self):
-        ""Combine the words from each article together.""
-
-        # Loop through each erp, and each article
-        for erp in range(self.n_erps):
-            for art in range(self.results[erp].n_articles):
-
-                # Combine the words from each article into the 'all_words' collection
-                if self.results[erp].words[art]:
-                    self.results[erp].all_words.extend(self.results[erp].words[art])
-
-
-    def freq_dists(self):
-        ""Create a frequency distribution from all the extracted words.""
-
-        # Loop through all ERPs
-        for erp in range(self.n_erps):
-
-            # Use nltk to create a frequency distribution from all words
-            self.results[erp].freqs = nltk.FreqDist(self.results[erp].all_words)
-
-            # Remove the ERPs name from list of words - so ERP isn't trivially most common
-            try: self.results[erp].freqs.pop(self.erps[erp][0].lower())
-            except KeyError: pass
-
-
-    def check_words(self, n_check=20):
-        ""Check the most common words for each ERP.
-
-        Parameters
-        ----------
-        n_check : int, optional (default=20)
-            Number of top words, for each ERP, to print out.
-        ""
-
-        # Loop through each ERP term
-        for erp in range(self.n_erps):
-
-            # Get the requested number of most common words for the ERP
-            top_words = self.results[erp].freqs.most_common()[0:n_check]
-
-            # Join together the top words into a string
-            top_words_str = ''
-            for i in range(n_check):
-                top_words_str += top_words[i][0]
-                top_words_str += ' , '
-
-            # Print out the top words for the current ERP
-            print(self.erps[erp][0], ': ', top_words_str)
-    """
-
 #######################################################################################################
 ################################# ERPSC - WORDS - FUNCTIONS (PRIVATE) #################################
 #######################################################################################################
