@@ -2,10 +2,27 @@
 
 import random
 from wordcloud import WordCloud
+import matplotlib.pyplot as plt
 
 ############################################################################################
 ############################################################################################
 ############################################################################################
+
+def make_wc(freq_dist, n_words, save_fig=False):
+    """   """
+
+    wc = create_wc(conv_freqs(freq_dist, 20))
+    disp_wc(wc, save_fig)
+
+
+def disp_wc(wc, save_fig):
+    """   """
+
+    plt.imshow(wc)
+    plt.axis("off")
+
+    if save_fig:
+        plt.save_fig('wc.png')
 
 def conv_freqs(freq_dist, n_words):
     """Convert FreqDist into a list of tuple for creating a WordCloud.
@@ -19,13 +36,16 @@ def conv_freqs(freq_dist, n_words):
 
     Returns
     -------
-    list of tuple
+    dict
         All words with their corresponding frequecies.
     """
 
+    return dict(freq_dist.most_common(n_words))
+
+    # OLD: (FROM PY27)
     # Get most common words, and convert to tuple format
-    top_words = freq_dist.most_common(n_words)
-    return [(freq[0], freq[1]) for freq in top_words]
+    #top_words = freq_dist.most_common(n_words)
+    #return [(freq[0], freq[1]) for freq in top_words]
 
 
 def create_wc(words_in):
