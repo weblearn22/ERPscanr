@@ -37,11 +37,13 @@ class Words(Base):
 
 
     def __getitem__(self, key):
-        """   """
+        """Be able to index into Words object with ERP label key."""
 
+        # Give up if obkect is empty
         if len(self.keys) == 0:
             raise IndexError('Object is empty - cannot index.')
 
+        # Check if requested key is available
         try:
             ind = self.keys.index(key)
         except ValueError:
@@ -93,9 +95,6 @@ class Words(Base):
         cur_erp.add_kws(_process_kws(extract(art, 'Keyword', 'all')))
         cur_erp.add_pub_date(_process_pub_date(extract(art, 'PubDate', 'raw')))
         cur_erp.add_doi(_process_ids(extract(art, 'ArticleId', 'all')))
-
-        # Old year extraction - was the wrong field
-        #cur_erp.add_year(extract(extract(art, 'DateCreated', 'raw'), 'Year', 'str'))
 
         # Increment number of articles included in ERPData
         cur_erp.increment_n_articles()
