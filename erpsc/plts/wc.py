@@ -43,7 +43,8 @@ def create_wc(words_in):
     """
 
     # Create the WordCloud object
-    wc = WordCloud(background_color='white',
+    wc = WordCloud(background_color=None,
+                   mode='RGBA',
                    width=800,
                    height=400,
                    prefer_horizontal=1,
