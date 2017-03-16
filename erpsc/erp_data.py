@@ -67,12 +67,6 @@ class ERPData(object):
         self.months = list()
         self.dois = list()
 
-        # Initialize a list to store all words (across all papers)
-        #self.all_words = list()
-
-        # Initialize to store FreqDists (across all words)
-        #self.freqs = list()
-
 
     def __iter__(self):
         """Iterate through extracted ERP papers."""
