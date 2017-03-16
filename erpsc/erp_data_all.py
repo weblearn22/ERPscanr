@@ -241,6 +241,9 @@ def _proc_authors(a_lst):
 
     names = [(author[0], author[2]) for authors in a_lst for author in authors]
 
+    # Drop Nones
+    names = filter(lambda n: n != (None, None), names)
+
     # Sometimes full author name ends up in the last name field
     #  If first name is None, assume this happened
     #   Split up the text in first name, and grab the first name initial
