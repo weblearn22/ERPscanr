@@ -293,7 +293,9 @@ def _process_kws(keywords):
         List of all the keywords.
     """
 
-    return [kw.text.encode('ascii', 'ignore') for kw in keywords]
+    # NOTE: UPDATE WITH MOVE TO PY35
+    return [kw.text for kw in keywords]
+    #return [kw.text.encode('ascii', 'ignore') for kw in keywords]
 
 
 @CatchNone

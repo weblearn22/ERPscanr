@@ -58,10 +58,11 @@ def extract(dat, tag, how):
     try:
         if how is 'raw':
             return dat.find(tag)
-        elif how is 'txt':
-            return dat.find(tag).text
+        # NOTE: SWITCHED TXT TO STR AND DROPPED STR WITH MOVE TO PY35
         elif how is 'str':
-            return dat.find(tag).text.encode('ascii', 'ignore')
+            return dat.find(tag).text
+        #elif how is 'str':
+        #    return dat.find(tag).text.encode('ascii', 'ignore')
         elif how is 'all':
             return dat.findAll(tag)
 
