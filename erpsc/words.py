@@ -1,5 +1,5 @@
 """Classes and functions for Word analysis (text analysis of abstract texts)."""
-from __future__ import print_function, division
+#from __future__ import print_function, division
 
 import datetime
 from bs4 import BeautifulSoup
@@ -82,8 +82,6 @@ class Words(Base):
         -----
         - Data extraction is all in try/except statements in order to
         deal with missing data, since fields may be missing.
-
-        TODO: Add DOI extraction
         """
 
         # Add ID of current article

@@ -1,6 +1,5 @@
 """Base object for ERP-SCANR."""
-
-from __future__ import print_function
+#from __future__ import print_function
 
 #from types import StringType, ListType
 import pkg_resources as pkg
