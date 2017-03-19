@@ -215,14 +215,14 @@ class ERPData(object):
                 == len(self.years) == len(self.months) == len(self.dois)):
 
             # If not, print out error
-            cur_erp.update_history('Failed Check')
+            self.update_history('Failed Check')
             raise InconsistentDataError('ERP Words data is inconsistent.')
 
         # Update history
-        cur_erp.update_history('Passed Check')
+        self.update_history('Passed Check')
 
 
-    def update_history(update):
+    def update_history(self, update):
         """Update object history."""
 
         self.history.append(update)
