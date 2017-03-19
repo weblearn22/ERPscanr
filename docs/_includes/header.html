@@ -10,6 +10,11 @@
 
 
     <title>{{ site.title | default: site.github.repository_name }} by {{ site.github.owner_name }}</title>
+
+    {% if site.google_analytics and jekyll.environment == 'production' %}
+    {% include analytics.html %}
+    {% endif %}
+
   </head>
 
   <body>
@@ -26,9 +31,7 @@
           <a href="{{ site.github.repository_url }}" class="button"><small>Follow me on</small> GitHub</a>
         {% endif %}
 
-        {% if site.google_analytics and jekyll.environment == 'production' %}
-        {% include analytics.html %}
-        {% endif %}
+
 
       </div>
     </header>
