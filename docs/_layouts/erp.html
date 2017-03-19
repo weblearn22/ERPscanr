@@ -2,7 +2,7 @@
 
 <h1>{{ page.title }}</h1>
 
-<img src={{ site.url }}/assets/{{ page.title }}/wc.png alt="Test-WC" align="middle">
+<img src={{ site.baseurl }}/assets/{{ page.title }}/wc.png alt="Test-WC" align="middle">
 
 <h4> The most common keywords for this ERP are: </h4>
 <ul>
@@ -23,6 +23,6 @@ Author: {{ site.data.erp_dat[page.title].com_author }} </p>
 This ERP is most different from:  {{ site.data.erp_dat[page.title].diff }} </p>
 
 <h4> Publication History </h4>
-<img src={{ site.url }}/assets/{{ page.title }}/hist.png alt="Test-History">
+<img src={{ site.baseurl }}/assets/{{ page.title }}/hist.png alt="Test-History">
 
 {% include sidebar.html %}
