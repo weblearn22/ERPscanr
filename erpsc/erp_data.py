@@ -2,11 +2,12 @@
 
 import json
 
+from erpsc.core.io import check_db
 from erpsc.core.errors import InconsistentDataError
 
-##########################################################################
-############################ ERPSC - ERPWords ############################
-##########################################################################
+##################################################################################
+################################ ERPSC - ERPWords ################################
+##################################################################################
 
 class ERPData(object):
     """An object to hold the word results for a given ERP or term.
@@ -37,6 +38,8 @@ class ERPData(object):
         Publication month of each article included in object.
     dois : list of str
         DOIs of each article included in object.
+    history : list of str
+        History of the object and it's data.
     """
 
     def __init__(self, erp):
@@ -66,6 +69,10 @@ class ERPData(object):
         self.years = list()
         self.months = list()
         self.dois = list()
+
+        # Initialize list to track object history
+        self.history = list()
+        self.update_history('Initialized')
 
 
     def __iter__(self):
@@ -208,16 +215,31 @@ class ERPData(object):
                 == len(self.years) == len(self.months) == len(self.dois)):
 
             # If not, print out error
+            cur_erp.update_history('Failed Check')
             raise InconsistentDataError('ERP Words data is inconsistent.')
 
+        # Update history
+        cur_erp.update_history('Passed Check')
 
-    def save(self):
+
+    def update_history(update):
+        """Update object history."""
+
+        self.history.append(update)
+
+
+    def save(self, db=None):
         """Save out json file with all attached data."""
 
-        with open(self.erp[0] + '.json', 'w') as outfile:
+        db = check_db(db)
+
+        with open(db.words_path + '/raw/' + self.erp[0] + '.json', 'w') as outfile:
             for art in self:
                 json.dump(art, outfile)
                 outfile.write('\n')
+
+        # Update history
+        self.update_history('Saved')
 
 
     def clear(self):
@@ -236,6 +258,9 @@ class ERPData(object):
 
         # Re-initialize article count to zero
         self.n_articles = 0
+
+        # Update history
+        self.update_history('Cleared')
 
 
     def save_n_clear(self):
