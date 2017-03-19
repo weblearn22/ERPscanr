@@ -45,18 +45,18 @@ def load_base(set_erps=False, set_excl=False, set_terms=None):
 def load_erp_data(add_dat=False, n=1):
     """Helper function to load ERPData() object for testing."""
 
-    words = ERPData('test')
+    erp_dat = ERPData(['test'])
 
     if add_dat:
         for i in range(n):
-            words.add_id(1)
-            words.add_title('title')
-            words.add_journal('science', 'sc')
-            words.add_authors([('A', 'B', 'C', 'D')])
-            words.add_words(['new', 'words'])
-            words.add_kws(['lots', 'of', 'erps'])
-            words.add_pub_date((2112, 'Jan'))
-            words.add_doi('doi_str')
-            words.increment_n_articles()
+            erp_dat.add_id(1)
+            erp_dat.add_title('title')
+            erp_dat.add_journal('science', 'sc')
+            erp_dat.add_authors([('A', 'B', 'C', 'D')])
+            erp_dat.add_words(['new', 'erp_dat'])
+            erp_dat.add_kws(['lots', 'of', 'erps'])
+            erp_dat.add_pub_date((2112, 'Jan'))
+            erp_dat.add_doi('doi_str')
+            erp_dat.increment_n_articles()
 
-    return words
+    return erp_dat
