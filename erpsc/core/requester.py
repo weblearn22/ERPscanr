@@ -39,6 +39,16 @@ class Requester(object):
         self.time_last_req = float()
 
 
+    def check(self):
+        """Print out basic check of requester object."""
+
+        print('Requester object is active: \t', str(self.is_active))
+        print('Number of requests sent: \t', str(self.n_requests))
+        print('Requester opened: \t\t', str(self.st_time))
+        print('Requester closed: \t\t', str(self.en_time))
+        print('Most recent request sent at: \t', str(self.time_last_req))
+
+
     def throttle(self):
         """Slow down rate of requests by waiting if a new request is initiated too soon."""
 
@@ -69,7 +79,7 @@ class Requester(object):
         Parameters
         ----------
         url : str
-            Web address to
+            Web address to request.
 
         Returns
         -------
