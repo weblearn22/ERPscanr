@@ -1,4 +1,4 @@
-"""Load & save functions for ERP-SCANR. p"""
+"""Load & save functions for ERP-SCANR."""
 
 import os
 import pickle
