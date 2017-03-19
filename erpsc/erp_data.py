@@ -51,7 +51,8 @@ class ERPData(object):
             Name of the ERP.
         """
 
-        # Set the given string as the erp label
+        # Set the given name & synonyms as the erp label
+        self.label = erp[0]
         self.erp = erp
 
         # Initialize list to store pubmed article ids
@@ -233,13 +234,34 @@ class ERPData(object):
 
         db = check_db(db)
 
-        with open(db.words_path + '/raw/' + self.erp[0] + '.json', 'w') as outfile:
+        with open(db.words_path + '/raw/' + self.label + '.json', 'w') as outfile:
             for art in self:
                 json.dump(art, outfile)
                 outfile.write('\n')
 
         # Update history
         self.update_history('Saved')
+
+
+    def load(self, db=None):
+        """Load raw data from json file."""
+
+        db = check_db(db)
+
+        data = _parse_json_dat(db.words_path + '/raw/' + self.label + '.json')
+
+        for dat in data:
+            self.add_id(dat['id'])
+            self.add_title(dat['title'])
+            self.add_journal(dat['journal'][0], dat['journal'][1])
+            self.add_authors(dat['authors'])
+            self.add_words(dat['words'])
+            self.add_kws(dat['kws'])
+            self.add_pub_date([dat['year'], dat['month']])
+            self.add_doi(dat['doi'])
+            self.increment_n_articles()
+
+        self.check_results()
 
 
     def clear(self):
@@ -268,3 +290,10 @@ class ERPData(object):
 
         self.save()
         self.empty()
+
+#####
+#####
+
+def _parse_json_dat(f_name):
+    for l in open(f_name):
+        yield json.loads(l)
