@@ -166,6 +166,9 @@ class Words(Base):
             # Pull out articles
             articles = art_page_soup.findAll('PubmedArticle')
 
+            # Update History
+            cur_erp.update_history('Start Scrape')
+
             # Loop through each article, extracting relevant information
             for ind, art in enumerate(articles):
 
@@ -177,6 +180,10 @@ class Words(Base):
 
             # Check consistency of extracted results
             cur_erp.check_results()
+            cur_erp.update_history('End Scrape')
+
+            # Save out and clear data
+            #cur_erp.save_n_clear()
 
             # Add the object with current erp data to results list
             self.add_results(cur_erp)
