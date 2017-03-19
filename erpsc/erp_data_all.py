@@ -44,56 +44,21 @@ class ERPDataAll(object):
         self.all_words = list()
         self.all_kws = list()
 
-        self.combine_words(erp_data)
-        self.combine_kws(erp_data)
+        #
+        self._combine_words(erp_data)
+        self._combine_kws(erp_data)
 
         #
         self.word_freqs = None
-        self.create_word_freq_dist()
+        self._create_word_freq_dist()
         self.kw_freqs = None
-        self.create_kw_freq_dist()
+        self._create_kw_freq_dist()
 
         #
-        self.author_counts = _proc_authors(erp_data.authors)
-        self.f_author_counts = _proc_fst_authors(erp_data.authors)
+        self.author_counts = list()#_proc_authors(erp_data.authors)
+        self.f_author_counts = list()#_proc_fst_authors(erp_data.authors)
         self.journal_counts = _proc_journals(erp_data.journals)
         self.year_counts = _proc_years(erp_data.years)
-
-
-    def combine_words(self, erp_data):
-        """Combine the words from all articles together."""
-
-        #
-        for ind in range(erp_data.n_articles):
-            if erp_data.words[ind]:
-                self.all_words.extend(erp_data.words[ind])
-
-
-    def combine_kws(self, erp_data):
-        """Combine the keywords from all articles together."""
-
-        #
-        for ind in range(erp_data.n_articles):
-            if erp_data.kws[ind]:
-                self.all_kws.extend(erp_data.kws[ind])
-
-    def create_word_freq_dist(self):
-        """Create frequency distribution of all abstract words."""
-
-        self.word_freqs = nltk.FreqDist(self.all_words)
-
-        # Remove ERP name(s) - so they aren't trivially most common
-        for erp in self.erp:
-            try:
-                self.word_freqs.pop(erp.lower())
-            except KeyError:
-                pass
-
-
-    def create_kw_freq_dist(self):
-        """Create frequency distribution of all keywords."""
-
-        self.kw_freqs = nltk.FreqDist(self.all_kws)
 
 
     def check_words(self, n_check):
@@ -149,6 +114,41 @@ class ERPDataAll(object):
               'articles.')
         print('The most common journal is', self.journal_counts[0][1],
               'with', self.journal_counts[0][0], 'articles.')
+
+    def _combine_words(self, erp_data):
+        """Combine the words from all articles together."""
+
+        #
+        for ind in range(erp_data.n_articles):
+            if erp_data.words[ind]:
+                self.all_words.extend(erp_data.words[ind])
+
+
+    def _combine_kws(self, erp_data):
+        """Combine the keywords from all articles together."""
+
+        #
+        for ind in range(erp_data.n_articles):
+            if erp_data.kws[ind]:
+                self.all_kws.extend(erp_data.kws[ind])
+
+    def _create_word_freq_dist(self):
+        """Create frequency distribution of all abstract words."""
+
+        self.word_freqs = nltk.FreqDist(self.all_words)
+
+        # Remove ERP name(s) - so they aren't trivially most common
+        for erp in self.erp:
+            try:
+                self.word_freqs.pop(erp.lower())
+            except KeyError:
+                pass
+
+
+    def _create_kw_freq_dist(self):
+        """Create frequency distribution of all keywords."""
+
+        self.kw_freqs = nltk.FreqDist(self.all_kws)
 
 ##########################################################################################
 ##########################################################################################
@@ -239,6 +239,10 @@ def _proc_authors(a_lst):
         Number of publications per author - (n, (Last Name, Initials)).
     """
 
+    # Drop Nones
+    a_lst = filter(lambda n: n != None, a_lst)
+
+    #
     names = [(author[0], author[2]) for authors in a_lst for author in authors]
 
     # Drop Nones
