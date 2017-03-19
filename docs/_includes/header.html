@@ -25,6 +25,11 @@
         {% if site.github.is_user_page %}
           <a href="{{ site.github.repository_url }}" class="button"><small>Follow me on</small> GitHub</a>
         {% endif %}
+
+        {% if site.google_analytics and jekyll.environment == 'production' %}
+        {% include analytics.html %}
+        {% endif %}
+
       </div>
     </header>
 

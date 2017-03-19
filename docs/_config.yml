@@ -3,3 +3,5 @@ description: Automated meta-analysis of ERP research.
 baseurl: /ERP_SCANR
 
 theme: jekyll-theme-architect
+
+google_analytics: UA-93965597-2
