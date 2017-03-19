@@ -3,6 +3,7 @@
 from py.test import raises
 
 from erpsc.erp_data import *
+from erpsc.tests.utils import TestDB as TDB
 from erpsc.tests.utils import load_erp_data
 
 ######################################################################################
@@ -19,104 +20,134 @@ def test_erp_data():
 def test_add_id():
     """   """
 
-    words = load_erp_data()
+    erp_dat = load_erp_data()
 
-    words.add_id(1)
+    erp_dat.add_id(1)
 
-    assert words.ids
+    assert erp_dat.ids
 
 def test_add_title():
     """   """
 
-    words = load_erp_data()
+    erp_dat = load_erp_data()
 
-    words.add_title('title')
+    erp_dat.add_title('title')
 
-    assert words.titles
+    assert erp_dat.titles
 
 def test_add_authors():
     """   """
 
-    words = load_erp_data()
+    erp_dat = load_erp_data()
 
-    words.add_authors(('Last', 'First', 'IN', 'School'))
+    erp_dat.add_authors(('Last', 'First', 'IN', 'School'))
 
-    assert words.authors
+    assert erp_dat.authors
 
 def test_add_journal():
     """   """
 
-    words = load_erp_data()
+    erp_dat = load_erp_data()
 
-    words.add_journal('Journal name', 'J abbrev')
+    erp_dat.add_journal('Journal name', 'J abbrev')
 
-    assert words.journals
+    assert erp_dat.journals
 
-def test_add_words():
+def test_add_erp_dat():
     """   """
 
-    words = load_erp_data()
+    erp_dat = load_erp_data()
 
-    words.add_words(['new', 'words'])
+    erp_dat.add_words(['new', 'erp_dat'])
 
-    assert words.words
+    assert erp_dat.words
 
 def test_add_kws():
     """   """
 
-    words = load_erp_data()
+    erp_dat = load_erp_data()
 
-    words.add_kws(['list', 'of', 'kws'])
+    erp_dat.add_kws(['list', 'of', 'kws'])
 
-    assert words.kws
+    assert erp_dat.kws
 
 def test_add_pub_date():
     """   """
 
-    words = load_erp_data()
+    erp_dat = load_erp_data()
 
-    words.add_pub_date((2000, 'Feb'))
+    erp_dat.add_pub_date((2000, 'Feb'))
 
-    assert words.years
-    assert words.months
+    assert erp_dat.years
+    assert erp_dat.months
 
 def test_add_doi():
     """   """
 
-    words = load_erp_data()
+    erp_dat = load_erp_data()
 
-    words.add_doi('doi_str')
+    erp_dat.add_doi('doi_str')
 
-    assert words.dois
-
-"""
-def test_add_year():
-    "   ""
-
-    words = load_erp_data()
-
-    words.add_year(2112)
-
-    assert words.years
-"""
+    assert erp_dat.dois
 
 def test_increment_n_articles():
     """   """
 
-    words = load_erp_data()
+    erp_dat = load_erp_data()
 
-    words.increment_n_articles()
+    erp_dat.increment_n_articles()
 
-    assert words.n_articles
+    assert erp_dat.n_articles
 
 def test_check_results():
     """   """
 
-    words = load_erp_data(add_dat=True)
+    erp_dat = load_erp_data(add_dat=True)
 
-    words.check_results()
+    erp_dat.check_results()
 
-    words.n_articles += 1
+    erp_dat.n_articles += 1
 
     with raises(InconsistentDataError):
-        assert words.check_results()
+        assert erp_dat.check_results()
+
+def test_update_history():
+    """   """
+    pass
+
+def test_save():
+    """   """
+
+    tdb = TDB()
+
+    erp_dat = load_erp_data(add_dat=True)
+
+    erp_dat.save(tdb)
+
+    assert True
+
+def test_load():
+    """   """
+
+    tdb = TDB()
+
+    erp_dat = ERPData(['test'])
+    erp_dat.load(tdb)
+
+    assert erp_dat
+
+def test_clear():
+    """   """
+
+    erp_dat = load_erp_data(add_dat=True)
+    erp_dat.clear()
+    erp_dat.check_results()
+    assert erp_dat.n_articles == 0
+
+def test_save_n_clear():
+    """   """
+
+    erp_dat = load_erp_data(add_dat=True)
+    erp_dat.save_n_clear()
+
+    assert erp_dat.n_articles == 0
