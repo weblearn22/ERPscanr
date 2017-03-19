@@ -13,6 +13,14 @@ def test_requester():
 
     assert Requester()
 
+def test_check():
+    """Test the check method."""
+
+    req = Requester()
+    req.check()
+
+    assert True
+
 def test_throttle():
     """Test the throttle method."""
 
