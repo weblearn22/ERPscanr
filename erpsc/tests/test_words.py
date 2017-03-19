@@ -1,12 +1,15 @@
 """Tests for the Words() class and related functions from erpsc."""
 
+from py.test import raises
+
 import requests
 import bs4
 from bs4 import BeautifulSoup
 
 from erpsc.erp_data import ERPData
 from erpsc.words import Words
-from erpsc.words import _ids_to_str, _process_words, _process_kws, _process_authors
+from erpsc.words import _ids_to_str, _process_words, _process_kws
+from erpsc.words import _process_authors, _process_pub_date, _process_ids
 
 #######################################################################################
 ################################ TESTS - ERPSC - WORDS ################################
@@ -17,13 +20,30 @@ def test_words():
 
     assert Words()
 
+def test_get_item():
+    """   """
+
+    words = Words()
+
+    # Test error for empty object
+    with raises(IndexError):
+        words['not a thing']
+
+    words.add_results(ERPData(['test']))
+
+    # Test error for wrong key
+    with raises(IndexError):
+        words['wrong']
+
+    # Test properly extracting item
+    assert words['test']
+
 def test_add_results():
     """Test the add_results method."""
 
     words = Words()
-    new_word = ERPData('test')
 
-    words.add_results(new_word)
+    words.add_results(ERPData(['test']))
 
     assert words.results
 
@@ -75,34 +95,6 @@ def test_scrape_data():
 
     assert True
 
-"""
-    comb_words(words)
-    freq_dists(words)
-    check_words(words)
-
-
-def comb_words(words):
-    ""Run the combine_words method for testing.""
-
-    words.combine_words()
-
-    assert True
-
-def freq_dists(words):
-    ""Run the freq_dists method for testing.""
-
-    words.freq_dists()
-
-    assert True
-
-def check_words(words):
-    ""Run the check_words method for testing.""
-
-    words.check_words()
-
-    assert True
-"""
-
 #######################################################################################
 ###################### TEST - ERPSC - WORDS - PRIVATE FUNCTIONS  ######################
 #######################################################################################
@@ -127,6 +119,8 @@ def test_none_process():
     assert _process_words(None) is None
     assert _process_kws(None) is None
     assert _process_authors(None) is None
+    assert _process_authors(None) is None
+    assert _process_pub_date(None) == (None, None)
 
 def test_process_words():
     """Test the _process_words function."""
