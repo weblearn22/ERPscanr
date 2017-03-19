@@ -2,7 +2,7 @@
 
 import json
 
-from erpsc.core.io import check_db
+from erpsc.core.db import check_db
 from erpsc.core.errors import InconsistentDataError
 
 ##################################################################################
