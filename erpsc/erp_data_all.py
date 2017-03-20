@@ -55,20 +55,6 @@ class ERPDataAll(object):
         self.journal_counts = _proc_journals(erp_data.journals)
         self.year_counts = _proc_years(erp_data.years)
 
-        #
-        #self.all_words = list()
-        #self.all_kws = list()
-
-        #
-        #self._combine_words(erp_data)
-        #self._combine_kws(erp_data)
-
-        #
-        #self.word_freqs = None
-        #self._create_word_freq_dist()
-        #self.kw_freqs = None
-        #self._create_kw_freq_dist()
-
 
     def check_words(self, n_check):
         """Check the most common words for the ERP.
@@ -123,45 +109,6 @@ class ERPDataAll(object):
               'articles.')
         print('The most common journal is', self.journal_counts[0][1],
               'with', self.journal_counts[0][0], 'articles.')
-
-    """
-    def _combine_words(self, erp_data):
-        "Combine the words from all articles together.""
-
-        #
-        for ind in range(erp_data.n_articles):
-            if erp_data.words[ind]:
-                self.all_words.extend(erp_data.words[ind])
-
-
-    def _combine_kws(self, erp_data):
-        ""Combine the keywords from all articles together.""
-
-        #
-        for ind in range(erp_data.n_articles):
-            if erp_data.kws[ind]:
-                self.all_kws.extend(erp_data.kws[ind])
-
-
-
-    def _create_word_freq_dist(self):
-        ""Create frequency distribution of all abstract words.""
-
-        self.word_freqs = nltk.FreqDist(self.all_words)
-
-        # Remove ERP name(s) - so they aren't trivially most common
-        for erp in self.erp:
-            try:
-                self.word_freqs.pop(erp.lower())
-            except KeyError:
-                pass
-
-
-    def _create_kw_freq_dist(self):
-        ""Create frequency distribution of all keywords.""
-
-        self.kw_freqs = nltk.FreqDist(self.all_kws)
-    """
 
 ##########################################################################################
 ##########################################################################################
