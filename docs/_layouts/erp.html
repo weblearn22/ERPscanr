@@ -6,16 +6,16 @@
 
 <h4> The most common keywords for this ERP are: </h4>
 <ul>
-{% for kw in site.data[page.title].kws %}
+{% for kw in site.data[page.title].top_kws %}
     <li> {{ kw }} </li>
 {% endfor %}
 </ul>
 
 <h4> Quick Stats </h4>
-<p> Number Papers: {{ site.data[page.title].n_art }} <br/>
-First Pub: {{ site.data[page.title].f_pub }} <br/>
-Journal: {{ site.data[page.title].com_journal }} <br/>
-Author: {{ site.data[page.title].com_author }} </p>
+<p> Number Papers: {{ site.data[page.title].n_articles }} <br/>
+First Pub: {{ site.data[page.title].first_publication }} <br/>
+Journal: {{ site.data[page.title].top_journal_name }} <br/>
+Author: {{ site.data[page.title].top_author_name }} </p>
 
 
 <h4> Similarity </h4>
