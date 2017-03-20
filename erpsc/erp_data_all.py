@@ -56,7 +56,7 @@ class ERPDataAll(object):
         self.year_counts = _proc_years(erp_data.years)
 
 
-    def check_words(self, n_check):
+    def check_words(self, n_check=20):
         """Check the most common words for the ERP.
 
         Parameters
@@ -67,22 +67,8 @@ class ERPDataAll(object):
 
         _check(self.word_freqs, n_check, self.erp[0])
 
-        """
-        # Get the requested number of most common words for the ERP
-        top_words = self.word_freqs.most_common()[0:n_check]
 
-        # Join together the top words into a string
-        top_words_str = ''
-        for i in range(n_check):
-            top_words_str += top_words[i][0]
-            top_words_str += ' , '
-
-        # Print out the top words for the current ERP
-        print(self.erp[0], ': ', top_words_str)
-        """
-
-
-    def check_kws(self, n_check):
+    def check_kws(self, n_check=20):
         """Check the most common kws for the ERP.
 
         Parameters
@@ -92,20 +78,6 @@ class ERPDataAll(object):
         """
 
         _check(self.kw_freqs, n_check, self.erp[0])
-
-        """
-        # Get the requested number of most common kws for the ERP
-        top_words = self.kw_freqs.most_common()[0:n_check]
-
-        # Join together the top words into a string
-        top_words_str = ''
-        for i in range(n_check):
-            top_words_str += top_words[i][0]
-            top_words_str += ' , '
-
-        # Print out the top words for the current ERP
-        print(self.erp[0], ': ', top_words_str)
-        """
 
 
     def print_summary(self):
