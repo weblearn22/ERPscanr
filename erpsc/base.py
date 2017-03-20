@@ -95,13 +95,15 @@ class Base(object):
         self.unload_erps()
 
         # Get erps from module data file
+        labels = _terms_load_file('erp_labels')
         erps = _terms_load_file('erps')
 
         # Set the number of erps
         self.n_erps = len(erps)
 
-        # Drop number indices for erps, and set as list
+        # Drop number indices, add labels & erps (as list)
         for i in range(self.n_erps):
+            self.labels.append(labels[i][3:])
             self.erps.append(erps[i][3:].split(','))
 
 
@@ -110,8 +112,8 @@ class Base(object):
 
         # Print out header and all current ERPs
         print('List of ERPs used: \n')
-        for erps_ls in self.erps:
-            print(", ".join(erp for erp in erps_ls))
+        for lab, erp_lst in zip(self.labels, self.erps):
+            print(lab + "\t : " + ", ".join(erp for erp in erp_lst))
 
 
     def unload_erps(self):
@@ -173,9 +175,8 @@ class Base(object):
 
         # Print out header and all exclusion words
         print('List of exclusion words used: \n')
-        for i in range(self.n_erps):
-            print(self.erps[i][0] + "\t : " +
-                  ", ".join(exclude for exclude in self.exclusions[i]))
+        for lab, excs in zip(self.labels, self.exclusions):
+            print(lab + "\t : " + ", ".join(exc for exc in excs))
 
 
     def unload_exclusions(self):
