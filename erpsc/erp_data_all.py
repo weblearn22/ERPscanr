@@ -55,8 +55,9 @@ class ERPDataAll(object):
         self._create_kw_freq_dist()
 
         #
-        self.author_counts = list()#_proc_authors(erp_data.authors)
-        self.f_author_counts = list()#_proc_fst_authors(erp_data.authors)
+        self.author_counts = _proc_authors(erp_data.authors)
+        self.f_author_counts, self.l_author_counts = \
+            _proc_end_authors(erp_data.authors)
         self.journal_counts = _proc_journals(erp_data.journals)
         self.year_counts = _proc_years(erp_data.years)
 
@@ -189,14 +190,14 @@ def _proc_journals(j_lst):
     """
 
     names = [j[1] for j in j_lst]
-    counts = [(names.count(i), i) for i in set(names)]
 
+    counts = [(names.count(i), i) for i in set(names)]
     counts.sort(reverse=True)
 
     return counts
 
-def _proc_fst_authors(a_lst):
-    """Process first authors only.
+def _proc_end_authors(a_lst):
+    """Process first and last authors only.
 
     Parameters
     ----------
@@ -210,19 +211,20 @@ def _proc_fst_authors(a_lst):
         Number of publications per author - (n, (Last Name, Initials)).
     """
 
-    names = [(author[0], author[2]) for author in [authors[0] for authors in a_lst]]
+    # Drop author lists that are None
+    a_lst = [a for a in a_lst if a is not None]
 
-    # Sometimes full author name ends up in the last name field
-    #  If first name is None, assume this happened
-    #   Split up the text in first name, and grab the first name initial
-    names = [(name[0].split(' ')[1], name[0].split(' ')[0][0])
-             if name[1] is None else name for name in names]
+    # Pull out the full name for the first & last author of each paper
+    #  Last author is only considered if there is more than 1 author
+    firsts = [authors[0] for authors in a_lst]
+    f_names = [(author[0], author[2]) for author in firsts]
+    lasts = [authors[-1] for authors in a_lst if len(authors) > 1]
+    l_names = [(author[0], author[2]) for author in lasts]
 
-    counts = [(names.count(i), i) for i in set(names)]
+    f_counts = _count(_fix_names(f_names))
+    l_counts = _count(_fix_names(l_names))
 
-    counts.sort(reverse=True)
-
-    return counts
+    return f_counts, l_counts
 
 def _proc_authors(a_lst):
     """Process all authors.
@@ -237,25 +239,68 @@ def _proc_authors(a_lst):
     -------
     counts : list of tuple of (int, (str, str))
         Number of publications per author - (n, (Last Name, Initials)).
+
+    Notes
+    -----
+    The non-obvious list comprehension is more obviously written as:
+    names = []
+    for authors in a_lst:
+        for author in authors:
+            all_authors.append(author)
     """
 
-    # Drop Nones
-    a_lst = filter(lambda n: n != None, a_lst)
+    # Drop author lists that are None
+    a_lst = [a for a in a_lst if a is not None]
 
-    #
+    # Reduce author fields to pair of tuples (L_name, Initials)
     names = [(author[0], author[2]) for authors in a_lst for author in authors]
 
-    # Drop Nones
-    names = filter(lambda n: n != (None, None), names)
+    # Count how often each author published
+    return _count(_fix_names(names))
 
-    # Sometimes full author name ends up in the last name field
-    #  If first name is None, assume this happened
-    #   Split up the text in first name, and grab the first name initial
+def _fix_names(names):
+    """
+
+    Parameters
+    ----------
+    names : list of ?
+        xx
+
+    Returns
+    -------
+    names : list of ?
+        xx
+
+    Notes
+    -----
+    Sometimes full author name ends up in the last name field.
+    If first name is None, assume this happened:
+        Split up the text in first name, and grab the first name initial.
+    """
+
+    # Drop names whos data is all None
+    names = [n for n in names if n != (None, None)]
+
+    #
     names = [(name[0].split(' ')[1], name[0].split(' ')[0][0])
              if name[1] is None else name for name in names]
 
-    counts = [(names.count(i), i) for i in set(names)]
+    return names
 
+def _count(d_lst):
+    """
+    Parameters
+    ----------
+    d_lst : list of ?
+        xx
+
+    Returns
+    -------
+    counts : list of tuple of (item_label, count)
+        Counts for how often each item occurs in the input list.
+    """
+
+    counts = [(d_lst.count(i), i) for i in set(d_lst)]
     counts.sort(reverse=True)
 
     return counts
