@@ -32,20 +32,20 @@ class Words(Base):
         Base.__init__(self)
 
         # Initialize a list to store results for all the erps
-        self.keys = list()
+        self.result_keys = list()
         self.results = list()
 
 
     def __getitem__(self, key):
-        """Be able to index into Words object with ERP label key."""
+        """Be able to index into Words object with ERP result key."""
 
         # Give up if obkect is empty
-        if len(self.keys) == 0:
+        if len(self.result_keys) == 0:
             raise IndexError('Object is empty - cannot index.')
 
         # Check if requested key is available
         try:
-            ind = self.keys.index(key)
+            ind = self.result_keys.index(key)
         except ValueError:
             raise IndexError('Requested key not available in object.')
 
@@ -53,7 +53,7 @@ class Words(Base):
 
 
     def add_results(self, new_result):
-        """Add a new Words() results object.
+        """Add a new ERPData results object.
 
         Parameters
         ----------
@@ -61,7 +61,7 @@ class Words(Base):
             Object with information about current ERP term.
         """
 
-        self.keys.append(new_result.erp[0])
+        self.result_keys.append(new_result.label)
         self.results.append(new_result)
 
 
@@ -132,18 +132,19 @@ class Words(Base):
         self.get_db_info(urls.info)
 
         # Loop through all the erps
-        for ind, erp in enumerate(self.erps):
+        #for ind, erp in enumerate(self.erps):
+        for ind, lab in enumerate(self.labels):
 
             # Initiliaze object to store data for current erp papers
-            cur_erp = ERPData(erp)
+            cur_erp = ERPData(lab, self.erps[ind])
 
             # Set up search terms - add exclusions, if there are any
             if self.exclusions[ind][0]:
                 #term_arg = '"' + erp[0] + '"' + 'NOT' + '"' + self.exclusions[ind][0] + '"'
-                term_arg = comb_terms(erp, 'or') + comb_terms(self.exclusions[ind], 'not')
+                term_arg = comb_terms(self.erps[ind], 'or') + comb_terms(self.exclusions[ind], 'not')
             else:
                 #term_arg = '"' + erp[0] + '"'
-                term_arg = comb_terms(erp, 'or')
+                term_arg = comb_terms(self.erps[ind], 'or')
 
             # Create the url for the erp search term
             url = urls.search + term_arg

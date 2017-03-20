@@ -14,14 +14,12 @@ def test_erp_data():
     """Test the ERPData object."""
 
     # Check that ERPData returns properly.
-    erp = 'test'
-    assert ERPData(erp)
+    assert ERPData('test', ['test'])
 
 def test_add_id():
     """   """
 
     erp_dat = load_erp_data()
-
     erp_dat.add_id(1)
 
     assert erp_dat.ids
@@ -30,7 +28,6 @@ def test_add_title():
     """   """
 
     erp_dat = load_erp_data()
-
     erp_dat.add_title('title')
 
     assert erp_dat.titles
@@ -39,7 +36,6 @@ def test_add_authors():
     """   """
 
     erp_dat = load_erp_data()
-
     erp_dat.add_authors(('Last', 'First', 'IN', 'School'))
 
     assert erp_dat.authors
@@ -48,7 +44,6 @@ def test_add_journal():
     """   """
 
     erp_dat = load_erp_data()
-
     erp_dat.add_journal('Journal name', 'J abbrev')
 
     assert erp_dat.journals
@@ -57,7 +52,6 @@ def test_add_erp_dat():
     """   """
 
     erp_dat = load_erp_data()
-
     erp_dat.add_words(['new', 'erp_dat'])
 
     assert erp_dat.words
@@ -66,7 +60,6 @@ def test_add_kws():
     """   """
 
     erp_dat = load_erp_data()
-
     erp_dat.add_kws(['list', 'of', 'kws'])
 
     assert erp_dat.kws
@@ -75,7 +68,6 @@ def test_add_pub_date():
     """   """
 
     erp_dat = load_erp_data()
-
     erp_dat.add_pub_date((2000, 'Feb'))
 
     assert erp_dat.years
@@ -85,7 +77,6 @@ def test_add_doi():
     """   """
 
     erp_dat = load_erp_data()
-
     erp_dat.add_doi('doi_str')
 
     assert erp_dat.dois
@@ -94,7 +85,6 @@ def test_increment_n_articles():
     """   """
 
     erp_dat = load_erp_data()
-
     erp_dat.increment_n_articles()
 
     assert erp_dat.n_articles
@@ -131,7 +121,7 @@ def test_load():
 
     tdb = TDB()
 
-    erp_dat = ERPData(['test'])
+    erp_dat = ERPData('test')
     erp_dat.load(tdb)
 
     assert erp_dat

@@ -1,7 +1,10 @@
 """Classes and functions to store aggregated ERP paper data."""
 #from __future__ import print_function
 
+import json
 import nltk
+
+from erpsc.core.db import check_db
 
 ##########################################################################################
 ##########################################################################################
@@ -12,6 +15,8 @@ class ERPDataAll(object):
 
     Attributes
     ----------
+    label : str
+        Label for the current ERP.
     erp : list of str
         Name(s) of the ERP word data relates to.
     n_articles : int
@@ -55,6 +60,9 @@ class ERPDataAll(object):
         self.journal_counts = _proc_journals(erp_data.journals)
         self.year_counts = _proc_years(erp_data.years)
 
+        # Initialize summary dictionary
+        self.summary = dict()
+
 
     def check_words(self, n_check=20):
         """Check the most common words for the ERP.
@@ -80,15 +88,48 @@ class ERPDataAll(object):
         _check(self.kw_freqs, n_check, self.erp[0])
 
 
+    def create_summary(self):
+        """Fill the summary dictionary of the current ERPs Words data."""
+
+        # Add data to summary dictionary.
+        self.summary['n_articles'] = str(self.n_articles)
+        self.summary['top_author_name'] = ' '.join([self.author_counts[0][1][1],
+                                               self.author_counts[0][1][0]])
+        self.summary['top_author_count'] = str(self.author_counts[0][0])
+        self.summary['top_journal_name'] = self.journal_counts[0][1]
+        self.summary['top_journal_count'] = str(self.journal_counts[0][0])
+        self.summary['top_kws'] = [f[0] for f in self.kw_freqs.most_common()[0:5]]
+        self.summary['first_publication'] = str(min([y[0] for y in self.year_counts]))
+
+
     def print_summary(self):
         """Print out a summary of the scraped ERP paper data."""
 
-        print('The number of articles is', str(self.n_articles))
-        print('The most common author is', self.author_counts[0][1][1],
-              self.author_counts[0][1][0], 'with', self.author_counts[0][0],
-              'articles.')
-        print('The most common journal is', self.journal_counts[0][1],
-              'with', self.journal_counts[0][0], 'articles.')
+        # Print out summary information
+        print('Number of articles: \t\t', self.summary['n_articles'])
+        print('First publication: \t\t', self.summary['first_publication'])
+        print('Most common author: \t\t', self.summary['top_author_name'])
+        print('  number of publications: \t', self.summary['top_author_count'])
+        print('Most common journal: \t\t', self.summary['top_journal_name'])
+        print('  number of publications: \t', self.summary['top_journal_count'])
+
+
+        #print('The number of articles is', str(self.n_articles))
+        #print('The most common author is', self.author_counts[0][1][1],
+        #      self.author_counts[0][1][0], 'with', self.author_counts[0][0],
+        #      'articles.')
+        #print('The most common journal is', self.journal_counts[0][1],
+        #      'with', self.journal_counts[0][0], 'articles.')
+
+    def save_summary(self, db=None):
+        """Save out a summary of the scraped ERP paper data."""
+
+        db = check_db(db)
+
+        with open('a.json', 'w') as f_name:
+            json.dump(self.summary)
+
+        pass
 
 ##########################################################################################
 ##########################################################################################

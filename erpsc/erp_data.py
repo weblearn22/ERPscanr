@@ -14,8 +14,10 @@ class ERPData(object):
 
     Attributes
     ----------
+    label : str
+        Label for the current ERP.
     erp : list of str
-        Name(s) of the ERP word data relates to.
+        Name(s) of the ERP word data relates to (search terms).
     ids : list of int
         Pubmed article ids for all articles included in object.
     n_articles : int
@@ -42,17 +44,19 @@ class ERPData(object):
         History of the object and it's data.
     """
 
-    def __init__(self, erp):
+    def __init__(self, label, erp=[]):
         """Initialize ERPWords() object.
 
         Parameters
         ----------
-        erp  : str
-            Name of the ERP.
+        label : str
+            Label for the ERP.
+        erp  : list of str
+            Name(s) of the ERP.
         """
 
         # Set the given name & synonyms as the erp label
-        self.label = erp[0]
+        self.label = label
         self.erp = erp
 
         # Initialize list to store pubmed article ids
@@ -82,6 +86,7 @@ class ERPData(object):
         for ind in range(self.n_articles):
 
             yield {
+                'label': self.label,
                 'erp': self.erp,
                 'id': self.ids[ind],
                 'title': self.titles[ind],

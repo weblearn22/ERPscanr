@@ -29,7 +29,7 @@ def test_get_item():
     with raises(IndexError):
         words['not a thing']
 
-    words.add_results(ERPData(['test']))
+    words.add_results(ERPData('test', ['test']))
 
     # Test error for wrong key
     with raises(IndexError):

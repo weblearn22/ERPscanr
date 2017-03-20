@@ -45,7 +45,7 @@ def load_base(set_erps=False, set_excl=False, set_terms=None):
 def load_erp_data(add_dat=False, n=1):
     """Helper function to load ERPData() object for testing."""
 
-    erp_dat = ERPData(['test'])
+    erp_dat = ERPData('test', ['test'])
 
     if add_dat:
         for i in range(n):
