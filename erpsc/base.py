@@ -22,11 +22,13 @@ class Base(object):
         Stores info about the database used for scarping data.
     terms_type : {'cognitive', 'disease'}
         Type of terms used.
-    erps : list of str
-        ERP words.
-    exclusions : list of str
-        Exclusion words, used to avoid unwanted articles.
-    terms : list of str
+    labels : list of str
+        Label to reference each ERP.
+    erps : list of list of str
+        Name(s) for each ERP (used as search terms).
+    exclusions : list of list str
+        Exclusion words for each ERP, used to avoid unwanted articles.
+    terms : list of list of str
         Terms words.
     n_erps : int
         Number of erps.
@@ -48,6 +50,7 @@ class Base(object):
         self.terms_type = str()
 
         # Initialize list of erps & term terms to use
+        self.labels = list()
         self.erps = list()
         self.exclusions = list()
         self.terms = list()
@@ -77,7 +80,9 @@ class Base(object):
 
         # Set given list as erp words
         for erp in erps:
-            self.erps.append(_check_type(erp))
+            erp = _check_type(erp)
+            self.labels.append(erp[0])
+            self.erps.append(erp)
 
         # Set the number of erps
         self.n_erps = len(erps)
@@ -119,6 +124,7 @@ class Base(object):
             print('Unloading previous ERP words.')
 
             # Reset ERP variables to empty
+            self.labels = list()
             self.erps = list()
             self.n_erps = int()
 
@@ -288,10 +294,8 @@ def _check_type(term):
     """
 
     # Check the type of the given item, return as list
-    #if isinstance(term, StringType):
     if isinstance(term, str):
         return [term]
-    #elif isinstance(term, ListType):
     elif isinstance(term, list):
         return term
 
