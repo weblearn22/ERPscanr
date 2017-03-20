@@ -42,6 +42,7 @@ class ERPDataAll(object):
     def __init__(self, erp_data):
         """Initialize ERPDataAll() object."""
 
+        self.label = erp_data.label
         self.erp = erp_data.erp
         self.n_articles = erp_data.n_articles
 
@@ -106,30 +107,22 @@ class ERPDataAll(object):
         """Print out a summary of the scraped ERP paper data."""
 
         # Print out summary information
-        print('Number of articles: \t\t', self.summary['n_articles'])
-        print('First publication: \t\t', self.summary['first_publication'])
-        print('Most common author: \t\t', self.summary['top_author_name'])
-        print('  number of publications: \t', self.summary['top_author_count'])
-        print('Most common journal: \t\t', self.summary['top_journal_name'])
-        print('  number of publications: \t', self.summary['top_journal_count'])
+        print(self.label, ':')
+        print('  Number of articles: \t\t', self.summary['n_articles'])
+        print('  First publication: \t\t', self.summary['first_publication'])
+        print('  Most common author: \t\t', self.summary['top_author_name'])
+        print('    number of publications: \t', self.summary['top_author_count'])
+        print('  Most common journal: \t\t', self.summary['top_journal_name'])
+        print('    number of publications: \t', self.summary['top_journal_count'], '\n')
 
-
-        #print('The number of articles is', str(self.n_articles))
-        #print('The most common author is', self.author_counts[0][1][1],
-        #      self.author_counts[0][1][0], 'with', self.author_counts[0][0],
-        #      'articles.')
-        #print('The most common journal is', self.journal_counts[0][1],
-        #      'with', self.journal_counts[0][0], 'articles.')
 
     def save_summary(self, db=None):
         """Save out a summary of the scraped ERP paper data."""
 
         db = check_db(db)
 
-        with open('a.json', 'w') as f_name:
-            json.dump(self.summary)
-
-        pass
+        with open(db.words_path + '/summary/' + self.label + '.json', 'w') as outfile:
+            json.dump(self.summary, outfile)
 
 ##########################################################################################
 ##########################################################################################
