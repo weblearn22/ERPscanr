@@ -65,6 +65,9 @@ class ERPDataAll(object):
             Number of top words to print out.
         """
 
+        _check(self.word_freqs, n_check, self.erp[0])
+
+        """
         # Get the requested number of most common words for the ERP
         top_words = self.word_freqs.most_common()[0:n_check]
 
@@ -76,6 +79,7 @@ class ERPDataAll(object):
 
         # Print out the top words for the current ERP
         print(self.erp[0], ': ', top_words_str)
+        """
 
 
     def check_kws(self, n_check):
@@ -87,6 +91,9 @@ class ERPDataAll(object):
             Number of top words to print out.
         """
 
+        _check(self.kw_freqs, n_check, self.erp[0])
+
+        """
         # Get the requested number of most common kws for the ERP
         top_words = self.kw_freqs.most_common()[0:n_check]
 
@@ -98,6 +105,7 @@ class ERPDataAll(object):
 
         # Print out the top words for the current ERP
         print(self.erp[0], ': ', top_words_str)
+        """
 
 
     def print_summary(self):
@@ -113,6 +121,31 @@ class ERPDataAll(object):
 ##########################################################################################
 ##########################################################################################
 ##########################################################################################
+
+def _check(freqs, n_check, label):
+    """Prints out the most common items in frequecy distribution.
+
+    Parameters
+    ----------
+    freqs : nltk.FreqDist
+        Frequency distribution to check.
+    n_check : int
+        Number of most common items to print out.
+    label : str
+        Label to print for which data this relates to.
+    """
+
+    # Get the requested number of most common kws for the ERP
+    top = freqs.most_common()[0:n_check]
+
+    # Join together the top words into a string
+    top_str = ''
+    for i in range(n_check):
+        top_str += top[i][0]
+        top_str += ' , '
+
+    # Print out the top words for the current ERP
+    print(label, ': ', top_str)
 
 def _combine(in_lst):
     """Combine list of lists into one large list.
