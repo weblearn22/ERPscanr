@@ -1,4 +1,5 @@
 from erpsc.words import Words
+from erpsc.core.io import save_pickle_obj
 
 ###############################################################################
 ###############################################################################
@@ -15,13 +16,15 @@ def main():
     words = Words()
 
     if TEST:
-        words.set_erps([['P100'], ['P300'], ['N170'], ['P600'], ['N400']])
-        words.set_exclusions([['protein'], ['protein'], ['protein'], ['protein'], ['protein']])
+        #words.set_erps([['P100']])
+        #words.set_exclusions([['protein']])
+        words.set_erps([['P100'], ['P300'], ['N170'], ['P600'], ['N400'], ['MMN']])
+        words.set_exclusions([['protein'], ['protein'], ['protein'], ['protein'], ['protein'], ['protein']])
     else:
         words.set_erps_file()
         words.set_exclusions_file()
 
-    words.scrape_data(db='pmc', retmax=500)
+    words.scrape_data(db='pubmed', retmax='500')
 
     save_pickle_obj(words, S_NAME)
 
