@@ -115,7 +115,18 @@ class ERPDataAll(object):
 ##########################################################################################
 
 def _combine(in_lst):
-    """   """
+    """Combine list of lists into one large list.
+
+    Parameters
+    ----------
+    in_lst : list of list of str
+        Embedded lists to combine.
+
+    Returns
+    -------
+    out : list of str
+        Combined list.
+    """
 
     out = []
 
@@ -126,7 +137,20 @@ def _combine(in_lst):
     return out
 
 def _freq_dist(in_lst, exclude):
-    """   """
+    """Create frequency distribution.
+
+    Parameters
+    ----------
+    in_lst : list of str
+        Word items to create frequecy distribution of.
+    exclude : list of str
+        Words to exclude from list.
+
+    Returns
+    -------
+    freqs : nltk.FreqDist
+        Frequency distribution of the input list.
+    """
 
     freqs = nltk.FreqDist(in_lst)
 
@@ -179,36 +203,6 @@ def _proc_journals(j_lst):
 
     return counts
 
-def _proc_end_authors(a_lst):
-    """Process first and last authors only.
-
-    Parameters
-    ----------
-    a_lst : list of list of tuple of (str, str, str, str)
-        Authors of all articles included in object.
-            (Last Name, First Name, Initials, Affiliation)
-
-    Returns
-    -------
-    counts : list of tuple of (int, (str, str))
-        Number of publications per author - (n, (Last Name, Initials)).
-    """
-
-    # Drop author lists that are None
-    a_lst = [a for a in a_lst if a is not None]
-
-    # Pull out the full name for the first & last author of each paper
-    #  Last author is only considered if there is more than 1 author
-    firsts = [authors[0] for authors in a_lst]
-    f_names = [(author[0], author[2]) for author in firsts]
-    lasts = [authors[-1] for authors in a_lst if len(authors) > 1]
-    l_names = [(author[0], author[2]) for author in lasts]
-
-    f_counts = _count(_fix_names(f_names))
-    l_counts = _count(_fix_names(l_names))
-
-    return f_counts, l_counts
-
 def _proc_authors(a_lst):
     """Process all authors.
 
@@ -241,18 +235,48 @@ def _proc_authors(a_lst):
     # Count how often each author published
     return _count(_fix_names(names))
 
-def _fix_names(names):
-    """
+def _proc_end_authors(a_lst):
+    """Process first and last authors only.
 
     Parameters
     ----------
-    names : list of ?
-        xx
+    a_lst : list of list of tuple of (str, str, str, str)
+        Authors of all articles included in object.
+            (Last Name, First Name, Initials, Affiliation)
 
     Returns
     -------
-    names : list of ?
-        xx
+    counts : list of tuple of (int, (str, str))
+        Number of publications per author - (n, (Last Name, Initials)).
+    """
+
+    # Drop author lists that are None
+    a_lst = [a for a in a_lst if a is not None]
+
+    # Pull out the full name for the first & last author of each paper
+    #  Last author is only considered if there is more than 1 author
+    firsts = [authors[0] for authors in a_lst]
+    f_names = [(author[0], author[2]) for author in firsts]
+    lasts = [authors[-1] for authors in a_lst if len(authors) > 1]
+    l_names = [(author[0], author[2]) for author in lasts]
+
+    f_counts = _count(_fix_names(f_names))
+    l_counts = _count(_fix_names(l_names))
+
+    return f_counts, l_counts
+
+def _fix_names(names):
+    """Fix author names.
+
+    Parameters
+    ----------
+    names : list of tuple of (L_Name, Initials)
+        Author names.
+
+    Returns
+    -------
+    names : list of tuple of (L_Name, Initials)
+        Author names.
 
     Notes
     -----
@@ -264,18 +288,19 @@ def _fix_names(names):
     # Drop names whos data is all None
     names = [n for n in names if n != (None, None)]
 
-    #
+    # Fix names if full name ended up in last name field
     names = [(name[0].split(' ')[1], name[0].split(' ')[0][0])
              if name[1] is None else name for name in names]
 
     return names
 
 def _count(d_lst):
-    """
+    """Count occurences of each item in a list.
+
     Parameters
     ----------
-    d_lst : list of ?
-        xx
+    d_lst : list of str
+        List of items to count occurences of.
 
     Returns
     -------
