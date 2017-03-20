@@ -35,20 +35,20 @@ class ERPDataAll(object):
     """
 
     def __init__(self, erp_data):
-        """   """
+        """Initialize ERPDataAll() object."""
 
         self.erp = erp_data.erp
         self.n_articles = erp_data.n_articles
 
-        #
+        # Combine all articles into single list of all words
         self.all_words = _combine(erp_data.words)
         self.all_kws = _combine(erp_data.kws)
 
-        #
+        # Convert lists of all words in frequency distributions
         self.word_freqs = _freq_dist(self.all_words, self.erp)
         self.kw_freqs = _freq_dist(self.all_kws, self.erp)
 
-        #
+        # Get counts of authors, journals, years
         self.author_counts = _proc_authors(erp_data.authors)
         self.f_author_counts, self.l_author_counts = \
             _proc_end_authors(erp_data.authors)
@@ -225,7 +225,7 @@ def _proc_authors(a_lst):
     Notes
     -----
     The non-obvious list comprehension is more obviously written as:
-    names = []
+    all_authors = []
     for authors in a_lst:
         for author in authors:
             all_authors.append(author)
