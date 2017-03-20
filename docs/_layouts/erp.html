@@ -6,21 +6,21 @@
 
 <h4> The most common keywords for this ERP are: </h4>
 <ul>
-{% for kw in site.data.erp_dat[page.title].kws %}
+{% for kw in site.data[page.title].kws %}
     <li> {{ kw }} </li>
 {% endfor %}
 </ul>
 
 <h4> Quick Stats </h4>
-<p> Number Papers: {{ site.data.erp_dat[page.title].n_art }} <br/>
-First Pub: {{ site.data.erp_dat[page.title].f_pub }} <br/>
-Journal: {{ site.data.erp_dat[page.title].com_journal }} <br/>
-Author: {{ site.data.erp_dat[page.title].com_author }} </p>
+<p> Number Papers: {{ site.data[page.title].n_art }} <br/>
+First Pub: {{ site.data[page.title].f_pub }} <br/>
+Journal: {{ site.data[page.title].com_journal }} <br/>
+Author: {{ site.data[page.title].com_author }} </p>
 
 
 <h4> Similarity </h4>
-<p> This ERP is most similar to: {{ site.data.erp_dat[page.title].sim }} <br/>
-This ERP is most different from:  {{ site.data.erp_dat[page.title].diff }} </p>
+<p> This ERP is most similar to: {{ site.data[page.title].sim }} <br/>
+This ERP is most different from:  {{ site.data[page.title].diff }} </p>
 
 <h4> Publication History </h4>
 <img src={{ site.baseurl }}/assets/{{ page.title }}/hist.png alt="Test-History">
