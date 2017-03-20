@@ -262,7 +262,7 @@ def _process_kws(keywords):
     """
 
     # NOTE: UPDATE WITH MOVE TO PY35
-    return [kw.text for kw in keywords]
+    return [kw.text.lower() for kw in keywords]
     #return [kw.text.encode('ascii', 'ignore') for kw in keywords]
 
 

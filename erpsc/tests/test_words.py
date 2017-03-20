@@ -64,7 +64,7 @@ def test_extract_add_info():
     assert erp_word.titles[0] == ("A Neurocomputational Model of the N400"
                                   " and the P600 in Language Processing.")
     assert erp_word.words[0][0] == "ten"
-    assert erp_word.kws[0][0] == "Computational modeling"
+    assert erp_word.kws[0][0] == "computational modeling"
     assert erp_word.years[0] == 2016
     assert erp_word.months[0] == 'Dec'
     assert erp_word.dois[0] == '10.1111/cogs.12461'
