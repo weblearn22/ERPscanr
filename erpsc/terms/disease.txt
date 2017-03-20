@@ -12,6 +12,7 @@ dyslexia
 epilepsy,seizure
 insomnia
 migraine
+obsessive compulsive disorder
 parkinson
 PTSD
 psychosis

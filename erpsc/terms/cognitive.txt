@@ -5,14 +5,20 @@ categorization
 cognitive
 decision making
 emotion,emotional
+error
+expectation
 face,facial
+grammar
 language
 learning
 memory
 motor
-pain
+number
+pain,nociception
 phonology,phonological
+reading
 reasoning
+representation
 reward
 semantic,semantics
 spatial
@@ -21,3 +27,4 @@ social
 somatosensory
 tactile
 vision,visual
+working memory

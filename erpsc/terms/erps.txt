@@ -1,4 +1,4 @@
-01-P40
+
 02-P50
 03-P60
 04-P100,P1
@@ -9,13 +9,15 @@
 09-P340
 10-P350
 11-P400
-12-P600,syntactice positive shift, SPS
-13-N50
-14-N60
+12-P600
+
+
 15-N80
 16-N100, N1
+
+
 17-N140
-18-N170,Vertex Positive Potential,VPP
+18-N170,
 19-N200,N2
 20-MMN,mismatch negativity,N2a
 21-N2a
@@ -29,33 +31,34 @@
 29-N450
 30-N600
 31-C1
-32-LPC,late positive component
-33-LPP, late Positive Potential
-34-MRPC,movement-related cortical potential
-35-CNV,contingent negative variation
-36-PINV,post-imperative negative variation
-37-ERN,Ne,error related negativity
-38-ELAN,early left anterior negativity
-39-CPS,closure positive shift
-40-LRP,lateralized readiness potential
-41-LDN,late difference negativity
-42-ORN,object related negativity
-43-SEP,somatosensory evoked potential
-44-VsEP,vestibular evoked potential
-45-BP,pre-motor potential,readiness potential,Bereitschaftspotential
-46-Pe,error-related positivity,error positivity,post-error positivity
-47-CRN,correct-related negativity,correct response negativity
-48-MFN,Medial frontal negativity
-49-SPN,Stimulus-Preceding Negativity
-50-ADAN,Anterior directed-attention negativity
-51-FRN,Feedback-related negativity
-52-Nc,Negative central component
-53-Pd,Distractor Positivity
-54-EDAN,early directing attention negativity
-55-ADAN,anterior directing attention negativity
-56-NSW,negative slow wave
-57-PSW,positive slow wave
-58-EPN,early posterior negativity
-59-SN,selection negativity
-60-SPN,sustained posterior negativity
-61-SPCN,sustained posterior contralateral negativity
+32-late positive component
+33-late positive potential
+/34-movement related cortical potential
+35-contingent negative variation
+36-post imperative negative variation
+37-error related negativity
+38-early left anterior negativity
+39-closure positive shift
+40-lateralized readiness potential
+41-late difference negativity
+42-object related negativity
+43-somatosensory evoked potential
+44-vestibular evoked potential
+45-readiness potential,bereitschaftspotential
+46-error-related positivity,error positivity,post-error positivity
+47-correct-related negativity,correct response negativity
+48-medial frontal negativity
+49-stimulus preceding negativity
+50-syntactic positive shift
+51-feedback related negativity
+52-negative central component
+53-distractor positivity
+54-early directing attention negativity
+55-anterior directing attention negativity
+56-early posterior negativity
+57-selection negativity
+58-sustained posterior negativity
+59-sustained posterior contralateral negativity
+60-vertex positive potential
+61-negative slow wave
+62-positive slow wave
