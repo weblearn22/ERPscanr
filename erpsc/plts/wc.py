@@ -33,7 +33,7 @@ def make_wc(freq_dist, n_words, label, disp_fig=True, save_fig=False, db=None):
         db = check_db(db)
         s_file = os.path.join(db.figs_path, 'wc', label + '.png')
 
-        plt.savefig(s_file)
+        plt.savefig(s_file, transparent=True)
         if not disp_fig:
             plt.close()
 
