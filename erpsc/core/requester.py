@@ -46,7 +46,6 @@ class Requester(object):
         print('Number of requests sent: \t', str(self.n_requests))
         print('Requester opened: \t\t', str(self.st_time))
         print('Requester closed: \t\t', str(self.en_time))
-        print('Most recent request sent at: \t', str(self.time_last_req))
 
 
     def throttle(self):
