@@ -2,7 +2,7 @@
 
 import os
 
-from erpsc.core.db import ERPDB, check_db
+from erpsc.core.db import ERPDB, WebDB, check_db
 
 ##################################################################################
 ##################################################################################
@@ -22,13 +22,30 @@ def test_erpdb_gen_paths():
 
     assert db
 
-def test_omdb_paths():
-    """Test that all defined OMDB paths exist."""
+def test_erpdb_paths():
+    """Test that all defined ERPDB paths exist."""
 
     db = ERPDB()
 
     # Loops through all paths, checking they exist
-    #  Skips vars with '_path' marker, and empty variables
+    #  Skips vars without '_path' marker, and empty variables
+    for key, val in vars(db).items():
+        if '_path' in key and val:
+            assert os.path.exists(val)
+
+def test_webdb():
+    """Test the WebDB object."""
+
+    # Check that WebDB returns properly
+    assert WebDB()
+
+def test_webdb_paths():
+    """Test that all defined WebDB paths exist."""
+
+    db = WebDB()
+
+    # Loops through all paths, checking they exist
+    #  Skips vars without '_path' marker, and empty variables
     for key, val in vars(db).items():
         if '_path' in key and val:
             assert os.path.exists(val)
