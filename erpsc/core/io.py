@@ -42,6 +42,11 @@ def save_pickle_obj(obj, f_name, db=None):
     else:
         raise InconsistentDataError('Object type unclear - can not save.')
 
+    # Save out labels header file
+    with open(os.path.join(save_path, 'labels.txt'), 'w') as outfile:
+        for label in obj.labels:
+            outfile.write("%s\n" % label)
+
     # Save pickle file
     save_file = os.path.join(save_path, save_name)
     pickle.dump(obj, open(save_file, 'wb'))
