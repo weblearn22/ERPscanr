@@ -32,6 +32,7 @@ class ERPDB(object):
         self.data_path = str()
         self.counts_path = str()
         self.words_path = str()
+        self.figs_path = str()
 
         # Generate project paths
         if auto_gen:
@@ -43,6 +44,7 @@ class ERPDB(object):
 
         # Set the data path
         self.data_path = os.path.join(self.project_path, '2-Data')
+        self.figs_path = os.path.join(self.project_path, '4-Figures')
 
         # Set paths to different data types
         self.counts_path = os.path.join(self.data_path, 'counts')
