@@ -7,7 +7,7 @@ import os
 ##################################################################################
 
 class ERPDB(object):
-    """Class to hold database information ERP SCANR project.
+    """Class to hold database information for ERP-SCANR project.
 
     Attributes
     ----------
@@ -48,12 +48,40 @@ class ERPDB(object):
         self.counts_path = os.path.join(self.data_path, 'counts')
         self.words_path = os.path.join(self.data_path, 'words')
 
+
+class WebDB(object):
+    """Class to hold database information for ERP-SCANR Website.
+
+    Parameters
+    ----------
+    base_path : str
+        Path to base directory of website.
+    post_path : str
+        Path to posts directory.
+    dat_path : str
+        Path to data directory.
+    plt_path : str
+        Path to store plots.
+    """
+
+    def __init__(self):
+        """Initialize WebDB object."""
+
+        # Set base path for the website
+        self.base_path = ("/Users/thomasdonoghue/Documents/"
+                             "GitCode/ERP_SCANR/docs")
+
+        # Set paths to directories for the website
+        self.post_path = os.path.join(self.base_path, '_posts')
+        self.dat_path = os.path.join(self.base_path, '_data')
+        self.plt_path = os.path.join(self.base_path, 'assets')
+
 ##########################################################################################
 ##########################################################################################
 ##########################################################################################
 
 def check_db(db):
-    """Check if ERPDB object is initialized, if not, return a ERPDB object.
+    """Check if ERPDB object is initialized, if not, return an ERPDB object.
 
     Parameters
     ----------
