@@ -1,17 +1,17 @@
 """WordCloud plots for ERP-SCANR."""
 
-from erpsc.core.db import check_db
-
 import os
 import random
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 
+from erpsc.core.db import check_db
+
 ############################################################################################
 ############################################################################################
 ############################################################################################
 
-def make_wc(freq_dist, n_words, label, save_fig=False, db=None):
+def make_wc(freq_dist, n_words, label, disp_fig=True, save_fig=False, db=None):
     """Create and display wordcloud.
 
     Parameters
@@ -23,13 +23,8 @@ def make_wc(freq_dist, n_words, label, save_fig=False, db=None):
     """
 
     wc = create_wc(conv_freqs(freq_dist, 20))
-    disp_wc(wc, label, save_fig, db)
 
-
-def disp_wc(wc, label, save_fig, db):
-    """Display the wordcloud."""
-
-    print('Wordcloud for ', label)
+    plt.figure()
     plt.imshow(wc)
     plt.axis("off")
 
@@ -39,6 +34,8 @@ def disp_wc(wc, label, save_fig, db):
         s_file = os.path.join(db.figs_path, 'wc', label + '.png')
 
         plt.savefig(s_file)
+        if not disp_fig:
+            plt.close()
 
 
 def conv_freqs(freq_dist, n_words):
