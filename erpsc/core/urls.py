@@ -75,7 +75,7 @@ class URLS(object):
         Dictionary of all arguments (settings & values) that can be used in e-utils URL.
     """
 
-    def __init__(self, db=None, retmax=None, field=None, retmode=None, auto_gen=False):
+    def __init__(self, db=None, usehistory='n', retmax=None, field=None, retmode=None, auto_gen=False):
         """Initialize the ncbi e-utils urls.
 
         NOTE:
@@ -85,6 +85,8 @@ class URLS(object):
         ----------
         db : {'pubmed', 'pmc'}, optional
             Which literature database to use.
+        usehistory : {'n', 'y'}
+            Whether to use history caching on pubmed server.
         retmax : str, optional
             The maximum number of papers to return.
         field : str, optional
@@ -106,7 +108,7 @@ class URLS(object):
 
         # Initialize dictionary to save settings, and add settings to it
         self.settings = dict()
-        self.save_settings(db=db, retmax=retmax, field=field, retmode=retmode)
+        self.save_settings(db=db, usehistory=usehistory, retmax=retmax, field=field, retmode=retmode)
 
         # Initialize dictionary to save url arguments, and populate it from settings
         self.args = dict()
@@ -124,7 +126,7 @@ class URLS(object):
         #self.retmax = ''
 
 
-    def save_settings(self, db=None, retmax=None, field=None, retmode=None):
+    def save_settings(self, usehistory=None, db=None, retmax=None, field=None, retmode=None):
         """Save provided setting values into a dictionary object.
 
         Parameters
@@ -260,7 +262,7 @@ class URLS(object):
 
         # Set the fetch url
         fetch_base = _check_auth(self.eutils + 'efetch.fcgi?')
-        self.fetch = fetch_base + '&'.join([self.args[arg] for arg in args_to_use]) + '&id='
+        self.fetch = fetch_base + '&'.join([self.args[arg] for arg in args_to_use]) #+ '&id='
 
 ##########################################################################################
 ##########################################################################################
