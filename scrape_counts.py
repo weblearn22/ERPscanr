@@ -24,9 +24,16 @@ def main():
         counts.set_exclusions_file()
         counts.set_terms_file(TERMS_TYPE)
 
+    print('\n\nSTARTING COUNTS SCRAPE\n\n')
+
     counts.scrape_data(db='pubmed', verbose=True)
 
+    print('\n\nCOUNTS SCRAPE FINISHED\n\n')
+
     save_pickle_obj(counts, S_NAME)
+
+    print('\n\nCOUNTS SCRAPE SAVED\n\n')
+
 
 if __name__ == "__main__":
     main()
