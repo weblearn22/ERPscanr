@@ -95,6 +95,20 @@ def test_scrape_data():
 
     assert True
 
+def test_scrape_data_hist():
+    """   """
+
+    words = Words()
+
+    # Add ERPs and terms
+    words.set_erps(['N180', 'P600'])
+    words.set_terms(['language', 'memory'])
+    words.set_exclusions(['protein', ''])
+
+    words.scrape_data(db='pubmed', retmax='5', use_hist=True)
+
+    assert True
+
 #######################################################################################
 ###################### TEST - ERPSC - WORDS - PRIVATE FUNCTIONS  ######################
 #######################################################################################
