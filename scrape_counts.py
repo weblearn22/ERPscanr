@@ -24,7 +24,8 @@ def main():
         counts.set_exclusions_file()
         counts.set_terms_file(TERMS_TYPE)
 
-    print('\n\nSTARTING COUNTS SCRAPE\n\n')
+    print('\n\nSTARTING COUNTS SCRAPE')
+    print('RUNNING TERMS TYPE: ', TERMS_TYPE, '\n\n')
 
     counts.scrape_data(db='pubmed', verbose=True)
 
