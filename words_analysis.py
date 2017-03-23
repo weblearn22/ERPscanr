@@ -25,9 +25,12 @@ def main():
     # Loop through all ERPs
     for erp in words.result_keys:
 
+        # Print status
+        print('Analyzing ', erp, 'data.')
+
         # Check if raw data loaded - load if not
-        if not words.results[erp].n_articles:
-            words.results[erp].load()
+        if not words[erp].n_articles:
+            words[erp].load()
 
         # Turn into ERPDataAll object
         erp_dat = ERPDataAll(words[erp])
