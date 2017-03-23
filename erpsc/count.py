@@ -44,7 +44,7 @@ class Count(Base):
         self.dat_percent = np.zeros(0)
 
 
-    def scrape_data(self, db=None):
+    def scrape_data(self, db=None, verbose=False):
         """Search through pubmed for all abstracts with co-occurence of ERP & terms.
 
         The scraping does an exact word search for two terms (one ERP and one term)
@@ -74,26 +74,52 @@ class Count(Base):
         # Loop through each ERP term
         for erp_ls in self.erps:
 
+            # Get the index of the current erp
+            erp_ind = self.erps.index(erp_ls)
+
+            # Print out status
+            if verbose:
+                print('Running counts for: ', self.labels[erp_ind])
+
+            # Get number of results for just ERP search
+            #url = urls.search + '"' + erp_ls[0] + '"'
+            url = urls.search + _mk(self.erps[erp_ind]) + \
+                  _mk(self.exclusions[erp_ind], 'NOT')
+            self.erp_counts[erp_ind] = self._get_count(url)
+
             # For each ERP, loop through each term term
             for term_ls in self.terms:
 
-                # Get the indices of the current erp & term terms
-                erp_ind = self.erps.index(erp_ls)
+                # Get the indices of the current term
                 term_ind = self.terms.index(term_ls)
 
-                # Make URL - Exact Term Version, using double quotes
-                url = urls.search + '"' + erp_ls[0] + '"AND"' + term_ls[0] + '"'
+                # Get number of results for just term search
+                #url = urls.search + '"' + term_ls[0] + '"'
+                url = urls.search + _mk(self.terms[term_ind])
+                self.term_counts[term_ind] = self._get_count(url)
+
+                # Make URL - Exact Term Version, using double quotes, & exclusions
+                url = urls.search + _mk(self.erps[erp_ind]) + \
+                        _mk(self.exclusions[erp_ind], 'NOT') + \
+                        _mk(self.terms[term_ind], 'AND')
+                #
+                #url = urls.search + '"' + erp_ls[0] + '"AND"' + term_ls[0] + '"'
                 #url = urls.search + comb_terms(erp_ls, 'or') + 'AND' + comb_terms(term_ls, 'or')
 
                 # Make URL - Non-exact term version
                 #url = self.eutils_search + erp + ' erp ' + term
 
+                count = self._get_count(url)
+                self.dat_numbers[erp_ind, term_ind] = count
+                self.dat_percent[erp_ind, term_ind] = count / self.erp_counts[erp_ind]
+
+
+                """
                 # Pull the page, and parse with Beautiful Soup
                 page = self.req.get_url(url)
                 page_soup = BeautifulSoup(page.content, 'lxml')
 
                 # Get all 'count' tags
-                #counts = page_soup.find_all('count')
                 counts = extract(page_soup, 'count', 'all')
 
                 # Initialize empty temp vector to hold counts
@@ -116,9 +142,22 @@ class Count(Base):
                 # Add the number & percent of overlapping papers
                 self.dat_numbers[erp_ind, term_ind] = vec[0]
                 self.dat_percent[erp_ind, term_ind] = vec[0]/vec[1]
+                """
 
         # Set Requester object as finished being used
         self.req.close()
+
+    def _get_count(self, url):
+        """   """
+
+        #
+        page = self.req.get_url(url)
+        page_soup = BeautifulSoup(page.content, 'lxml')
+
+        # Get all count tags
+        counts = extract(page_soup, 'count', 'all')
+
+        return int(counts[0].text)
 
 
     def check_cooc_erps(self):
@@ -187,3 +226,15 @@ class Count(Base):
             for term_ls in self.terms:
                 term_ind = self.terms.index(term_ls)
                 print('{:18} - {:10.0f}'.format(term_ls[0], self.term_counts[term_ind]))
+
+##
+##
+##
+
+def _mk(t_lst, cm=''):
+    """   """
+
+    if t_lst[0]:
+        return cm + comb_terms(t_lst, 'or')
+    else:
+        return ''
