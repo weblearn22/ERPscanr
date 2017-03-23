@@ -12,7 +12,7 @@ from erpsc.core.db import check_db
 def plot_years(year_counts, label, disp_fig=True, save_fig=False, db=None):
     """Plot publications across years histogram."""
 
-    f, ax = plt.subplots(figsize=(12, 4))
+    f, ax = plt.subplots(figsize=(10, 5))
 
     yrs = set(range(1985, 2016))
 
@@ -22,22 +22,22 @@ def plot_years(year_counts, label, disp_fig=True, save_fig=False, db=None):
 
     # Add line and points to plot
     plt.plot(x_dat, y_dat)
-    plt.plot(x_dat, y_dat, '.', markersize=14)
+    plt.plot(x_dat, y_dat, '.', markersize=16)
 
     # Set plot limits
     plt.xlim([min(yrs), max(yrs)])
     plt.ylim([0, max(y_dat)+5])
 
     # Add title & labels
-    plt.title('Publication History')
-    plt.xlabel('Year')
-    plt.ylabel('# Pubs')
+    plt.title('Publication History', fontsize=24, fontweight='bold')
+    plt.xlabel('Year', fontsize=18)
+    plt.ylabel('# Pubs', fontsize=18)
 
     if save_fig:
 
         db = check_db(db)
         s_file = os.path.join(db.figs_path, 'year', label + '.png')
 
-        plt.savefig(s_file, transparent=True)
+        plt.savefig(s_file, dpi=350, transparent=True)
         if not disp_fig:
             plt.close()
