@@ -2,7 +2,7 @@
 05-protein,cell,dna
 06-protein,serum,plasma,rat,mice,feline
 07-gene,protein,antibody,phosphate
-08-protein,dna, postnatal
+08-protein,dna,postnatal
 09-gene,protein,muscle,rat
 10-protein,cell,postnatal
 11-protein,promoter,rna
