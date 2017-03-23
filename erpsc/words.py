@@ -123,7 +123,7 @@ class Words(Base):
         self.date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
         # Get e-utils URLS object
-        urls = URLS(db=db, retmax=retmax, retmode='xml', auto_gen=False)
+        urls = URLS(db=db, retmax=retmax, retmode='xml', field='TIAB', auto_gen=False)
         urls.build_info(['db'])
         urls.build_search(['db', 'retmax', 'retmode'])
         urls.build_fetch(['db', 'retmax', 'retmode'])

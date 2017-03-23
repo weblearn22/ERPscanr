@@ -56,9 +56,9 @@ class Count(Base):
         self.date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
         # Get e-utils URLS object. Set retmax as 0, since not using UIDs in this analysis
-        urls = URLS(db=db, retmax='0', retmode='xml')
+        urls = URLS(db=db, retmax='0', retmode='xml', field='TIAB')
         urls.build_info(['db'])
-        urls.build_search(['db', 'retmax', 'retmode'])
+        urls.build_search(['db', 'retmax', 'retmode', 'field'])
 
         # Get current information about database being used
         self.get_db_info(urls.info)
