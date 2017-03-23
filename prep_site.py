@@ -1,4 +1,4 @@
-""" """
+"""Prepare and move the data for the website."""
 
 import os
 from shutil import copyfile
@@ -13,6 +13,10 @@ from erpsc.core.db import WebDB as WDB
 def main():
     """   """
 
+    # Print out status
+    print('\n\n GENERATING WEBSITE DATA \n\n')
+
+    # Get database objects
     db = ERPDB()
     wdb = WDB()
 
@@ -44,6 +48,9 @@ def main():
         # Publication graph - copy to wesbite directory
         copyfile(os.path.join(db.figs_path, 'year', label + '.png'),
                  os.path.join(w_plts_path, 'hist.png'))
+
+    # Print out status
+    print('\n\n WEBSITE DATA GENERATED \n\n')
 
 
 def make_post_md(label):
