@@ -164,15 +164,14 @@ class Count(Base):
         """"Prints out the terms most associatied with each ERP."""
 
         # Loop through each erp term, find maximally associated term term and print out
-        for erp_ls in self.erps:
+        for erp_ind, erp in enumerate(self.labels):
 
             # Find the index of the most common term for current erp
-            erp_ind = self.erps.index(erp_ls)
             term_ind = np.argmax(self.dat_percent[erp_ind, :])
 
             # Print out the results
             print("For the  {:5} the most common association is \t {:10} with \t %{:05.2f}"
-                  .format(erp_ls[0], self.terms[term_ind][0], \
+                  .format(erp, self.terms[term_ind][0], \
                   self.dat_percent[erp_ind, term_ind]*100))
 
 
@@ -180,15 +179,15 @@ class Count(Base):
         """Prints out the ERP terms most associated with each term."""
 
         # Loop through each cig term, find maximally associated erp term and print out
-        for term_ls in self.terms:
+        for term_ind, term_ls in enumerate(self.terms):
 
             # Find the index of the most common erp for current term
-            term_ind = self.terms.index(term_ls)
+            #term_ind = self.terms.index(term_ls)
             erp_ind = np.argmax(self.dat_percent[:, term_ind])
 
             # Print out the results
-            print("For  {:12} the strongest associated ERP is \t {:5} with \t %{:05.2f}"
-                  .format(term_ls[0], self.erps[erp_ind][0], \
+            print("For  {:20} the strongest associated ERP is \t {:5} with \t %{:05.2f}"
+                  .format(term_ls[0], self.labels[erp_ind], \
                   self.dat_percent[erp_ind, term_ind]*100))
 
 
@@ -217,15 +216,13 @@ class Count(Base):
 
         # Check counts for all ERP terms
         if dat is 'erp':
-            for erp_ls in self.erps:
-                erp_ind = self.erps.index(erp_ls)
-                print('{:5} - {:8.0f}'.format(erp_ls[0], self.erp_counts[erp_ind]))
+            for ind, erp in enumerate(self.labels):
+                print('{:5} - {:8.0f}'.format(erp, self.erp_counts[ind]))
 
         # Check counts for all term terms
         elif dat is 'term':
-            for term_ls in self.terms:
-                term_ind = self.terms.index(term_ls)
-                print('{:18} - {:10.0f}'.format(term_ls[0], self.term_counts[term_ind]))
+            for ind, term_ls in enumerate(self.terms):
+                print('{:20} - {:10.0f}'.format(term_ls[0], self.term_counts[ind]))
 
 ##################################################################################################
 ##################################################################################################
