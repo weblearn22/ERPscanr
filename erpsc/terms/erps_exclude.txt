@@ -1,5 +1,5 @@
 04-gene,virus,protein,cancer,acid,skin
-05-protein,cell,dna
+05-protein,cell,dna,dynein,adhesion
 06-protein,serum,plasma,rat,mice,feline
 07-gene,protein,antibody,phosphate
 08-protein,dna,postnatal
