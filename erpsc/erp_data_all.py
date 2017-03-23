@@ -10,6 +10,20 @@ from erpsc.core.db import check_db
 ##########################################################################################
 ##########################################################################################
 
+EXCLUDE_KWS = [
+    'eeg',
+    'erp',
+    'erps',
+    'event-related potential',
+    'event-related potentials',
+    'potentials',
+    'evoked'
+]
+
+##########################################################################################
+##########################################################################################
+##########################################################################################
+
 class ERPDataAll(object):
     """Object to hold ERP data, aggregated across papers.
 
@@ -51,8 +65,8 @@ class ERPDataAll(object):
         self.all_kws = _combine(erp_data.kws)
 
         # Convert lists of all words in frequency distributions
-        self.word_freqs = _freq_dist(self.all_words, self.erp)
-        self.kw_freqs = _freq_dist(self.all_kws, self.erp)
+        self.word_freqs = _freq_dist(self.all_words, self.erp + [self.label] + EXCLUDE_KWS)
+        self.kw_freqs = _freq_dist(self.all_kws, self.erp + [self.label] + EXCLUDE_KWS)
 
         # Get counts of authors, journals, years
         self.author_counts = _proc_authors(erp_data.authors)
@@ -74,7 +88,7 @@ class ERPDataAll(object):
             Number of top words to print out.
         """
 
-        _check(self.word_freqs, n_check, self.erp[0])
+        _check(self.word_freqs, n_check, self.label)
 
 
     def check_kws(self, n_check=20):
@@ -86,7 +100,7 @@ class ERPDataAll(object):
             Number of top words to print out.
         """
 
-        _check(self.kw_freqs, n_check, self.erp[0])
+        _check(self.kw_freqs, n_check, self.label)
 
 
     def create_summary(self):
@@ -141,6 +155,10 @@ def _check(freqs, n_check, label):
         Label to print for which data this relates to.
     """
 
+    # Reset number to check if there are fewer words available
+    if n_check > len(freqs):
+        n_check = len(freqs)
+
     # Get the requested number of most common kws for the ERP
     top = freqs.most_common()[0:n_check]
 
@@ -151,7 +169,7 @@ def _check(freqs, n_check, label):
         top_str += ' , '
 
     # Print out the top words for the current ERP
-    print(label, ': ', top_str)
+    print("{:5} : ".format(label) + top_str)
 
 def _combine(in_lst):
     """Combine list of lists into one large list.
