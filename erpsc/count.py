@@ -170,7 +170,7 @@ class Count(Base):
             term_ind = np.argmax(self.dat_percent[erp_ind, :])
 
             # Print out the results
-            print("For the  {:5} the most common association is \t {:10} with \t %{:05.2f}"
+            print("For the  {:5} the most common association is \t {:18} with \t %{:05.2f}"
                   .format(erp, self.terms[term_ind][0], \
                   self.dat_percent[erp_ind, term_ind]*100))
 
@@ -182,11 +182,10 @@ class Count(Base):
         for term_ind, term_ls in enumerate(self.terms):
 
             # Find the index of the most common erp for current term
-            #term_ind = self.terms.index(term_ls)
             erp_ind = np.argmax(self.dat_percent[:, term_ind])
 
             # Print out the results
-            print("For  {:20} the strongest associated ERP is \t {:5} with \t %{:05.2f}"
+            print("For  {:20} the strongest associated ERP is \t {:7} with \t %{:05.2f}"
                   .format(term_ls[0], self.labels[erp_ind], \
                   self.dat_percent[erp_ind, term_ind]*100))
 
