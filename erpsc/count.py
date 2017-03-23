@@ -223,6 +223,20 @@ class Count(Base):
             for ind, term_ls in enumerate(self.terms):
                 print('{:20} - {:10.0f}'.format(term_ls[0], self.term_counts[ind]))
 
+    def drop_data(self, n):
+        """   """
+
+        keep_inds = np.where(self.erp_counts > n)[0]
+
+        self.erps = [self.erps[i] for i in keep_inds]
+        self.erp_counts = self.erp_counts[keep_inds]
+
+        self.dat_numbers = self.dat_numbers[keep_inds, :]
+        self.dat_percent = self.dat_percent[keep_inds, :]
+
+        self.n_erps = len(self.erps)
+
+
 ##################################################################################################
 ##################################################################################################
 ##################################################################################################
