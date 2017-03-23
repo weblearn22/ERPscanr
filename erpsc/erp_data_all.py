@@ -237,6 +237,9 @@ def _proc_journals(j_lst):
 
     names = [j[1] for j in j_lst]
 
+    # TODO: Update this quick fix
+    names = [n for n in names if n is not None]
+
     counts = [(names.count(i), i) for i in set(names)]
     counts.sort(reverse=True)
 
@@ -327,9 +330,10 @@ def _fix_names(names):
     # Drop names whos data is all None
     names = [n for n in names if n != (None, None)]
 
+    # TODO: figure out and fix
     # Fix names if full name ended up in last name field
-    names = [(name[0].split(' ')[1], name[0].split(' ')[0][0])
-             if name[1] is None else name for name in names]
+    #names = [(name[0].split(' ')[1], name[0].split(' ')[0][0])
+    #         if name[1] is None else name for name in names]
 
     return names
 
