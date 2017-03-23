@@ -14,7 +14,7 @@ def plot_years(year_counts, label, disp_fig=True, save_fig=False, db=None):
 
     f, ax = plt.subplots(figsize=(12, 4))
 
-    yrs = set(range(1990, 2018))
+    yrs = set(range(1985, 2016))
 
     # Extract x & y data to plot
     x_dat = [y[0] for y in year_counts]
