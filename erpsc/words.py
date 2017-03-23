@@ -92,7 +92,7 @@ class Words(Base):
         cur_erp.add_words(_process_words(extract(art, 'AbstractText', 'str')))
         cur_erp.add_kws(_process_kws(extract(art, 'Keyword', 'all')))
         cur_erp.add_pub_date(_process_pub_date(extract(art, 'PubDate', 'raw')))
-        cur_erp.add_doi(_process_ids(extract(art, 'ArticleId', 'all')))
+        cur_erp.add_doi(_process_ids(extract(art, 'ArticleId', 'all'), 'doi'))
 
         # Increment number of articles included in ERPData
         cur_erp.increment_n_articles()
@@ -100,7 +100,7 @@ class Words(Base):
         return cur_erp
 
 
-    def scrape_data(self, db=None, retmax=None):
+    def scrape_data(self, db=None, retmax=None, use_hist=False):
         """Search through pubmed for all abstracts referring to a given ERP.
 
         The scraping does an exact word search for the ERP term given.
@@ -123,10 +123,12 @@ class Words(Base):
         self.date = datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
         # Get e-utils URLS object
-        urls = URLS(db=db, retmax=retmax, retmode='xml', field='TIAB', auto_gen=False)
+        if use_hist: hist_val = 'y'
+        else: hist_val = 'n'
+        urls = URLS(db=db, usehistory=hist_val, retmax=retmax, retmode='xml', field='TIAB', auto_gen=False)
         urls.build_info(['db'])
-        urls.build_search(['db', 'retmax', 'retmode'])
-        urls.build_fetch(['db', 'retmax', 'retmode'])
+        urls.build_search(['db', 'usehistory', 'retmax', 'retmode', 'field'])
+        urls.build_fetch(['db', 'retmode'])
 
         # Get current information about database being used
         self.get_db_info(urls.info)
@@ -153,31 +155,74 @@ class Words(Base):
             page = self.req.get_url(url)
             page_soup = BeautifulSoup(page.content, 'lxml')
 
-            # Get all ids
-            ids = page_soup.find_all('id')
+            # Using history
+            if use_hist:
 
-            # Convert ids to string
-            ids_str = _ids_to_str(ids)
+                #
+                ret_start = 0
+                ret_max = 100
 
-            # Get article page
-            art_url = urls.fetch + ids_str
-            art_page = self.req.get_url(art_url)
-            art_page_soup = BeautifulSoup(art_page.content, "xml")
+                #
+                count = int(page_soup.find('count').text)
+                web_env = page_soup.find('webenv').text
+                query_key = page_soup.find('querykey').text
 
-            # Pull out articles
-            articles = art_page_soup.findAll('PubmedArticle')
+                # Update History
+                cur_erp.update_history('Start Scrape')
 
-            # Update History
-            cur_erp.update_history('Start Scrape')
+                #
+                while ret_start < count:
 
-            # Loop through each article, extracting relevant information
-            for ind, art in enumerate(articles):
+                    #
+                    art_url = urls.fetch + '&WebEnv=' + web_env + '&query_key=' + query_key + \
+                              '&retstart=' + str(ret_start) + '&retmax=' + str(ret_max)
+                    art_page = self.req.get_url(art_url)
+                    art_page_soup = BeautifulSoup(art_page.content, "xml")
 
-                # Get ID of current article
-                new_id = int(ids[ind].text)
+                    # Pull out articles
+                    articles = art_page_soup.findAll('PubmedArticle')
 
-                # Extract and add all relevant info from current articles to ERPData object
-                cur_erp = self.extract_add_info(cur_erp, new_id, art)
+                    # Loop through each article, extracting relevant information
+                    for ind, art in enumerate(articles):
+
+                        # Get ID of current article
+                        new_id = _process_ids(extract(art, 'ArticleId', 'all'), 'pubmed')
+                        #new_id = int(ids[ind].text)
+
+                        # Extract and add all relevant info from current articles to ERPData object
+                        cur_erp = self.extract_add_info(cur_erp, new_id, art)
+
+                    #
+                    ret_start += ret_max
+
+            # Without using history
+            else:
+
+                # Get all ids
+                ids = page_soup.find_all('id')
+
+                # Convert ids to string
+                ids_str = _ids_to_str(ids)
+
+                # Get article page
+                art_url = urls.fetch + '&id=' + ids_str
+                art_page = self.req.get_url(art_url)
+                art_page_soup = BeautifulSoup(art_page.content, "xml")
+
+                # Pull out articles
+                articles = art_page_soup.findAll('PubmedArticle')
+
+                # Update History
+                cur_erp.update_history('Start Scrape')
+
+                # Loop through each article, extracting relevant information
+                for ind, art in enumerate(articles):
+
+                    # Get ID of current article
+                    new_id = int(ids[ind].text)
+
+                    # Extract and add all relevant info from current articles to ERPData object
+                    cur_erp = self.extract_add_info(cur_erp, new_id, art)
 
             # Check consistency of extracted results
             cur_erp.check_results()
@@ -324,7 +369,7 @@ def _process_pub_date(pub_date):
 
 
 @CatchNone
-def _process_ids(ids):
+def _process_ids(ids, id_type):
     """
 
     Parameters
@@ -338,7 +383,7 @@ def _process_ids(ids):
         The DOI if available, otherwise None.
     """
 
-    lst = [str(i.contents[0]) for i in ids if i.attrs == {'IdType' : 'doi'}]
+    lst = [str(i.contents[0]) for i in ids if i.attrs == {'IdType' : id_type}]
 
     if lst == []: return None
     else: return lst[0]
