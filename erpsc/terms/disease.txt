@@ -1,5 +1,6 @@
-ADHD
-alchohol abuse
+alcoholism
+addiction
+attention deficit hyperactivity disorder
 alzheimer
 anorexia
 anxiety
@@ -8,13 +9,16 @@ autism
 bipolar
 dementia
 depression
+down syndrome
 dyslexia
 epilepsy,seizure
 insomnia
 migraine
+mild cognitive impairment`
+multiple sclerosis
 obsessive compulsive disorder
 parkinson
-PTSD
+post traumatic stress disorder
 psychosis
 schizophrenia
 stroke
