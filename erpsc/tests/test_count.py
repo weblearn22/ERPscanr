@@ -22,6 +22,7 @@ def test_scrape():
     # Add ERPs and terms
     counts.set_erps(['N400', 'P600'])
     counts.set_terms(['language', 'memory'])
+    counts.set_exclusions(['protein', 'protein'])
 
     counts.scrape_data(db='pubmed')
 
