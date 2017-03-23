@@ -48,6 +48,12 @@ from erpsc.core.errors import InconsistentDataError
 ##########################################################################################
 ##########################################################################################
 
+AUTH = True
+
+##########################################################################################
+##########################################################################################
+##########################################################################################
+
 class URLS(object):
     """Class to hold URL information for ERP SCANR project.
 
@@ -196,7 +202,7 @@ class URLS(object):
         self.check_args(args_to_use)
 
         # Set the eg query search url
-        info_base = self.eutils + 'einfo.fcgi?'
+        info_base = _check_auth(self.eutils + 'einfo.fcgi?')
         self.info = info_base + '&'.join([self.args[arg] for arg in args_to_use])
 
 
@@ -213,7 +219,7 @@ class URLS(object):
         self.check_args(args_to_use)
 
         # Set the eg query search url
-        query_base = self.eutils + 'egquery.fcgi?'
+        query_base = _check_auth(self.eutils + 'egquery.fcgi?')
         self.query = query_base + '&'.join([self.args[arg] for arg in args_to_use]) + '&term='
 
 
@@ -233,7 +239,7 @@ class URLS(object):
         self.check_args(args_to_use)
 
         # Set the search url
-        search_base = self.eutils + 'esearch.fcgi?'
+        search_base = _check_auth(self.eutils + 'esearch.fcgi?')
         self.search = search_base + '&'.join([self.args[arg] for arg in args_to_use]) + '&term='
 
 
@@ -253,5 +259,17 @@ class URLS(object):
         self.check_args(args_to_use)
 
         # Set the fetch url
-        fetch_base = self.eutils + 'efetch.fcgi?'
+        fetch_base = _check_auth(self.eutils + 'efetch.fcgi?')
         self.fetch = fetch_base + '&'.join([self.args[arg] for arg in args_to_use]) + '&id='
+
+##########################################################################################
+##########################################################################################
+##########################################################################################
+
+def _check_auth(url):
+    """Check for authorization, if so add registered details."""
+
+    if AUTH:
+        return url + 'email=tdonoghue@ucsd&tool=ERPscanr&'
+    else:
+        return url
