@@ -100,7 +100,7 @@ class Words(Base):
         return cur_erp
 
 
-    def scrape_data(self, db=None, retmax=None, use_hist=False):
+    def scrape_data(self, db=None, retmax=None, use_hist=False, verbose=False):
         """Search through pubmed for all abstracts referring to a given ERP.
 
         The scraping does an exact word search for the ERP term given.
@@ -136,6 +136,9 @@ class Words(Base):
         # Loop through all the erps
         #for ind, erp in enumerate(self.erps):
         for ind, lab in enumerate(self.labels):
+
+            # Print out status
+            print('Scraping words for: ', lab)
 
             # Initiliaze object to store data for current erp papers
             cur_erp = ERPData(lab, self.erps[ind])
@@ -229,7 +232,7 @@ class Words(Base):
             cur_erp.update_history('End Scrape')
 
             # Save out and clear data
-            #cur_erp.save_n_clear()
+            cur_erp.save_n_clear()
 
             # Add the object with current erp data to results list
             self.add_results(cur_erp)
