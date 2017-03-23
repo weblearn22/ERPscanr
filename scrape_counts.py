@@ -5,8 +5,8 @@ from erpsc.core.io import save_pickle_obj
 ###############################################################################
 
 TEST = False
-TERMS_TYPE = 'disease'
-S_NAME = 'DisScrape'
+TERMS_TYPE = 'cognitive'
+S_NAME = 'CogScrape'
 
 ###############################################################################
 ###############################################################################
@@ -21,9 +21,10 @@ def main():
         counts.set_terms([['language'], ['visual']])
     else:
         counts.set_erps_file()
+        counts.set_exclusions_file()
         counts.set_terms_file(TERMS_TYPE)
 
-    counts.scrape_data(db='pmc')
+    counts.scrape_data(db='pubmed', verbose=True)
 
     save_pickle_obj(counts, S_NAME)
 
