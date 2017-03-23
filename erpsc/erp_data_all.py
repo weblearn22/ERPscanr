@@ -16,7 +16,12 @@ EXCLUDE_KWS = [
     'erps',
     'event-related potential',
     'event-related potentials',
+    'event related potentials',
+    'event related-potentials (erps)',
+    'event-related potentials (erps)',
     'potentials',
+    'electroencephalography',
+    'electroencephalography (eeg)',
     'evoked'
 ]
 
