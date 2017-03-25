@@ -76,7 +76,7 @@ class WebDB(object):
         # Set paths to directories for the website
         self.post_path = os.path.join(self.base_path, '_posts')
         self.dat_path = os.path.join(self.base_path, '_data')
-        self.plt_path = os.path.join(self.base_path, 'assets')
+        self.plt_path = os.path.join(self.base_path, 'assets/ERPs')
 
 ##########################################################################################
 ##########################################################################################
