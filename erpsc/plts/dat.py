@@ -36,8 +36,8 @@ def plot_years(year_counts, label, disp_fig=True, save_fig=False, db=None):
     if save_fig:
 
         db = check_db(db)
-        s_file = os.path.join(db.figs_path, 'year', label + '.png')
+        s_file = os.path.join(db.figs_path, 'year', label + '.svg')
 
-        plt.savefig(s_file, dpi=350, transparent=True)
+        plt.savefig(s_file, transparent=True)
         if not disp_fig:
             plt.close()
