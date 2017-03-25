@@ -1,6 +1,6 @@
 {% include header.html %}
 
-<h1>{{ page.title }} {{ page.label }}</h1>
+<h1>{{ page.title }} {{ page.label }} {{ site.data[page.title].name }} </h1>
 
 <img src={{ site.baseurl }}/assets/ERPs/{{ page.title }}/wc.png alt="Test-WC" align="middle">
 
@@ -14,8 +14,8 @@
 <h4> Quick Stats </h4>
 <p> Number Papers: {{ site.data[page.title].n_articles }} <br/>
 First Pub: {{ site.data[page.title].first_publication }} <br/>
-Journal: {{ site.data[page.title].top_journal_name }} <br/>
-Author: {{ site.data[page.title].top_author_name }} </p>
+Journal: {{ site.data[page.title].top_journal_name }} ( {{ site.data[page.title].top_journal_count }} papers ) <br/>
+Author: {{ site.data[page.title].top_author_name }} ( {{ site.data[page.title].top_author_count }} papers ) </p>
 
 
 <h4> Similarity </h4>
