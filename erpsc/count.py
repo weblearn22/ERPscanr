@@ -228,6 +228,10 @@ class Count(Base):
 
         keep_inds = np.where(self.erp_counts > n)[0]
 
+        # TODO: take this out when update to scrape
+        # Specific fix to drop typo'd value from current scrape
+        keep_inds = np.delete(keep_inds, np.where(keep_inds == self.erps.index(['270'])))
+
         self.erps = [self.erps[i] for i in keep_inds]
         self.labels = [self.labels[i] for i in keep_inds]
         self.erp_counts = self.erp_counts[keep_inds]
