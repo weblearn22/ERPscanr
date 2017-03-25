@@ -112,6 +112,7 @@ class ERPDataAll(object):
         """Fill the summary dictionary of the current ERPs Words data."""
 
         # Add data to summary dictionary.
+        self.summary['name'] = str(self.erp[0])
         self.summary['n_articles'] = str(self.n_articles)
         self.summary['top_author_name'] = ' '.join([self.author_counts[0][1][1],
                                                self.author_counts[0][1][0]])
@@ -127,6 +128,7 @@ class ERPDataAll(object):
 
         # Print out summary information
         print(self.label, ':')
+        print('  Full name of this ERP is: \t\t', self.summary['name'])
         print('  Number of articles: \t\t', self.summary['n_articles'])
         print('  First publication: \t\t', self.summary['first_publication'])
         print('  Most common author: \t\t', self.summary['top_author_name'])
