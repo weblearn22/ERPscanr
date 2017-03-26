@@ -6,6 +6,17 @@ layout: default
 
 This is the website for the ERP-SCANR project. ERP-SCANR is an 'automated meta-analysis' of the literature, specifically of work that uses and studies event-related potentials (ERPs).
 
+## Contact
+
+ERP-SCANR was built by Tom Donoghue, from the [Voytek lab](http://voyteklab.com) at UC San Diego.
+Please get in touch with any questions, comments, suggestions at thomasdonoghue@hotmail.ca, or @TomDonoghue on Twitter.
+
+## CNS Poster
+
+The poster on this project which was presented at the Cognitive Neuroscience Society (CNS) meeting is available to view and download [here.](https://www.dropbox.com/s/sgnz7ecd3qp6tb7/TDonoghue_ERP-SCANR_CNS.pdf?dl=0)
+
+
+
 ## Motivation
 
 ERPs are a common method of investigation in cognitive neuroscience, so much so that there are now hundreds of thousands of papers investigating cognition, disease states, and the brain using these approaches. The scale of the literature makes it difficult to keep up to date with the field, and explore now ideas about cognitive neuroscience and this method of investigation. This issues can be especially intimidating to newcomers to the field.
@@ -20,10 +31,6 @@ ERP-SCANR is based on the PubMed E-Utilities tools, which are used to search thr
 From there, we use simple text-mining and word co-occurence analysis to derive data-driven summaries for each ERP, as well as to compare across these profiles to work towards summarizing across
 
 A more in-depth overview of the methods is available [here.](methods.html)
-
-## CNS Poster
-
-The poster on this project which was presented at the Cognitive Neuroscience Society (CNS) meeting is available to view and download [here.](https://www.dropbox.com/s/sgnz7ecd3qp6tb7/TDonoghue_ERP-SCANR_CNS.pdf?dl=0)
 
 ## Acknowledgements
 
