@@ -6,6 +6,8 @@ layout: default
 
 The codebase to run collect this data and analyze the results was all written in Python, including calls the PubMed E-Utilities API. All code written and used for this project will be made freely available (coming soon).
 
+![methods]({{ site.baseurl }}/assets/FIGS/methods.pdf)
+
 ## Literature Searchs & Web Scraping
 
 Dictionaries of terms were manually compiled to serve as serve terms on PubMed. These include separate dictionaries for ERP terms, cognitive terms, and disease terms. In addition, we collected a dictionary of exclusion words, per ERP, that were also manually curated to restrict search results to the relevant literature, and exclude homophones (for example, for P50, we use an exclusion word of 'protein' to avoid papers examing the P50 protein).
