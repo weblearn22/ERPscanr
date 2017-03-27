@@ -42,12 +42,12 @@ def main():
             os.mkdir(w_plts_path)
 
         # Wordcloud - copy to website directory
-        copyfile(os.path.join(db.figs_path, 'wc', label + '.png'),
-                 os.path.join(w_plts_path, 'wc.png'))
+        copyfile(os.path.join(db.figs_path, 'wc', label + '.svg'),
+                 os.path.join(w_plts_path, 'wc.svg'))
 
         # Publication graph - copy to wesbite directory
-        copyfile(os.path.join(db.figs_path, 'year', label + '.png'),
-                 os.path.join(w_plts_path, 'hist.png'))
+        copyfile(os.path.join(db.figs_path, 'year', label + '.svg'),
+                 os.path.join(w_plts_path, 'hist.svg'))
 
     # Print out status
     print('\n\n WEBSITE DATA GENERATED \n\n')
