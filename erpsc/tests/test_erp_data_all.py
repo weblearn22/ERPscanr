@@ -29,12 +29,16 @@ def test_check_funcs():
 
     assert True
 
-def test_print_summary():
+def test_create_print_summary():
     """   """
-    pass
-    #erp_dat = load_erp_data(add_dat=True, n=2)
-    #erp_dat_all = ERPDataAll(erp_dat)
 
-    #erp_dat_all.print_summary()
+    erp_dat = load_erp_data(add_dat=True, n=2)
+    erp_dat_all = ERPDataAll(erp_dat)
 
-    #assert True
+    erp_dat_all.create_summary()
+
+    assert erp_dat_all.summary
+
+    erp_dat_all.print_summary()
+
+    assert True
