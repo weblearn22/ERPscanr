@@ -112,7 +112,6 @@ class ERPDataAll(object):
         """Fill the summary dictionary of the current ERPs Words data."""
 
         # Add data to summary dictionary.
-        self.summary['name'] = str(self.erp[0])
         self.summary['n_articles'] = str(self.n_articles)
         self.summary['top_author_name'] = ' '.join([self.author_counts[0][1][1],
                                                self.author_counts[0][1][0]])
@@ -121,6 +120,10 @@ class ERPDataAll(object):
         self.summary['top_journal_count'] = str(self.journal_counts[0][0])
         self.summary['top_kws'] = [f[0] for f in self.kw_freqs.most_common()[0:5]]
         self.summary['first_publication'] = str(min([y[0] for y in self.year_counts]))
+        if self.label != str(self.erp[0]):
+            self.summary['name'] = str(self.erp[0])
+        else:
+            self.summary['name'] = ''
 
 
     def print_summary(self):
@@ -128,7 +131,7 @@ class ERPDataAll(object):
 
         # Print out summary information
         print(self.label, ':')
-        print('  Full name of this ERP is: \t\t', self.summary['name'])
+        print('  Full name of this ERP is: \t', self.summary['name'])
         print('  Number of articles: \t\t', self.summary['n_articles'])
         print('  First publication: \t\t', self.summary['first_publication'])
         print('  Most common author: \t\t', self.summary['top_author_name'])
@@ -260,7 +263,7 @@ def _proc_journals(j_lst):
         Number of publications per journal - (n, Journal Name).
     """
 
-    names = [j[1] for j in j_lst]
+    names = [j[0] for j in j_lst]
 
     # TODO: Update this quick fix
     names = [n for n in names if n is not None]
