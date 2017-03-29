@@ -21,6 +21,24 @@ From there, we use simple text-mining and word co-occurence analysis to derive d
 
 A more in-depth overview of the methods is available [here.](methods.html)
 
+## Version
+
+The project, codebase, and website are all dynamic and in active development, and this website may change without warning, including changes to the results due to edits to the analysis procedure, changes in the term dictionaries, and the addition of new analyses.
+
+The current scrape is v0.1-PubMed:
+
+Counts Scrape:
+
+    - dbbuild: Build170322-2207m.1
+    - lastupdate: 2017/03/23 02:08
+    - scraped on: Thursday 23 March
+
+Words  Scrape:
+
+    - dbbuild: Build170322-2207m.2
+    - lastupdate: 2017/03/23 07:24
+    - scraped on: Thursday 23 March
+
 ## CNS Poster
 
 The poster on this project which was presented at the Cognitive Neuroscience Society (CNS) meeting is available to view and download [here.](https://www.dropbox.com/s/sgnz7ecd3qp6tb7/TDonoghue_ERP-SCANR_CNS.pdf?dl=0)
@@ -32,6 +50,6 @@ Please get in touch with any questions, comments, suggestions at thomasdonoghue@
 
 ## Acknowledgements
 
-This project is similar to and inspired by [Brain-SCANR.](http://www.brainscanr.com)
+This project is similar to and inspired by [Brain-SCANR.](http://www.brainscanr.com) It is also inspired by [NeuroSynth](http://www.neurosynth.org), another meta-analytic tool for fMRI research.
 
-This project is built on the PudMed E-Utilities API, and open source tools, with thanks to Python developers and in particular those who work on nltk, BeautifulSoup. Also thanks to Github academic, where the codebase is hosted, and Github-Pages which is used to host this website.
+This project is built on the PudMed E-Utilities API, and open source tools, using Python and in particular using nltk and BeautifulSoup. The codebase is hosted on Github academic, and this website is hosted by Github-Pages.
