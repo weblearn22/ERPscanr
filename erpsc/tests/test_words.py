@@ -91,12 +91,12 @@ def test_scrape_data():
     words.set_terms(['language', 'memory'])
     words.set_exclusions(['cell', ''])
 
-    words.scrape_data(db='pubmed', retmax='5')
+    #words.scrape_data(db='pubmed', retmax='5')
 
     assert True
 
 def test_scrape_data_hist():
-    """   """
+    """Test the scrape_data method, using HTTP Post method."""
 
     words = Words()
 
@@ -105,7 +105,7 @@ def test_scrape_data_hist():
     words.set_terms(['language', 'memory'])
     words.set_exclusions(['protein', ''])
 
-    words.scrape_data(db='pubmed', retmax='5', use_hist=True)
+    #words.scrape_data(db='pubmed', retmax='5', use_hist=True)
 
     assert True
 
