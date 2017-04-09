@@ -278,7 +278,7 @@ def _check_auth(url):
         return url
 
 def _authenticate():
-    """Check that user has permission to run as ERP-SCANR tool."""
+    """Check that user has permission to run as registered ERP-SCANR tool."""
     import hashlib
 
     try:
