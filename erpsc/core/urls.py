@@ -48,6 +48,7 @@ from erpsc.core.errors import InconsistentDataError
 ##########################################################################################
 ##########################################################################################
 
+# Whether to add pubmed authentification details for ERP-SCANR tool
 AUTH = False
 
 ##########################################################################################
@@ -271,7 +272,30 @@ class URLS(object):
 def _check_auth(url):
     """Check for authorization, if so add registered details."""
 
-    if AUTH:
+    if AUTH and _authenticate:
         return url + 'email=tdonoghue@ucsd&tool=ERPscanr&'
     else:
         return url
+
+def _authenticate():
+    """Check that user has permission to run as ERP-SCANR tool."""
+    import hashlib
+
+    try:
+        with open('.auth', 'r') as f:
+            pw = f.read()
+            pw = pw.strip('\n')
+
+        pwh = hashlib.sha224(pw.encode()).hexdigest()
+        chh = 'a28ffb33c70f372d8974c12424f605518f025c08e94663e705304298'
+
+        if  pwh == chh:
+            print('Authentification passed.')
+            return True
+        else:
+            print('Authentification failed.')
+            return False
+
+    except:
+        print('Authentification failed.')
+        return False
