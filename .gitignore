@@ -17,3 +17,5 @@
 # Ignore things for website
 /docs/_site/*
 /docs/.sass-cache/*
+# Ignore authentification file
+.auth
