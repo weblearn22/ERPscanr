@@ -66,7 +66,7 @@ def test_extract_add_info():
     assert erp_word.words[0][0] == "ten"
     assert erp_word.kws[0][0] == "computational modeling"
     assert erp_word.years[0] == 2017
-    assert erp_word.months[0] == 'Dec'
+    assert erp_word.months[0] == 'May'
     assert erp_word.dois[0] == '10.1111/cogs.12461'
 
     # Check page with all fields missing - check error handling
