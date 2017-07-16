@@ -73,10 +73,11 @@
 73-anterior directing attention negativity
 74-early posterior negativity
 75-selection negativity
-76-sustained posterior negativity
-77-sustained posterior contralateral negativity
-78-reversal negativity
-79-vsep,vestibular sensory evoked potentials,vestibular evoked potentials
-80-movement related cortical potential, movement related cortical potentials
-81-frontal selection positivity
-82-prefrontal negativity
+76-selection positivity
+77-sustained posterior negativity
+78-sustained posterior contralateral negativity
+79-reversal negativity
+80-vsep,vestibular sensory evoked potentials,vestibular evoked potentials
+81-movement related cortical potential, movement related cortical potentials
+82-frontal selection positivity, fronto polar selection positivity
+83-prefrontal negativity
