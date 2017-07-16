@@ -6,7 +6,7 @@ import os
 ################################# ERPSC - UTILS - FUNCTIONS ####################################
 ################################################################################################
 
-def erp_numbering(f_name):
+def erp_file_numbers(f_name):
     """Rewrites the number prefix in ERP term files.
 
     Parameters
