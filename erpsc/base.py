@@ -1,7 +1,5 @@
 """Base object for ERP-SCANR."""
-#from __future__ import print_function
 
-#from types import StringType, ListType
 import pkg_resources as pkg
 from bs4 import BeautifulSoup
 
@@ -49,11 +47,12 @@ class Base(object):
         # Initialize variable to keep track of term type used
         self.terms_type = str()
 
-        # Initialize list of erps & term terms to use
+        # Initialize list of erps & term terms to use, including labels
         self.labels = list()
         self.erps = list()
         self.exclusions = list()
         self.terms = list()
+        self.terms_labels = list()
 
         # Initialize counters for numbers of terms
         self.n_erps = int()
@@ -254,6 +253,12 @@ class Base(object):
             self.terms_type = str()
             self.terms = list()
             self.n_terms = int()
+
+
+    def get_term_labels(self):
+        """   """
+
+        self.term_labels = [term[-1] for term in self.terms]
 
 
     def get_db_info(self, info_url):
