@@ -1,0 +1,82 @@
+01-P, 100
+02-P, 150
+03-P, 180
+04-P, 200
+05-P, 220
+06-P, 240
+07-P, 250
+08-P, 270
+09-P, 300
+10-P, 300
+11-P, 300
+12-P, 340
+13-P, 350
+14-P, 400
+15-P, 500
+16-P, 550
+17-P, 600
+18-N, 75
+19-N, 80
+20-N, 90
+21-N, 100
+22-N, 110
+23-N, 120
+24-N, 130
+25-N, 140
+26-N, 150
+27-N, 160
+28-N, 170
+29-N, 180
+30-N, 190
+31-N, 200
+32-N, 200
+33-N, 200
+34-N, 200
+35-N, 200
+36-N, 240
+37-N, 250
+38-N, 270
+39-N, 280
+40-N, 250
+41-N, 300
+42-N, 320
+43-N, 350
+44-N, 380
+45-N, 400
+46-N, 450
+47-N, 550
+48-N, 600
+49-N, 700
+50-P, 550
+51-P, 550
+52-N, #negative slow wave
+53-P, #positive slow wave
+54-P, 175
+55-N, 365
+56-N, #post imperative negative variation
+57-N, 200
+58-N, 400
+59-P, 350
+60-lateralized readiness potential
+61-N, #late discriminative negativity
+62-N, #object related negativity
+63-readiness potential,bereitschaftspotential
+64-N, 115
+65-P, 350
+66-N, #correct related negativity,correct response negativity
+67-N, 300
+68-N, #stimulus preceding negativity
+69-N, #feedback related negativity
+70-P, 335
+71-N, 220
+72-P, #late directing attention positivity
+73-N, #anterior directing attention negativity
+74-N, 300
+75-N, #selection negativity
+76-N, #sustained posterior negativity
+77-N, #sustained posterior contralateral negativity
+78-N, 250
+79-vsep,vestibular sensory evoked potentials,vestibular evoked potentials
+80-movement related cortical potential, movement related cortical potentials
+81-
+82-

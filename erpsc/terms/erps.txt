@@ -1,82 +1,82 @@
-04-P100
-05-P150
-06-P180
-07-P200
-08-P220
-09-P240
-10-P250
-11-P270
-12-P300
-13-P3a
-14-P3b
-15-P340
-16-P350
-17-P400
-18-P500
-19-P550
-20-P600
-24-N75
-25-N80
-26-N90
-27-N100
-28-N110
-29-N120
-30-N130
-31-N140
-32-N150
-33-N160
-34—N170
-35-N180
-36-N190
-37-N200
-38-MMN,mismatch negativity
-39-N2a
-40-N2b
-41-N2c
-42-N240
-43-N250
-44-N270
-45-N280
-46-N2pc
-47-N300
-48-N320
-49-N350
-50-N400
-51-N450
-52-N550
-53-N600
-54-N700
-55-late positive component, late positive complex
-56-late positive potential, late positive potentials
-57-negative slow wave
-58-positive slow wave
-59-vertex positive potential
-60-contingent negative variation
-61-post imperative negative variation
-62-early left anterior negativity
-63-closure positive shift
-64-lateralized readiness potential
-65-late difference negativity
-66-late discriminative negativity
-67-object related negativity
-68-readiness potential,bereitschaftspotential
-69-error related negativity
-70-error related positivity,error positivity,post error positivity
-71-correct related negativity,correct response negativity
-72-medial frontal negativity
-73-stimulus preceding negativity
-74-syntactic positive shift
-75-feedback related negativity
-76-negative central component
-77-distractor positivity
-78-early directing attention negativity
-79-anterior directing attention negativity
-80-early posterior negativity
-81-selection negativity
-82-sustained posterior negativity
-83-sustained posterior contralateral negativity
-84-reversal negativity
-85-reversal positivity
-86-vsep,vestibular sensory evoked potentials,vestibular evoked potentials
-87-vagus somatosensory evoked potentials
-88-movement related cortical potential, movement related cortical potentials
+01-P100
+02-P150
+03-P180
+04-P200
+05-P220
+06-P240
+07-P250
+08-P270
+09-P300
+10-P3a
+11-P3b
+12-P340
+13-P350
+14-P400
+15-P500
+16-P550
+17-P600
+18-N75
+19-N80
+20-N90
+21-N100
+22-N110
+23-N120
+24-N130
+25-N140
+26-N150
+27-N160
+28-N170
+29-N180
+30-N190
+31-N200
+32-MMN,mismatch negativity
+33-N2a
+34-N2b
+35-N2c
+36-N240
+37-N250
+38-N270
+39-N280
+40-N2pc
+41-N300
+42-N320
+43-N350
+44-N380
+45-N400
+46-N450
+47-N550
+48-N600
+49-N700
+50-late positive component, late positive complex
+51-late positive potential, late positive potentials
+52-negative slow wave
+53-positive slow wave
+54-vertex positive potential
+55-contingent negative variation
+56-post imperative negative variation
+57-early left anterior negativity
+58-left anterior negativity
+59-closure positive shift
+60-lateralized readiness potential
+61-late discriminative negativity
+62-object related negativity
+63-readiness potential,bereitschaftspotential
+64-error related negativity
+65-error related positivity,error positivity,post error positivity
+66-correct related negativity,correct response negativity
+67-medial frontal negativity
+68-stimulus preceding negativity
+69-feedback related negativity
+70-distractor positivity
+71-early directing attention negativity
+72-late directing attention positivity
+73-anterior directing attention negativity
+74-early posterior negativity
+75-selection negativity
+76-sustained posterior negativity
+77-sustained posterior contralateral negativity
+78-reversal negativity
+79-vsep,vestibular sensory evoked potentials,vestibular evoked potentials
+80-movement related cortical potential, movement related cortical potentials
+81-frontal selection positivity
+82-prefrontal negativity
