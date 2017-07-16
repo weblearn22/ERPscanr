@@ -1,13 +1,13 @@
-"""Create data plots for ERP-SCANR project."""
+"""Create data plots for ERP-SCANR project - plots for single ERPs (for ERP profiles)."""
 
 import os
 import matplotlib.pyplot as plt
 
 from erpsc.core.db import check_db
 
-#####################################################################################
-#####################################################################################
-#####################################################################################
+#########################################################################################
+#########################################################################################
+#########################################################################################
 
 def plot_years(year_counts, label, disp_fig=True, save_fig=False, db=None):
     """Plot publications across years histogram."""
