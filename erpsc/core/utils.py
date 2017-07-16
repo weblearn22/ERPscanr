@@ -1,8 +1,30 @@
 """Basic utility functions for ERP-SCANR."""
 
+import os
+
 ################################################################################################
 ################################# ERPSC - UTILS - FUNCTIONS ####################################
 ################################################################################################
+
+def erp_numbering(f_name):
+    """Rewrites the number prefix in ERP term files.
+
+    Parameters
+    ----------
+    f_name : str
+        Full file path & name for file to run.
+    """
+
+    os.rename(f_name, 'temp.txt')
+
+    with open('temp.txt', 'r') as old_file:
+        with open(f_name, 'w') as new_file:
+
+            for ind, line in enumerate(old_file):
+                new_file.write('{:02}'.format(ind+1) + '-' + line[3:])
+
+    os.remove('temp.txt')
+
 
 def comb_terms(lst, jt):
     """Combine a list of terms to use as search arguments.
@@ -53,6 +75,10 @@ def extract(dat, tag, how):
     {bs4.element.Tag, bs4.element.ResultSet, unicode, str, None}
         Requested data from the tag. Returns None is requested tag is unavailable.
     """
+
+    # Check how spec if valid
+    if how not in ['raw', 'str', 'all']:
+        raise ValueError('Value for how is not understood.')
 
     # Use try to be robust to missing tag
     try:
