@@ -1,5 +1,4 @@
 """Classes and functions for Count analysis (key word co-occurences in papers)."""
-#from __future__ import print_function, division
 
 import datetime
 import numpy as np
@@ -147,10 +146,17 @@ class Count(Base):
         # Set Requester object as finished being used
         self.req.close()
 
-    def _get_count(self, url):
-        """   """
 
-        #
+    def _get_count(self, url):
+        """Get the count of how many articles listed on search results URL.
+
+        Parameters
+        ----------
+        url : str
+            URL to search with.
+        """
+
+        # Request page from URL
         page = self.req.get_url(url)
         page_soup = BeautifulSoup(page.content, 'lxml')
 
@@ -223,8 +229,15 @@ class Count(Base):
             for ind, term_ls in enumerate(self.terms):
                 print('{:20} - {:10.0f}'.format(term_ls[0], self.term_counts[ind]))
 
+
     def drop_data(self, n):
-        """   """
+        """Drop ERPs based on number of article results.
+
+        Parameters
+        ----------
+        n : int
+            Mininum number of articles to keep each term.
+        """
 
         keep_inds = np.where(self.erp_counts > n)[0]
 

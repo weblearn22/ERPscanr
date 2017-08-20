@@ -1,5 +1,4 @@
 """Classes and functions to store aggregated ERP paper data."""
-#from __future__ import print_function
 
 import json
 import nltk
@@ -56,6 +55,8 @@ class ERPDataAll(object):
         Counter across all journals.
     year_counts : list of tuple of (int, int)
         Counter across all years of publication.
+    summary : dict
+        Summary / overview of data associated with current object.
     """
 
     def __init__(self, erp_data):

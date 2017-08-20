@@ -1,5 +1,4 @@
 """Classes and functions for Word analysis (text analysis of abstract texts)."""
-#from __future__ import print_function, division
 
 import datetime
 from bs4 import BeautifulSoup
@@ -21,6 +20,8 @@ class Words(Base):
 
     Attributes
     ----------
+    result_keys : list of str
+        Keys for each result data attached to object.
     results : list of ERPData() objects
         Results for each ERP, stored in custom Words object.
     """
@@ -37,9 +38,9 @@ class Words(Base):
 
 
     def __getitem__(self, key):
-        """Be able to index into Words object with ERP result key."""
+        """Index into Words object with ERP result key."""
 
-        # Give up if obkect is empty
+        # Give up if object is empty
         if len(self.result_keys) == 0:
             raise IndexError('Object is empty - cannot index.')
 

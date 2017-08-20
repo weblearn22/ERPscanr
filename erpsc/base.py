@@ -28,6 +28,8 @@ class Base(object):
         Exclusion words for each ERP, used to avoid unwanted articles.
     terms : list of list of str
         Terms words.
+    term_labels : list of str
+        Labels for each term.
     n_erps : int
         Number of erps.
     n_terms : int
@@ -52,7 +54,7 @@ class Base(object):
         self.erps = list()
         self.exclusions = list()
         self.terms = list()
-        self.terms_labels = list()
+        self.term_labels = list()
 
         # Initialize counters for numbers of terms
         self.n_erps = int()
@@ -256,7 +258,7 @@ class Base(object):
 
 
     def get_term_labels(self):
-        """   """
+        """Get term labels."""
 
         self.term_labels = [term[-1] for term in self.terms]
 
@@ -306,7 +308,7 @@ def _check_type(term):
         return term
 
 def _terms_load_file(dat_name):
-    """Loads a terms data file from within the module
+    """Loads a terms data file from within the module.
 
     Parameters
     ----------

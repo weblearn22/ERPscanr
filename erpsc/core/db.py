@@ -19,14 +19,20 @@ class ERPDB(object):
         Path to the data folder for counts data.
     words_path : str
         Path to the data folder for words data.
+    figs_path : str
+        Path to the folder to save out figures.
     """
 
     def __init__(self, auto_gen=True):
         """Initialize ERPDB object."""
 
         # Set base path for the project
-        self.project_path = ("/Users/thomasdonoghue/Documents/"
+        self.project_path = ("/Users/tom/Documents/"
                              "Research/1-Projects/ERP-SCANR/")
+
+        # Set base path for the project - OLD LAPTOP
+        #self.project_path = ("/Users/thomasdonoghue/Documents/"
+        #                     "Research/1-Projects/ERP-SCANR/")
 
         # Initialize paths
         self.data_path = str()
@@ -70,8 +76,12 @@ class WebDB(object):
         """Initialize WebDB object."""
 
         # Set base path for the website
-        self.base_path = ("/Users/thomasdonoghue/Documents/"
-                             "GitCode/ERP_SCANR/docs")
+        self.base_path = ("/Users/tom/Documents/"
+                          "GitCode/ERP_SCANR/docs")
+
+        # Set base path for the website - OLD LAPTOP
+        #self.base_path = ("/Users/thomasdonoghue/Documents/"
+        #                     "GitCode/ERP_SCANR/docs")
 
         # Set paths to directories for the website
         self.post_path = os.path.join(self.base_path, '_posts')
