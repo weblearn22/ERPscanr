@@ -18,6 +18,9 @@ coverage run --source erpsc --omit="*/plts/*" -m py.test
 coverage report
 
 # Find a way to get summary from pylint?
+printf "\n\n\n RUN PYLINT ACROSS MODULE: \n"
+pylint erpsc/core -> _lint.txt
+tail -n5 _lint.txt
 
 # Print out some new lines
-printf "\n\n\n\n"
+printf "\n\n\n"
