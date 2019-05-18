@@ -19,7 +19,7 @@ coverage report
 
 # Find a way to get summary from pylint?
 printf "\n\n\n RUN PYLINT ACROSS MODULE: \n"
-pylint erpsc/core -> _lint.txt
+pylint erpsc -> _lint.txt
 tail -n5 _lint.txt
 
 # Print out some new lines

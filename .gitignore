@@ -1,21 +1,33 @@
-# Ignore compiled py files
+# Ignore compiled and cached py files
 *.pyc
+**/.cache
+
 # Ignore ipynb checkpoint files
 **/.ipynb_checkpoints
-# Ignore test cache files
-**/.cache
+
 # Ignore files marked as old
 *_old*
-# Ignore coverage report files
+
+# Ignore coverage and linter report files
 **/.coverage
+_lint.txt
+
 # Ignore test data files
 **/tests/data/**
+
 # Ignore Apple Desktop Services files
 *.DS_Store*
+
 # Ignore swap files
 *.swp*
+
 # Ignore things for website
 /docs/_site/*
 /docs/.sass-cache/*
+
+# Ignore any figures
+*.svg
+*.png
+
 # Ignore authentification file
 .auth
