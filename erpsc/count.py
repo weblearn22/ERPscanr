@@ -1,17 +1,16 @@
 """Classes and functions for Count analysis (key word co-occurences in papers)."""
 
 import datetime
+
 import numpy as np
 from bs4 import BeautifulSoup
 
-# Import custom code
 from erpsc.base import Base
 from erpsc.core.utils import comb_terms, extract
 from erpsc.core.urls import URLS
 
-#################################################################################################
-#################################### ERPSC - COUNT - CLASSES ####################################
-#################################################################################################
+###################################################################################################
+###################################################################################################
 
 class Count(Base):
     """This is a class for counting co-occurence of pre-specified ERPs & terms.
@@ -243,7 +242,10 @@ class Count(Base):
 
         # TODO: take this out when update to scrape
         # Specific fix to drop typo'd value from current scrape
-        keep_inds = np.delete(keep_inds, np.where(keep_inds == self.erps.index(['270'])))
+        try:
+            keep_inds = np.delete(keep_inds, np.where(keep_inds == self.erps.index(['270'])))
+        except:
+            pass
 
         self.erps = [self.erps[i] for i in keep_inds]
         self.labels = [self.labels[i] for i in keep_inds]
@@ -254,10 +256,8 @@ class Count(Base):
 
         self.n_erps = len(self.erps)
 
-
-##################################################################################################
-##################################################################################################
-##################################################################################################
+###################################################################################################
+###################################################################################################
 
 def _mk(t_lst, cm=''):
     """Create search term component."""

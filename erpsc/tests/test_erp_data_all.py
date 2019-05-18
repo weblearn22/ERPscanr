@@ -3,9 +3,8 @@
 from erpsc.erp_data_all import *
 from erpsc.tests.utils import load_erp_data
 
-###################################################################################
-###################################################################################
-###################################################################################
+###################################################################################################
+###################################################################################################
 
 def test_erp_data_all():
     """
@@ -19,7 +18,6 @@ def test_erp_data_all():
     assert erp_dat_all
 
 def test_check_funcs():
-    """   """
 
     erp_dat = load_erp_data(add_dat=True, n=2)
     erp_dat_all = ERPDataAll(erp_dat)
@@ -30,7 +28,6 @@ def test_check_funcs():
     assert True
 
 def test_create_print_summary():
-    """   """
 
     erp_dat = load_erp_data(add_dat=True, n=2)
     erp_dat_all = ERPDataAll(erp_dat)

@@ -5,12 +5,10 @@ from py.test import raises
 from erpsc.core.urls import URLS
 from erpsc.core.errors import InconsistentDataError
 
-##################################################################################
-##################################################################################
-##################################################################################
+###################################################################################################
+###################################################################################################
 
 def test_urls():
-    """Test the URLS object returns properly."""
 
     assert URLS(auto_gen=False)
     assert URLS(auto_gen=True)
@@ -23,18 +21,15 @@ def test_urls_settings_args():
     assert URLS(db='pubmed', retmax='500', field='id', retmode='xml')
 
 def test_check_args():
-    """Test the check_args() method from URLS()."""
 
     urls = URLS(db='pubmed', field='id')
 
     urls.check_args(['db', 'field'])
 
-    # Check error
     with raises(InconsistentDataError):
         urls.check_args(['db', 'retmax', 'field'])
 
 def test_build_info():
-    """Test the build_info() method from URLS()."""
 
     urls = URLS()
 
@@ -43,7 +38,6 @@ def test_build_info():
     assert urls.info
 
 def test_build_query():
-    """Test the build_query() method from URLS()."""
 
     urls = URLS(db='pubmed')
 
@@ -52,7 +46,6 @@ def test_build_query():
     assert urls.query
 
 def test_build_search():
-    """Test the buid_search() method form URLS()."""
 
     urls = URLS(db='pubmed', retmax='500', field='id', retmode='xml')
 
@@ -61,7 +54,6 @@ def test_build_search():
     assert urls.search
 
 def test_build_fetch():
-    """Test the build_fetch() method from URLS()."""
 
     urls = URLS(db='pubmed', retmax='500', field='id', retmode='xml')
 

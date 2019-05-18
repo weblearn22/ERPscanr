@@ -11,17 +11,14 @@ from erpsc.words import Words
 from erpsc.words import _ids_to_str, _process_words, _process_kws
 from erpsc.words import _process_authors, _process_pub_date, _process_ids
 
-#######################################################################################
-################################ TESTS - ERPSC - WORDS ################################
-#######################################################################################
+###################################################################################################
+###################################################################################################
 
 def test_words():
-    """Test the Words object."""
 
     assert Words()
 
 def test_get_item():
-    """   """
 
     words = Words()
 
@@ -39,7 +36,6 @@ def test_get_item():
     assert words['test']
 
 def test_add_results():
-    """Test the add_results method."""
 
     words = Words()
 
@@ -48,7 +44,6 @@ def test_add_results():
     assert words.results
 
 def test_extract_add_info():
-    """Tset the extract_add_info method."""
 
     words = Words()
 
@@ -82,7 +77,6 @@ def test_extract_add_info():
     assert erp_word.dois[1] is None
 
 def test_scrape_data():
-    """Test the scrape_data method."""
 
     words = Words()
 
@@ -96,7 +90,6 @@ def test_scrape_data():
     assert True
 
 def test_scrape_data_hist():
-    """Test the scrape_data method, using HTTP Post method."""
 
     words = Words()
 
@@ -109,12 +102,10 @@ def test_scrape_data_hist():
 
     assert True
 
-#######################################################################################
-###################### TEST - ERPSC - WORDS - PRIVATE FUNCTIONS  ######################
-#######################################################################################
+###################################################################################################
+###################################################################################################
 
 def test_ids_to_str():
-    """Test the _ids_to_str function."""
 
     # Initialize id ResultSet
     idd = bs4.element.Tag(name='id')
@@ -137,7 +128,6 @@ def test_none_process():
     assert _process_pub_date(None) == (None, None)
 
 def test_process_words():
-    """Test the _process_words function."""
 
     words = 'The Last wOrd, in they eRp!'
 
@@ -147,21 +137,13 @@ def test_process_words():
     assert words_out == exp_out
 
 def test_process_kws():
-    """Test the _process_kws function."""
-
     pass
 
 def test_process_authors():
-    """Test the _process_authors function."""
-
     pass
 
 def test_process_pub_date():
-    """   """
-
     pass
 
 def test_process_ids():
-    """   """
-
     pass

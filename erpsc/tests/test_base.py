@@ -5,30 +5,24 @@ NOTES
 - Load from file method '_file' are only tested for default (from module) loads.
 """
 
-#from types import StringType, ListType
 from py.test import raises
 
 from erpsc.base import Base, _check_type, _terms_load_file
 from erpsc.tests.utils import load_base
 from erpsc.core.errors import InconsistentDataError
 
-#######################################################################################
-###################### TESTS - ERPSC - BASE - PRIVATE FUNCTIONS  ######################
-#######################################################################################
+###################################################################################################
+###################################################################################################
 
 def test_check_type():
-    """Test that the _check_type function works properly."""
 
     out = _check_type('string')
-    #assert isinstance(out, ListType)
     assert isinstance(out, list)
 
     out = _check_type(['list'])
-    #assert isinstance(out, ListType)
     assert isinstance(out, list)
 
 def test_terms_load_file():
-    """Test that the _terms_load_file function returns properly."""
 
     erp_dat = _terms_load_file('erps')
     cog_terms_dat = _terms_load_file('cognitive')
@@ -41,20 +35,15 @@ def test_terms_load_file():
         assert dat
         assert isinstance(dat, list)
         assert isinstance(dat[0], str)
-        #assert isinstance(dat, ListType)
-        #assert isinstance(dat[0], StringType)
 
-########################################################################################
-############################ TESTS - ERPSC - GENERAL - BASE ############################
-########################################################################################
+###################################################################################################
+###################################################################################################
 
 def test_base():
-    """Test the Base() object returns properly."""
 
     assert Base()
 
 def test_set_erps():
-    """Test the set_erps method of Base()."""
 
     base = load_base()
     base.set_erps(['N100', 'P100'])
@@ -62,7 +51,6 @@ def test_set_erps():
     assert base.erps
 
 def test_set_erps_file():
-    """Test the set_erps_file method of Base()."""
 
     base = load_base()
     base.set_erps_file()
@@ -70,7 +58,6 @@ def test_set_erps_file():
     assert base.erps
 
 def tests_check_erps():
-    """Test the check_erps method of Base()."""
 
     base = load_base(set_erps=True)
 
@@ -79,7 +66,6 @@ def tests_check_erps():
     assert True
 
 def test_unload_erps():
-    """Test unloading of ERP words."""
 
     base = load_base(set_erps=True)
 
@@ -89,7 +75,6 @@ def test_unload_erps():
     assert not base.n_erps
 
 def test_set_exclusions():
-    """Test the set_exclusions method of Base."""
 
     base = Base()
     base.set_erps(['N100', 'P100'])
@@ -105,7 +90,6 @@ def test_set_exclusions():
         base.set_exclusions(['bad'])
 
 def test_set_exclusions_file():
-    """Test the set_exclusions_file method of Base()."""
 
     base = load_base(set_erps=True)
     base.set_exclusions_file()
@@ -113,7 +97,6 @@ def test_set_exclusions_file():
     assert base.exclusions
 
 def test_check_exclusions():
-    """Test the check_exclusions method of Base()."""
 
     base = load_base(set_erps=True, set_excl=True)
 
@@ -122,7 +105,6 @@ def test_check_exclusions():
     assert True
 
 def test_unload_exclusions():
-    """Test unload_exclusions of Base()."""
 
     base = load_base(set_erps=True, set_excl=True)
 
@@ -131,7 +113,6 @@ def test_unload_exclusions():
     assert not base.exclusions
 
 def test_set_terms():
-    """Test the set_terms method of Base."""
 
     base = load_base()
     base.set_terms(['think', 'do'])
@@ -139,7 +120,6 @@ def test_set_terms():
     assert base.terms
 
 def test_set_terms_file_cog():
-    """Test the set_terms_file method of Base(), for cognitive files."""
 
     base = load_base()
     base.set_terms_file('cognitive')
@@ -147,7 +127,6 @@ def test_set_terms_file_cog():
     assert base.terms
 
 def test_set_terms_file_dis():
-    """Test the set_terms_file method of Base(), for disease files."""
 
     base = load_base()
     base.set_terms_file('disease')
@@ -155,7 +134,6 @@ def test_set_terms_file_dis():
     assert base.terms
 
 def test_check_terms():
-    """Test the check_terms method of Base()."""
 
     base = load_base(set_terms='cognitive')
 
@@ -164,7 +142,6 @@ def test_check_terms():
     assert True
 
 def test_unload_terms():
-    """Test the unload_terms method of Base()."""
 
     base = load_base(set_terms='disease')
 
@@ -175,7 +152,6 @@ def test_unload_terms():
     assert not base.n_terms
 
 def test_get_db_info():
-    """Test the get_db_info method of Base()."""
 
     base = load_base()
 

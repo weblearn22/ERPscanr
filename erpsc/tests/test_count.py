@@ -4,18 +4,14 @@ import numpy as np
 
 from erpsc.count import Count
 
-#######################################################################################
-################################ TESTS - ERPSC - COUNT ################################
-#######################################################################################
+###################################################################################################
+###################################################################################################
 
 def test_erpsc_count():
-    """Test the Count object."""
 
-    # Check that ERPSCCount returns properly
     assert Count()
 
 def test_scrape():
-    """Test that Count object successful scrapes data."""
 
     counts = Count()
 
@@ -32,7 +28,6 @@ def test_scrape():
     check_funcs(counts)
 
 def check_funcs(counts):
-    """Given object with scraped data, test all the check functions."""
 
     # Check that all check functions run
     counts.check_cooc_erps()

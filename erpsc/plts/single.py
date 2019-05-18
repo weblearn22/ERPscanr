@@ -1,13 +1,14 @@
 """Create data plots for ERP-SCANR project - plots for single ERPs (for ERP profiles)."""
 
 import os
+
 import matplotlib.pyplot as plt
 
 from erpsc.core.db import check_db
+from erpsc.plts.utils import _disp_fig, _save_fig
 
-#########################################################################################
-#########################################################################################
-#########################################################################################
+###################################################################################################
+###################################################################################################
 
 def plot_years(year_counts, label, disp_fig=True, save_fig=False, db=None):
     """Plot publications across years histogram."""
@@ -33,11 +34,5 @@ def plot_years(year_counts, label, disp_fig=True, save_fig=False, db=None):
     plt.xlabel('Year', fontsize=18)
     plt.ylabel('# Pubs', fontsize=18)
 
-    if save_fig:
-
-        db = check_db(db)
-        s_file = os.path.join(db.figs_path, 'year', label + '.svg')
-
-        plt.savefig(s_file, transparent=True)
-        if not disp_fig:
-            plt.close()
+    _save_fig(save_fig, label, folder='year', db=db)
+    _disp_fig(disp_fig)

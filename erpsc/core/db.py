@@ -2,9 +2,8 @@
 
 import os
 
-##################################################################################
-##################################################################################
-##################################################################################
+###################################################################################################
+###################################################################################################
 
 class ERPDB(object):
     """Class to hold database information for ERP-SCANR project.
@@ -27,12 +26,8 @@ class ERPDB(object):
         """Initialize ERPDB object."""
 
         # Set base path for the project
-        self.project_path = ("/Users/tom/Documents/"
-                             "Research/1-Projects/ERP-SCANR/")
-
-        # Set base path for the project - OLD LAPTOP
-        #self.project_path = ("/Users/thomasdonoghue/Documents/"
-        #                     "Research/1-Projects/ERP-SCANR/")
+        self.project_path = ("/Users/tom/Documents/Research"
+                             "/1-Projects/1-Current/ERPSCANR/")
 
         # Initialize paths
         self.data_path = str()
@@ -79,18 +74,13 @@ class WebDB(object):
         self.base_path = ("/Users/tom/Documents/"
                           "GitCode/ERP_SCANR/docs")
 
-        # Set base path for the website - OLD LAPTOP
-        #self.base_path = ("/Users/thomasdonoghue/Documents/"
-        #                     "GitCode/ERP_SCANR/docs")
-
         # Set paths to directories for the website
         self.post_path = os.path.join(self.base_path, '_posts')
         self.dat_path = os.path.join(self.base_path, '_data')
         self.plt_path = os.path.join(self.base_path, 'assets/ERPs')
 
-##########################################################################################
-##########################################################################################
-##########################################################################################
+###################################################################################################
+###################################################################################################
 
 def check_db(db):
     """Check if ERPDB object is initialized, if not, return an ERPDB object.

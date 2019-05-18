@@ -1,19 +1,18 @@
 """Classes and functions for Word analysis (text analysis of abstract texts)."""
 
 import datetime
+
 from bs4 import BeautifulSoup
 import nltk
 from nltk.corpus import stopwords
 
-# Import custom code
 from erpsc.base import Base
 from erpsc.erp_data import ERPData
 from erpsc.core.urls import URLS
 from erpsc.core.utils import CatchNone, CatchNone2, comb_terms, extract
 
-#################################################################################################
-#################################### ERPSC - WORDS - Classes ####################################
-#################################################################################################
+###################################################################################################
+###################################################################################################
 
 class Words(Base):
     """Class for searching through words in the abstracts of specified papers.
@@ -162,11 +161,9 @@ class Words(Base):
             # Using history
             if use_hist:
 
-                #
                 ret_start = 0
                 ret_max = 100
 
-                #
                 count = int(page_soup.find('count').text)
                 web_env = page_soup.find('webenv').text
                 query_key = page_soup.find('querykey').text
@@ -174,10 +171,9 @@ class Words(Base):
                 # Update History
                 cur_erp.update_history('Start Scrape')
 
-                #
                 while ret_start < count:
 
-                    #
+                    # Create the URL and get the page
                     art_url = urls.fetch + '&WebEnv=' + web_env + '&query_key=' + query_key + \
                               '&retstart=' + str(ret_start) + '&retmax=' + str(ret_max)
                     art_page = self.req.get_url(art_url)
@@ -196,7 +192,6 @@ class Words(Base):
                         # Extract and add all relevant info from current articles to ERPData object
                         cur_erp = self.extract_add_info(cur_erp, new_id, art)
 
-                    #
                     ret_start += ret_max
 
             # Without using history
@@ -241,9 +236,8 @@ class Words(Base):
         # Set Requester object as finished being used
         self.req.close()
 
-#######################################################################################################
-################################# ERPSC - WORDS - FUNCTIONS (PRIVATE) #################################
-#######################################################################################################
+###################################################################################################
+###################################################################################################
 
 def _ids_to_str(ids):
     """Takes a list of pubmed ids, returns a str of the ids separated by commas.
@@ -311,9 +305,7 @@ def _process_kws(keywords):
         List of all the keywords.
     """
 
-    # NOTE: UPDATE WITH MOVE TO PY35
     return [kw.text.lower() for kw in keywords]
-    #return [kw.text.encode('ascii', 'ignore') for kw in keywords]
 
 
 @CatchNone
@@ -357,9 +349,9 @@ def _process_pub_date(pub_date):
     Returns
     -------
     year : int
-        xx
+        The year of publication.
     month : str
-        xx
+        The month of publication.
     """
 
     # Extract year, convert to int if not None

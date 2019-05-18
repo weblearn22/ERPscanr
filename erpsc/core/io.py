@@ -8,9 +8,8 @@ from erpsc.count import Count
 from erpsc.core.db import check_db
 from erpsc.core.errors import InconsistentDataError
 
-##########################################################################################
-##########################################################################################
-##########################################################################################
+###################################################################################################
+###################################################################################################
 
 def save_pickle_obj(obj, f_name, db=None):
     """Save a custom object from ERP-SCANR as a pickle file.
@@ -82,5 +81,4 @@ def load_pickle_obj(f_name, db=None):
     else:
         raise InconsistentDataError('Can not find requested file name.')
 
-    # Load and return the data
     return pickle.load(open(load_path, 'rb'))
