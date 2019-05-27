@@ -2,15 +2,28 @@
 
 import os
 
+import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 import scipy.cluster.hierarchy as hier
 
 from erpsc.core.db import check_db
-from erpsc.plts.utils import _save_fig
+from erpsc.plts.utils import _save_fig, _set_lr_spines
 
 ###################################################################################################
 ###################################################################################################
+
+def plot_count_hist(data, plt_log=True, save_fig=False, save_name=None):
+
+    fig, ax = plt.subplots(figsize=(6, 5))
+    if plt_log:
+        data = np.log10(data)
+
+    plt.hist(data, bins=10, color='#5b7399')
+
+    _set_lr_spines(ax, 2)
+    _save_fig(save_fig, save_name)
+
 
 def plot_time_assocs(dat, save_fig=False, save_name='LatencyAssociations'):
     """Plot top associations for each ERP across time.
@@ -39,13 +52,10 @@ def plot_time_assocs(dat, save_fig=False, save_name='LatencyAssociations'):
     ax.set_yticks([])
 
     # Set ticks and plot lines
-    ax.spines['right'].set_color('none')
+    _set_lr_spines(ax, 2)
     ax.spines['bottom'].set_position('center')
-    ax.spines['top'].set_color('none')
     ax.xaxis.set_ticks_position('none')
     ax.yaxis.set_ticks_position('none')
-    ax.spines['left'].set_linewidth(2)
-    ax.spines['bottom'].set_linewidth(2)
 
     # Add data to plot from
     for d in dat:
