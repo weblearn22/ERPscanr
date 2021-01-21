@@ -6,7 +6,7 @@ layout: default
 
 The codebase to run collect this data and analyze the results was all written in Python, including calls the PubMed E-Utilities API. All code written and used for this project will be made freely available (coming soon).
 
-![methods]({{ site.baseurl }}/assets/FIGS/methods.pdf)
+![methods]({{ site.baseurl }}/assets/FIGS/methods.png)
 
 ## Literature Searchs & Web Scraping
 
@@ -17,9 +17,11 @@ Using these terms, PubMed E-Utilities tools were used to find search for term co
 Specifically, data scraping was done in two ways: in the co-occurrence analysis we collected data on the number of articles returned by a combination of search terms (for example, counting the number of IDs returned by the search for "N400 AND language"). In addition, in the scraped-text analysis, we scraped available meta-data for all articles mentioning a particular ERP, including title, journal, author, publication date, keywords, and abstract text.
 
 ## Data-Driven Profiles
+
 For each ERP, we create a data-driven, based on the scraped text, using rudimentary text analysis to find the most common words that are used to descripe each component, as well as some historical context regarding when, where and by whom this component is published on.
 
 ## Group Analysis
+
 We also examined similarities between different ERP components, computing similarity and clustering metrics on both the counts and words data.
 
 ## Limitations

@@ -4,7 +4,7 @@ layout: default
 
 # Introduction
 
-This is the website for the ERP-SCANR project. ERP-SCANR is an 'automated meta-analysis' of the literature, specifically of work that uses and studies event-related potentials (ERPs).
+ERP-SCANR is an 'automated meta-analysis' of the scientific literature on the topic of event-related potentials (ERPs).
 
 ## Motivation
 
@@ -19,7 +19,7 @@ ERP-SCANR serves mostly as a data-driven summarization tool - a way to quickly a
 ERP-SCANR is based on the PubMed E-Utilities tools, which are used to search through PubMed databases and extract
 From there, we use simple text-mining and word co-occurence analysis to derive data-driven summaries for each ERP, as well as to compare across these profiles to work towards summarizing across
 
-A more in-depth overview of the methods is available [here.](methods.html)
+A more in-depth overview of the methods is available [here](methods.html).
 
 ## Version
 
@@ -39,17 +39,22 @@ Words  Scrape:
     - lastupdate: 2017/03/23 07:24
     - scraped on: Thursday 23 March
 
-## CNS Poster
+## Reference
 
-The poster on this project which was presented at the Cognitive Neuroscience Society (CNS) meeting is available to view and download [here.](https://www.dropbox.com/s/sgnz7ecd3qp6tb7/TDonoghue_ERP-SCANR_CNS.pdf?dl=0)
+A preprint for this project is upcoming.
+
+A [poster](https://www.dropbox.com/s/sgnz7ecd3qp6tb7/TDonoghue_ERP-SCANR_CNS.pdf?dl=0) for this project was
+presented at the Cognitive Neuroscience Society (CNS) conference in 2017.
 
 ## Contact
 
-ERP-SCANR was built by Tom Donoghue, from the [Voytek lab](http://voyteklab.com) at UC San Diego.
-Please get in touch with any questions, comments, suggestions at thomasdonoghue@hotmail.ca, or @TomDonoghue on Twitter.
+ERP-SCANR was built by [Tom Donoghue](https://tomdonoghue.github.io/).
+Please get in touch with any questions, comments, suggestions at tdonoghue.research@gmail.com, or @TomDonoghue on Twitter.
 
 ## Acknowledgements
 
-This project is similar to and inspired by [Brain-SCANR.](http://www.brainscanr.com) It is also inspired by [NeuroSynth](http://www.neurosynth.org), another meta-analytic tool for fMRI research.
+This project is based on the
+[BrainSCANR](https://doi.org/10.1016/j.jneumeth.2012.04.019) project, by Jessica & Bradley Voytek, and also
+takes inspiration from the [NeuroSynth](http://www.neurosynth.org) project by Tal Yarkoni.
 
-This project is built on the PudMed E-Utilities API, and open source tools, using Python and in particular using nltk and BeautifulSoup. The codebase is hosted on Github academic, and this website is hosted by Github-Pages.
+This project is done with the [LISC](https://lisc-tools.github.io/) Python tool, which allows for collecting and analyzing the scientific literature. This tool and project are built upon the PudMed E-Utilities API, and open source tools.
