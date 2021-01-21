@@ -1,0 +1,5 @@
+numpy
+pandas
+scipy
+sklearn
+lisc >= 0.1.0
