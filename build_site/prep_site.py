@@ -1,4 +1,4 @@
-"""Prepare and move the data for the website."""
+"""Prepare and move the data and figures for the website."""
 
 import os
 from shutil import copyfile
@@ -6,12 +6,11 @@ from shutil import copyfile
 from erpsc.core.db import ERPDB
 from erpsc.core.db import WebDB as WDB
 
-####################################################################################
-####################################################################################
-####################################################################################
+###################################################################################################
+###################################################################################################
 
 def main():
-    """   """
+    """Build the website page from ERP-SCANR results."""
 
     # Print out status
     print('\n\n GENERATING WEBSITE DATA \n\n')
