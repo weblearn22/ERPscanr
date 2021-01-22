@@ -3,8 +3,9 @@
 import os
 from shutil import copyfile
 
-from erpsc.core.db import ERPDB
-from erpsc.core.db import WebDB as WDB
+# Import local utility code
+from code.db import WebDB
+from code.settings import WEBSITE_LOC
 
 ###################################################################################################
 ###################################################################################################
@@ -16,7 +17,7 @@ def main():
     print('\n\n CLEARING WEBSITE DATA \n\n')
 
     # Get database object for the site
-    wdb = WDB()
+    wdb = WebDB(WEBSITE_LOC)
 
     # Remove data files
     for file in os.listdir(wdb.post_path):
@@ -24,11 +25,11 @@ def main():
 
     # Remove post pages
     for file in os.listdir(wdb.dat_path):
-        os.remove(os.path.join(wdb.dat_path, file))
+        os.remove(os.path.join(wdb.data_path, file))
 
     # Remove image folders
     for folder in os.listdir(wdb.plt_path):
-        shutil.rmdir(os.path.join(wdb.plt_path, folder))
+        shutil.rmdir(os.path.join(wdb.plot_path, folder))
 
 
 if __name__ == "__main__":

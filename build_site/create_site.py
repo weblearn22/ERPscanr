@@ -2,12 +2,20 @@
 
 import os
 from shutil import copyfile
+from datetime import datetime
 
-from erpsc.core.db import ERPDB
-from erpsc.core.db import WebDB as WDB
+# TODO:
+#from erpsc.core.db import ERPDB
+
+# Import local utility code
+from code.db import WebDB
+from code.settings import WEBSITE_LOC
 
 ###################################################################################################
 ###################################################################################################
+
+# Get the current date for creating the posts
+DATE = datetime.today().strftime('%Y-%m-%d')
 
 def main():
     """Build the website page from ERP-SCANR results."""
@@ -15,9 +23,11 @@ def main():
     # Print out status
     print('\n\n GENERATING WEBSITE DATA \n\n')
 
-    # Get database objects
+    # Get database object for the data
     db = ERPDB()
-    wdb = WDB()
+
+    # Get the database object for the website
+    wdb = WebDB(WEBSITE_LOC)
 
     # Load list of labels
     with open(os.path.join(db.words_path, 'labels.txt')) as infile:
@@ -33,10 +43,10 @@ def main():
 
         # Website data json - copy to website directory
         copyfile(os.path.join(db.words_path, 'summary', label + '.json'),
-                 os.path.join(wdb.dat_path, label + '.json'))
+                 os.path.join(wdb.data_path, label + '.json'))
 
         # Check website plots folder
-        w_plts_path = os.path.join(wdb.plt_path, label)
+        w_plts_path = os.path.join(wdb.plot_path, label)
         if not os.path.exists(w_plts_path):
             os.mkdir(w_plts_path)
 
@@ -59,10 +69,10 @@ def make_post_md(label):
     wdb = WDB()
 
     # Create the markdown file with yml front matter
-    with open(os.path.join(wdb.post_path, '2017-03-15-' + label + '.md'), 'w') as post_file:
+    with open(os.path.join(wdb.post_path, DATE + '-' + label + '.md'), 'w') as post_file:
         post_file.write('---\n')
         post_file.write('title: \"' + label + '\"\n')
-        post_file.write('date: 2017/03/15\n')
+        post_file.write('date: ' + DATE.replace('-', '/') + '\n')
         post_file.write('layout: erp\n')
         post_file.write('---')
 
