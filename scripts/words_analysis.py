@@ -1,13 +1,13 @@
-"""Run analysis on scraped words data."""
+"""Run analysis on collected words data."""
 
-from erpsc.core.io import load_pickle_obj
-from erpsc.erp_data_all import ERPDataAll
-from erpsc.plts.wc import make_wc
-from erpsc.plts.single import plot_years
+from lisc.data import ArticlesAll
+from lisc.utils import load_object
+from lisc.plts.words import plot_years, plot_wordcloud
 
 ###################################################################################################
 ###################################################################################################
 
+# Settings
 F_NAME = 'BaseScrape_words'
 
 ###################################################################################################
@@ -17,30 +17,30 @@ def main():
 
     print('\n\n ANALYZING WORDS DATA \n\n')
 
-    words = load_pickle_obj(F_NAME)
+    words = load_object(F_NAME)
 
-    for erp in words.result_keys:
+    for erp in words.labels:
 
         print('Analyzing ', erp, 'data.')
 
-        # Check if raw data loaded - load if not
+        # Check if raw data loaded, and load if not
         if not words[erp].n_articles:
             words[erp].load()
 
-        # Turn into ERPDataAll object
-        erp_dat = ERPDataAll(words[erp])
+        # Aggregate data together across all articles
+        erp_data = ArticlesAll(words[erp])
 
         # Create and save summary
-        erp_dat.create_summary()
-        erp_dat.save_summary()
+        erp_data.create_summary()
+        erp_data.save_summary()
 
         # Create and save wordcloud figure
-        make_wc(erp_dat.word_freqs, 20, erp_dat.label,
-                disp_fig=False, save_fig=True)
+        plot_wordcloud(erp_data.words, 20)
+        # TODO: turn off display & save
 
         # Create and save years figure
-        plot_years(erp_dat.year_counts, erp_dat.label,
-                   disp_fig=False, save_fig=True)
+        plot_years(erp_data.years)
+        # TODO: turn off display & save
 
     print('\n\n ANALYZING WORDS DATA \n\n')
 
