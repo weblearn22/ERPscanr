@@ -1,7 +1,7 @@
 """Script to run counts collection for the ERP-SCANR project."""
 
 from lisc import Counts
-from lisc.utils import SCDB, save_object
+from lisc.utils import SCDB, save_object, load_api_key
 
 ###################################################################################################
 ###################################################################################################
@@ -9,12 +9,16 @@ from lisc.utils import SCDB, save_object
 # Set whether to run a test run
 TEST = True
 
-# Set directory to load terms from
+# Set locations / names for loading files
 TERMS_DIR = '../terms/'
+API_FILE = 'api_key.txt'
 
 # Set label for secondary terms to run
 #   Options: 'cognitive', 'disease', 'erp' (run ERPs against each other)
 LABEL = 'disease'
+
+# Set collection settings
+LOGGING = None
 
 ###################################################################################################
 ###################################################################################################
@@ -22,6 +26,7 @@ LABEL = 'disease'
 def main():
 
     db = SCDB('../data')
+    api_key = load_api_key(API_FILE)
 
     counts = Counts()
 
@@ -44,7 +49,7 @@ def main():
     print('\n\nRUNNING COUNTS COLLECTION')
     print('RUNNING COLLECTION: ', LABEL, '\n\n')
 
-    counts.run_collection(db='pubmed', verbose=True)
+    counts.run_collection(db='pubmed', api_key=api_key, logging=LOGGING, verbose=True)
 
     save_object(counts, 'counts_' + LABEL, db)
 

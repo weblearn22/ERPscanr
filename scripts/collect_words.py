@@ -1,7 +1,7 @@
 """Script to run words collection for the ERP-SCANR project."""
 
 from lisc import Words
-from lisc.utils import SCDB, save_object
+from lisc.utils import SCDB, save_object, load_api_key
 
 ###################################################################################################
 ###################################################################################################
@@ -12,8 +12,9 @@ TEST = True
 # Set label for collection
 LABEL = 'erps'
 
-# Set directory to load terms from
+# Set locations / names for loading files
 TERMS_DIR = '../terms/'
+API_FILE = 'api_key.txt'
 
 # Set e-utils settings
 FIELD = 'TIAB'
@@ -21,6 +22,7 @@ RETMAX = 5000
 
 # Set collection settings
 SAVE_N_CLEAR = True
+LOGGING = None
 
 ###################################################################################################
 ###################################################################################################
@@ -28,6 +30,7 @@ SAVE_N_CLEAR = True
 def main():
 
     db = SCDB('../data')
+    api_key = load_api_key(API_FILE)
 
     words = Words()
 
@@ -48,8 +51,9 @@ def main():
 
     print('\n\nRUNNING WORDS COLLECTION')
 
-    words.run_collection(db='pubmed', retmax=RETMAX, field=FIELD, usehistory=True,
-                         save_and_clear=SAVE_N_CLEAR, directory=db, verbose=True)
+    words.run_collection(db='pubmed', retmax=RETMAX, field=FIELD,
+                         usehistory=True, api_key=api_key, save_and_clear=SAVE_N_CLEAR,
+                         directory=db, logging=LOGGING, verbose=True)
 
     save_object(words, 'words_' + LABEL, db)
 
