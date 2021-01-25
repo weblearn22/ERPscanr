@@ -13,6 +13,22 @@ from lisc.plts.words import plot_years, plot_wordcloud
 # Set words object to load
 F_NAME = 'words_erps'
 
+# Terms to exclude from word & keyword frequency distributions
+EXCLUDE_WORDS = [
+    'eeg',
+    'erp',
+    'erps',
+    'event-related potential',
+    'event-related potentials',
+    'event related potentials',
+    'event related-potentials (erps)',
+    'event-related potentials (erps)',
+    'potentials',
+    'electroencephalography',
+    'electroencephalography (eeg)',
+    'evoked'
+]
+
 ###################################################################################################
 ###################################################################################################
 
@@ -32,7 +48,7 @@ def main():
         words[erp].load(directory=db)
 
         # Aggregate data together across all articles
-        erp_data = ArticlesAll(words[erp])
+        erp_data = ArticlesAll(words[erp], exclusions=EXCLUDE_WORDS)
 
         # Create and save summary
         erp_data.create_summary()
