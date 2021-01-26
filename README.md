@@ -1,4 +1,4 @@
-# ERP_SCANR
+# ERPscanr
 
 `ERPscanr` project repository: automated meta-analysis of the ERP literature.
 
@@ -19,10 +19,11 @@ For data collection, this project employs main approaches to mining information:
 From there, we analyze patterns in the literature and make inferences about ERPs and how they relate based on analyzing this co-occurence data, by analyzing this co-occuring and text data.
 
 The easiest way to examine the outputs of this project is on the
-[project website](http://tomdonoghue.github.io/ERP_SCANR/), which includes
+[project website](http://erpscanr.github.io/), which includes
 individual profiles for all examined ERP components and group level analyses.
 
-To explore how this project was done, and see the underlying code, you can explore this repository. As a starting point, the `notebooks` describe the approach used in this project. For doing literature analyses in general, see the [LISC](https://github.com/lisc-tools/lisc) tool.
+To explore how this project was done, and see the underlying code, you can explore this repository. As a starting point, the `notebooks` describe the approach used in this project. For doing literature analyses in general, see the
+[LISC](https://github.com/lisc-tools/lisc) tool.
 
 ## Reference
 
@@ -38,13 +39,14 @@ This project requires standard scientific python libraries, listed in `requireme
 [Anaconda Distribution](https://www.anaconda.com/distribution/).
 
 Additional requirements include:
-- [lisc](https://github.com/lisc-tools/lisc) >= 0.1.0
+- [lisc](https://github.com/lisc-tools/lisc) >= 0.2.0
 
 ## Repository Layout
 
 This project repository is set up in the following way:
 
 - `build_site/` contains scripts to create the project website
+- `code`/ includes local code used for this project
 - `docs/` includes files for the project website
 - `notebooks/` is a collection of Jupyter notebooks that step through the project
 - `scripts/` contains stand alone scripts that run the data collection and analysis
