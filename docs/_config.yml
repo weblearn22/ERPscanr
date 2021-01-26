@@ -1,6 +1,6 @@
 title: ERP-SCANR
 description: Automated meta-analysis of ERP research.
-baseurl: /ERP_SCANR
+baseurl: /ERPscanr
 
 theme: jekyll-theme-architect
 
