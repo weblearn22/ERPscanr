@@ -32,7 +32,7 @@ def main():
 
     if TEST:
 
-        counts.add_terms([['P600'], ['N170']], dim='A')
+        counts.add_terms([['P600'], ['N170'], ['N400']], dim='A')
         counts.add_terms([['language'], ['visual']], dim='B')
 
         LABEL = 'test'
