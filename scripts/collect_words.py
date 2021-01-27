@@ -7,7 +7,7 @@ from lisc.utils import SCDB, save_object, load_api_key
 ###################################################################################################
 
 # Set whether to run a test run
-TEST = True
+TEST = False
 
 # Set label for collection
 LABEL = 'erps'
@@ -18,11 +18,17 @@ API_FILE = 'api_key.txt'
 
 # Set e-utils settings
 FIELD = 'TIAB'
-RETMAX = 5000
+RETMAX = 10000
 
 # Set collection settings
 SAVE_N_CLEAR = True
 LOGGING = None
+
+# Update settings for test run
+if TEST:
+    LABEL = 'test'
+    RETMAX = 5
+    SAVE_N_CLEAR = False
 
 ###################################################################################################
 ###################################################################################################
@@ -39,14 +45,10 @@ def main():
         words.add_terms([['P100'], ['N100']])
         words.add_terms([['protein'], ['protein']], term_type='exclusions')
 
-        RETMAX = 5
-        SAVE_N_CLEAR = False
-        LABEL = 'test'
-
     else:
 
-        words.set_terms_file('erps.txt', dim='A', directory=TERMS_DIR)
-        words.set_terms_file('erps_exclude.txt', term_type='exclusions',
+        words.add_terms_file('erps.txt', dim='A', directory=TERMS_DIR)
+        words.add_terms_file('erps_exclude.txt', term_type='exclusions',
                              dim='A', directory=TERMS_DIR)
 
     print('\n\nRUNNING WORDS COLLECTION')

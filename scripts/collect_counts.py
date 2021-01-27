@@ -7,7 +7,7 @@ from lisc.utils import SCDB, save_object, load_api_key
 ###################################################################################################
 
 # Set whether to run a test run
-TEST = True
+TEST = False
 
 # Set locations / names for loading files
 TERMS_DIR = '../terms/'
@@ -19,6 +19,11 @@ LABEL = 'disease'
 
 # Set collection settings
 LOGGING = None
+VERBOSE = True
+
+# Update settings for test run
+if TEST:
+    LABEL = 'test'
 
 ###################################################################################################
 ###################################################################################################
@@ -35,21 +40,19 @@ def main():
         counts.add_terms([['P600'], ['N170'], ['N400']], dim='A')
         counts.add_terms([['language'], ['visual']], dim='B')
 
-        LABEL = 'test'
-
     else:
 
-        counts.set_terms_file('erps.txt', dim='A', directory=TERMS_DIR)
-        counts.set_terms_file('erps_exclude.txt', term_type='exclusions',
+        counts.add_terms_file('erps.txt', dim='A', directory=TERMS_DIR)
+        counts.add_terms_file('erps_exclude.txt', term_type='exclusions',
                               dim='A', directory=TERMS_DIR)
 
         if LABEL != 'erp':
-            counts.set_terms_files(LABEL + '.txt', dim='B', directory=TERMS_DIR)
+            counts.add_terms_file(LABEL + '.txt', dim='B', directory=TERMS_DIR)
 
     print('\n\nRUNNING COUNTS COLLECTION')
     print('RUNNING COLLECTION: ', LABEL, '\n\n')
 
-    counts.run_collection(db='pubmed', api_key=api_key, logging=LOGGING, verbose=True)
+    counts.run_collection(db='pubmed', api_key=api_key, logging=LOGGING, verbose=VERBOSE)
 
     save_object(counts, 'counts_' + LABEL, db)
 
