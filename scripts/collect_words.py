@@ -13,6 +13,7 @@ TEST = False
 LABEL = 'erps'
 
 # Set locations / names for loading files
+DB_NAME = '../data'
 TERMS_DIR = '../terms/'
 API_FILE = 'api_key.txt'
 
@@ -35,7 +36,7 @@ if TEST:
 
 def main():
 
-    db = SCDB('../data')
+    db = SCDB(DB_NAME)
     api_key = load_api_key(API_FILE)
 
     words = Words()
