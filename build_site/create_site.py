@@ -4,12 +4,21 @@ import os
 from shutil import copyfile
 from datetime import datetime
 
-# TODO:
-#from erpsc.core.db import ERPDB
+from lisc.utils import SCDB, load_object
 
 # Import local utility code
 from code.db import WebDB
 from code.settings import WEBSITE_LOC
+
+###################################################################################################
+###################################################################################################
+
+# Set names for database and data objects
+DB_NAME = '../data'
+F_NAME = 'words_erps'
+
+# Set the file format for plots to use for website
+PLT_EXT = '.svg'   # '.png', '.svg'
 
 ###################################################################################################
 ###################################################################################################
@@ -24,25 +33,22 @@ def main():
     print('\n\n GENERATING WEBSITE DATA \n\n')
 
     # Get database object for the data
-    db = ERPDB()
+    db = SCDB(DB_NAME)
 
     # Get the database object for the website
     wdb = WebDB(WEBSITE_LOC)
 
-    # Load list of labels
-    with open(os.path.join(db.words_path, 'labels.txt')) as infile:
-        labels = infile.read().split('\n')
-    # Remove trailing empty line
-    _ = labels.pop()
+    # Load word object, used to get the index of all collect ERPs
+    words = load_object(F_NAME, directory=db)
 
     # Loop through each erp
-    for label in labels:
+    for label in words.labels:
 
         # Create website template file
-        make_post_md(label)
+        make_post_md(label, wdb)
 
         # Website data json - copy to website directory
-        copyfile(os.path.join(db.words_path, 'summary', label + '.json'),
+        copyfile(db.get_file_path('summary', label + '.json'),
                  os.path.join(wdb.data_path, label + '.json'))
 
         # Check website plots folder
@@ -51,22 +57,23 @@ def main():
             os.mkdir(w_plts_path)
 
         # Wordcloud - copy to website directory
-        copyfile(os.path.join(db.figs_path, 'wc', label + '.svg'),
-                 os.path.join(w_plts_path, 'wc.svg'))
+        copyfile(db.get_file_path('figures', 'wc/' + label + PLT_EXT),
+                 os.path.join(w_plts_path, 'wc' + PLT_EXT))
 
         # Publication graph - copy to wesbite directory
-        copyfile(os.path.join(db.figs_path, 'year', label + '.svg'),
-                 os.path.join(w_plts_path, 'hist.svg'))
+        copyfile(db.get_file_path('figures', 'years/' + label + PLT_EXT),
+                 os.path.join(w_plts_path, 'hist' + PLT_EXT))
 
     # Print out status
     print('\n\n WEBSITE DATA GENERATED \n\n')
 
 
-def make_post_md(label):
+def make_post_md(label, wdb):
     """Create the markdown post page for ERP-SCANR website."""
 
-    # Get website database object
-    wdb = WDB()
+    # Get website database object, if not provided
+    if not wdb:
+        wdb = WebDB()
 
     # Create the markdown file with yml front matter
     with open(os.path.join(wdb.post_path, DATE + '-' + label + '.md'), 'w') as post_file:
