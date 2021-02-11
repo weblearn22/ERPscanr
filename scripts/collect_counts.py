@@ -42,12 +42,13 @@ def main():
 
     else:
 
-        counts.add_terms_file('erps.txt', dim='A', directory=TERMS_DIR)
-        counts.add_terms_file('erps_exclude.txt', term_type='exclusions',
-                              dim='A', directory=TERMS_DIR)
+        counts.add_terms('erps.txt', dim='A', directory=TERMS_DIR)
+        counts.add_terms('erps_exclude.txt', term_type='exclusions',
+                         dim='A', directory=TERMS_DIR)
+        counts.add_labels('erp_labels.txt', dim='A', directory=TERMS_DIR)
 
         if LABEL != 'erp':
-            counts.add_terms_file(LABEL + '.txt', dim='B', directory=TERMS_DIR)
+            counts.add_terms(LABEL + '.txt', dim='B', directory=TERMS_DIR)
 
     print('\n\nRUNNING COUNTS COLLECTION')
     print('RUNNING COLLECTION: ', LABEL, '\n\n')

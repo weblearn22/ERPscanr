@@ -1,9 +1,7 @@
 """Run analysis on collected words data."""
 
 from lisc.data import ArticlesAll
-from lisc.utils import load_object
-
-from lisc.utils import SCDB
+from lisc.utils import SCDB, load_object
 
 from lisc.plts.words import plot_years, plot_wordcloud
 
@@ -18,6 +16,7 @@ EXCLUDE_WORDS = [
     'eeg',
     'erp',
     'erps',
+    'event-related'
     'event-related potential',
     'event-related potentials',
     'event related potentials',
@@ -28,6 +27,9 @@ EXCLUDE_WORDS = [
     'electroencephalography (eeg)',
     'evoked'
 ]
+
+# Set the year range for plotting
+YEAR_RANGE = [None, 2020]
 
 ###################################################################################################
 ###################################################################################################
@@ -42,7 +44,7 @@ def main():
 
     for erp in words.labels:
 
-        print('Analyzing ', erp, 'data.')
+        print('Analyzing ', erp, 'data')
 
         # Load data for the current term
         words[erp].load(directory=db)
@@ -55,10 +57,12 @@ def main():
         erp_data.save_summary(directory=db)
 
         # Create and save wordcloud figure
-        plot_wordcloud(erp_data.words, 20, save_fig=True, f_name='wc/' + erp, directory=db)
+        plot_wordcloud(erp_data.words, 20,
+                       save_fig=True, f_name='wc/' + erp, directory=db, close=True)
 
         # Create and save years figure
-        plot_years(erp_data.years, save_fig=True, f_name='years/' + erp, directory=db)
+        plot_years(erp_data.years, year_range=YEAR_RANGE,
+                   save_fig=True, f_name='years/' + erp, directory=db, close=True)
 
         # Clear the loaded data for the current term
         words[erp].clear()

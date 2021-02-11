@@ -47,8 +47,9 @@ def main():
 
     else:
 
-        words.add_terms_file('erps.txt', directory=TERMS_DIR)
-        words.add_terms_file('erps_exclude.txt', term_type='exclusions', directory=TERMS_DIR)
+        words.add_terms('erps.txt', directory=TERMS_DIR)
+        words.add_terms('erps_exclude.txt', term_type='exclusions', directory=TERMS_DIR)
+        words.add_labels('erp_labels.txt', directory=TERMS_DIR)
 
     print('\n\nRUNNING WORDS COLLECTION')
 
