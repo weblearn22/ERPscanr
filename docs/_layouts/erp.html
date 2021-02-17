@@ -4,25 +4,28 @@
 
 <img src={{ site.baseurl }}/assets/ERPs/{{ page.title }}/wc.svg alt="Test-WC" align="middle">
 
-<h4> The most common keywords for this ERP are: </h4>
+<h3> The most common keywords for this ERP are: </h3>
 <ul>
 {% for kw in site.data[page.title].top_keywords %}
     <li> {{ kw }} </li>
 {% endfor %}
 </ul>
 
-<h4> Quick Stats </h4>
-<p> Number Papers: {{ site.data[page.title].n_articles }} <br/>
-First Pub: {{ site.data[page.title].first_publication }} <br/>
-Journal: {{ site.data[page.title].top_journal_name }} ( {{ site.data[page.title].top_journal_count }} papers ) <br/>
-Author: {{ site.data[page.title].top_author_name }} ( {{ site.data[page.title].top_author_count }} papers ) </p>
+<h3> Quick Stats </h3>
+
+<p>
+	Number of Papers: {{ site.data[page.title].n_articles }} <br/>
+	First Paper: {{ site.data[page.title].first_publication }} <br/>
+	Most Common Journal: {{ site.data[page.title].top_journal_name }} ({{ site.data[page.title].top_journal_count }} papers) <br/>
+	Most Common Author: {{ site.data[page.title].top_author_name }} ({{ site.data[page.title].top_author_count }} papers)
+</p>
 
 <!-- <h4> Similarity </h4>
 <p> This ERP is most similar to: {{ site.data[page.title].sim }} <br/>
 This ERP is most different from:  {{ site.data[page.title].diff }} </p>
 -->
 
-<h4> Publication History </h4>
+<h3> Publication History </h3>
 <img src={{ site.baseurl }}/assets/ERPs/{{ page.title }}/hist.svg alt="Test-History">
 
 {% include sidebar.html %}
