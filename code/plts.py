@@ -1,4 +1,4 @@
-"""Plotting functions for the  ERPscanr project."""
+"""Plotting functions for the ERPscanr project."""
 
 import os
 
@@ -12,15 +12,22 @@ from lisc.plts.utils import check_ax, savefig
 ###################################################################################################
 
 @savefig
-def plot_count_hist(data, plt_log=True, **plt_kwargs):
+def plot_count_hist(data, log=True, bins=10, **plt_kwargs):
     """Plot a count histogram of collected data."""
 
+    if log:
+
+        hist, bins, _ = plt.hist(data, bins=bins)
+        plt.close()
+
+        # Use non-equal bin sizes, such that they look equal on log scale
+        bins = np.logspace(np.log10(bins[0]), np.log10(bins[-1]), len(bins))
+
     ax = check_ax(plt_kwargs.pop('ax', None), plt_kwargs.pop('figsize', (6, 5)))
+    ax.hist(data, bins=bins, color=plt_kwargs.pop('color', '#5b7399'), **plt_kwargs)
 
-    if plt_log:
-        data = np.log10(data)
-
-    ax.hist(data, bins=10, color='#5b7399')
+    if log:
+        ax.set_xscale('log')
 
     sns.despine(ax=ax)
     plt.setp(ax.spines.values(), linewidth=2)
@@ -28,6 +35,7 @@ def plot_count_hist(data, plt_log=True, **plt_kwargs):
 
 @savefig
 def plot_year_comparison(years, counts, labels, **plt_kwargs):
+    """Plot a comparison of number of values across years for multiple elements."""
 
     ax = check_ax(plt_kwargs.pop('ax', None), plt_kwargs.pop('figsize', (6, 4)))
 
@@ -36,7 +44,7 @@ def plot_year_comparison(years, counts, labels, **plt_kwargs):
 
     plt.legend()
 
-    ax.set_xlabel('Year of Publication', fontsize=14)
+    ax.set_xlabel('Decade of Publication', fontsize=14)
     ax.set_ylabel('Number of Articles', fontsize=14)
 
 
