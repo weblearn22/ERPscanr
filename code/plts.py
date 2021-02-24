@@ -3,25 +3,45 @@
 import os
 
 import numpy as np
+import seaborn as sns
 import matplotlib.pyplot as plt
 
+from lisc.plts.utils import check_ax, savefig
+
 ###################################################################################################
 ###################################################################################################
 
-def plot_count_hist(data, plt_log=True):
+@savefig
+def plot_count_hist(data, plt_log=True, **plt_kwargs):
     """Plot a count histogram of collected data."""
 
-    fig, ax = plt.subplots(figsize=(6, 5))
+    ax = check_ax(plt_kwargs.pop('ax', None), plt_kwargs.pop('figsize', (6, 5)))
 
     if plt_log:
         data = np.log10(data)
 
-    plt.hist(data, bins=10, color='#5b7399')
+    ax.hist(data, bins=10, color='#5b7399')
 
-    _set_lr_spines(ax, 2)
+    sns.despine(ax=ax)
+    plt.setp(ax.spines.values(), linewidth=2)
 
 
-def plot_time_associations(data):
+@savefig
+def plot_year_comparison(years, counts, labels, **plt_kwargs):
+
+    ax = check_ax(plt_kwargs.pop('ax', None), plt_kwargs.pop('figsize', (6, 4)))
+
+    for count, label, color in zip(counts, labels, sns.color_palette('muted')):
+        ax.plot(years, count, label=label, lw=2.5, color=color, alpha=0.9)
+
+    plt.legend()
+
+    ax.set_xlabel('Year of Publication', fontsize=14)
+    ax.set_ylabel('Number of Articles', fontsize=14)
+
+
+@savefig
+def plot_time_associations(data, **plt_kwargs):
     """Plot top associations for each ERP across time.
 
     Parameters
@@ -31,27 +51,27 @@ def plot_time_associations(data):
     """
 
     # Plot params
-    offsets = {'P': 50, 'N': -50}
-    rotations = {'P': 45, 'N': -45}
+    offsets = {'P' : 30, 'N': -30}
+    rotations = {'P' : 45, 'N': -45}
+    alignments = {'P' : 'bottom', 'N' : 'top'}
 
     # Initialize Plot
-    fig = plt.figure(figsize=(12, 5))
-    fig.suptitle('ERP Correlates Across Time', fontsize=24, fontweight='bold')
-    ax = fig.add_subplot(111)
+    ax = check_ax(plt_kwargs.pop('ax', None), plt_kwargs.pop('figsize', (12, 5)))
 
     # Set plot limits
-    ax.set_xlim([50, 600])
+    ax.set_xlim([50, 750])
     ax.set_ylim([-100, 100])
 
-    # Add x-ticks
-    plt.xticks([250, 500], ['250 ms', '500 ms'])
-    ax.set_yticks([])
-
     # Set ticks and plot lines
-    _set_lr_spines(ax, 2)
+    sns.despine(ax=ax)
+    plt.setp(ax.spines.values(), linewidth=3)
     ax.spines['bottom'].set_position('center')
     ax.xaxis.set_ticks_position('none')
     ax.yaxis.set_ticks_position('none')
+
+    # Add x-ticks
+    plt.xticks([250, 500], ['250 ms', '500 ms'], fontsize=14)
+    ax.set_yticks([])
 
     # Add data to plot from
     for datum in data:
@@ -59,21 +79,5 @@ def plot_time_associations(data):
         # Text takes: [X-pos, Y-pos, word, rotation]
         #   Where X-pos is latency, y-pos & rotation are defaults given +/-
         ax.text(datum[2], offsets[datum[1]], datum[0],
-                rotation=rotations[datum[1]], fontsize=20)
-
-###################################################################################################
-###################################################################################################
-
-def _set_lr_spines(ax, lw=None):
-    """Set the spines to drop top & right box & set linewidth."""
-
-    # Set the top and right side frame & ticks off
-    ax.spines['right'].set_visible(False)
-    ax.spines['top'].set_visible(False)
-    ax.xaxis.set_ticks_position('bottom')
-    ax.yaxis.set_ticks_position('left')
-
-    # Set linewidth of remaining spines
-    if lw:
-        ax.spines['left'].set_linewidth(lw)
-        ax.spines['bottom'].set_linewidth(lw)
+                verticalalignment=alignments[datum[1]],
+                rotation=rotations[datum[1]], fontsize=18)
