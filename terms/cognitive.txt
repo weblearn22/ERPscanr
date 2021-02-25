@@ -1,36 +1,45 @@
-attention
+anticipation, expectation, preparation
+attention, attentional
 arousal
-auditory,audition
+auditory, audition
 awareness
 categorization
+cognitive control
+comprehension
 conflict
+conscious, consciousness
 decision making
-emotion,emotional
+emotion, emotional, mood
 error
-executive functions
+executive function, executive functions
 expectation
-face,facial
-grammar
+face, facial
+fear
+goal
+illusion, illusory
+intelligence, knowledge
 language
 learning
 memory
-motor
-movement
-number
-pain,nociception
-phonology,phonological
-prediction,predictive
-reading
+motor, movement, motion
+music, musical
+pain, nociception
+perception
+phonology, phonological, phonetic, phonetics
+prediction, predictive
+reading, lexical
 reasoning
+recognition, familiar, familiarity
 representation
-reward
-semantic,semantics
+reward, reinforcement
+semantic, semantics
 sleep
-spatial
-speech
-social
-somatosensory
-tactile
-valence
-vision,visual
+spatial, navigation
+speech, articulation, prosody
+social, theory of mind
+somatosensory, tactile
+syntax, syntactic, grammar
+unconscious
+valence, affective
+vision, visual
 working memory
