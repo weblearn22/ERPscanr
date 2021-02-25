@@ -1,4 +1,6 @@
 eeg
+electroencephalography
+electroencephalography (eeg)
 erp
 erps
 event-related
@@ -8,6 +10,4 @@ event related potentials
 event related-potentials (erps)
 event-related potentials (erps)
 potentials
-electroencephalography
-electroencephalography (eeg)
 evoked
