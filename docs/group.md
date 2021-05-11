@@ -4,7 +4,7 @@ layout: default
 
 # GROUP ANALYSIS
 
-In the 'group' analyses, analyses across the entire dataset are done to compare the similarities and differences between different ERP components. These analyses are primarily done using the co-occurence data, and so can generally be interpreted in terms of examining
+In the 'group' analyses, analyses across the entire dataset are done to compare the similarities and differences between different ERP components. These analyses are primarily done using the co-occurrence data, and so can generally be interpreted in terms of examining how similar ERP components are, in terms of the topics they are associated with.
 
 ## ERP Timing
 
@@ -12,7 +12,7 @@ The following figure plots the most common cognitive association of ERPs across 
 
 ![erp_timing]({{ site.baseurl }}/assets/GROUP/erp_time.svg)
 
-This plot is created by by labelling each ERP component with it's typical timing, and then labelling them with their strongest association term. For visualization purposes, this plot only includes a subset of the ERP terms with the highest number of articles.
+This plot is created by labeling each ERP component with it's typical timing, and then labeling them with their strongest association term. For visualization purposes, this plot only includes a subset of the ERP terms with the highest number of articles.
 
 ## Cognition Matrix
 
@@ -20,7 +20,7 @@ The following plot is a clustering of ERP literature and cognitive associations.
 
 ![cognition_matrix]({{ site.baseurl }}/assets/GROUP/Cog_Mat.svg)
 
-The heatmap reflects the percent of ERP papers that mention each cognitive term. The matrix is re-ordered based on the cosine similarity, with the dendrogram is a hierachical clustering of ERPs (rows) and cognitive terms (columns). This graph shows the similarity and differences of ERP components based on their putative cognitive associations.
+The heatmap reflects the percent of ERP papers that mention each cognitive term. The matrix is re-ordered based on the cosine similarity, with the dendrogram is a hierarchical clustering of ERPs (rows) and cognitive terms (columns). This graph shows the similarity and differences of ERP components based on their putative cognitive associations.
 
 ## Disease Matrix
 
