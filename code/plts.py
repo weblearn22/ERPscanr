@@ -6,6 +6,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+from lisc.plts.words import plot_years
 from lisc.plts.utils import check_ax, savefig
 
 ###################################################################################################
@@ -89,3 +90,21 @@ def plot_time_associations(data, **plt_kwargs):
         ax.text(datum[2], offsets[datum[1]], datum[0],
                 verticalalignment=alignments[datum[1]],
                 rotation=rotations[datum[1]], fontsize=18)
+
+
+def plot_attrs_by_year(journals, authors):
+    """Plot counts of unique attributes by years.
+
+    journals, authors : dict
+    """
+
+    fig, ax1 = plt.subplots(figsize=(5, 4))
+
+    plot_years(journals, color='r', label='Journals', alpha=0.85, ax=ax1)
+
+    ax2 = ax1.twinx()
+    plot_years(authors, color='g', label='Authors', alpha=0.85, ax=ax2)
+
+    fig.legend(loc='upper left', bbox_to_anchor=(0, 1), bbox_transform=ax1.transAxes)
+    ax1.set_ylabel('Unique Journals')
+    ax2.set_ylabel('Unique Authors')
