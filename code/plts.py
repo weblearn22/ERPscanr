@@ -3,11 +3,14 @@
 import os
 
 import numpy as np
+import networkx as nx
 import seaborn as sns
 import matplotlib.pyplot as plt
 
 from lisc.plts.words import plot_years
 from lisc.plts.utils import check_ax, savefig
+
+from analysis import scale_number, scale_list
 
 ###################################################################################################
 ###################################################################################################
@@ -115,3 +118,26 @@ def plot_attrs_by_year(journals, authors, **plt_kwargs):
     fig.legend(loc='upper left', bbox_to_anchor=(0, 1), bbox_transform=ax1.transAxes)
     ax1.set_ylabel('Unique Journals')
     ax2.set_ylabel('Unique Authors')
+
+
+@savefig
+def plot_network(network, labels, edge_weights=(0.1, 2), layout_seed=None, figsize=(10, 6)):
+    """Plot network.
+
+    Notes: uses the spring_layout approach for setting the layout.
+    """
+
+    plt.figure(figsize=figsize)
+
+    # Compute the edges weights to visualize in the plot
+    weights = [network[ii][jj]['weight'] for ii, jj in network.edges()]
+    widths = scale_list(weights, *edge_weights)
+
+    # Get the location information for plotting the graph
+    pos = nx.spring_layout(network, seed=layout_seed)
+
+    # Update the label positions to offset them from on top of nodes
+    label_pos = {ind : array + [0, 0.04] for ind, array in pos.items()}
+
+    nx.draw(network, pos=pos, node_size=75, alpha=0.75, width=widths)
+    nx.draw_networkx_labels(network, label_pos, labels=labels, font_size=16);
