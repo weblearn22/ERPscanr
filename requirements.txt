@@ -1,5 +1,6 @@
 numpy
 scipy
+networkx
 matplotlib
 seaborn
 lisc >= 0.2.0
