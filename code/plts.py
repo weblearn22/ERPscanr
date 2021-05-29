@@ -13,7 +13,7 @@ from lisc.plts.utils import check_ax, savefig
 ###################################################################################################
 
 @savefig
-def plot_count_hist(data, log=True, bins=10, **plt_kwargs):
+def plot_count_hist(data, log=True, bins=10, xlabel=None, ylabel=None, **plt_kwargs):
     """Plot a count histogram of collected data."""
 
     if log:
@@ -29,6 +29,10 @@ def plot_count_hist(data, log=True, bins=10, **plt_kwargs):
 
     if log:
         ax.set_xscale('log')
+    if xlabel:
+        ax.set_xlabel(xlabel)
+    if ylabel:
+        ax.set_ylabel(ylabel)
 
     sns.despine(ax=ax)
     plt.setp(ax.spines.values(), linewidth=2)
@@ -92,18 +96,21 @@ def plot_time_associations(data, **plt_kwargs):
                 rotation=rotations[datum[1]], fontsize=18)
 
 
-def plot_attrs_by_year(journals, authors):
+@savefig
+def plot_attrs_by_year(journals, authors, **plt_kwargs):
     """Plot counts of unique attributes by years.
 
     journals, authors : dict
     """
 
-    fig, ax1 = plt.subplots(figsize=(5, 4))
+    fig, ax1 = plt.subplots(figsize=plt_kwargs.pop('figsize', (6, 5)))
 
-    plot_years(journals, color='r', label='Journals', alpha=0.85, ax=ax1)
+    plot_years(journals, color='r', label='Journals',
+               alpha=plt_kwargs.pop('alpha', 0.85), ax=ax1)
 
     ax2 = ax1.twinx()
-    plot_years(authors, color='g', label='Authors', alpha=0.85, ax=ax2)
+    plot_years(authors, color='g', label='Authors',
+               alpha=plt_kwargs.pop('alpha', 0.85), ax=ax2)
 
     fig.legend(loc='upper left', bbox_to_anchor=(0, 1), bbox_transform=ax1.transAxes)
     ax1.set_ylabel('Unique Journals')
