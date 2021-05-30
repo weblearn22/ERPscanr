@@ -21,10 +21,8 @@ def plot_count_hist(data, log=True, bins=10, xlabel=None, ylabel=None, **plt_kwa
 
     if log:
 
-        hist, bins, _ = plt.hist(data, bins=bins)
-        plt.close()
-
         # Use non-equal bin sizes, such that they look equal on log scale
+        hist, bins = np.histogram(data, bins=bins)
         bins = np.logspace(np.log10(bins[0]), np.log10(bins[-1]), len(bins))
 
     ax = check_ax(plt_kwargs.pop('ax', None), plt_kwargs.pop('figsize', (6, 5)))
