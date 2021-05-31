@@ -13,7 +13,7 @@ Event-related potentials (ERP) are a common signal of analysis in neuroscientifi
 To goal of this project is to map and annotate the existing literature related to the method of ERPs. In order to do so, we first manually curated a dictionary of all known ERP components that we could find. This list of ERP components is available viewable at /notebooks/Intro.ipynb.
 
 For data collection, this project employs main approaches to mining information:
-- 'Count': a co-occurence analysis of ERP terms and other pre-defined terms of interest (cognitive and/or disease terms)
+- 'Count': a co-occurence analysis of ERP terms and other pre-defined terms of interest (cognitive and/or disorder-related association terms)
 - 'Words': an analysis of all words that appear in the abstract of ERP related papers. From this web-scrape, we also gather and analysis meta-data, such as authors, journals, keywords and date of publication to build profiles of ERPs.
 
 From there, we analyze patterns in the literature and make inferences about ERPs and how they relate based on analyzing this co-occurence data, by analyzing this co-occuring and text data.

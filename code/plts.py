@@ -68,33 +68,33 @@ def plot_time_associations(data, **plt_kwargs):
         ERP data - [association, P or N, latency]
     """
 
-    # Plot params
+    # plot params
     offsets = {'P' : 25, 'N': -25}
     rotations = {'P' : 45, 'N': -45}
     alignments = {'P' : 'bottom', 'N' : 'top'}
 
-    # Initialize Plot
-    ax = check_ax(plt_kwargs.pop('ax', None), plt_kwargs.pop('figsize', (15, 5)))
+    # create axis
+    ax = check_ax(plt_kwargs.pop('ax', None), plt_kwargs.pop('figsize', (10, 4)))
 
-    # Set plot limits
-    ax.set_xlim(plt_kwargs.pop('xlim', [85, 625]))
+    # set plot limits
+    ax.set_xlim(plt_kwargs.pop('xlim', [50, 700]))
     ax.set_ylim(plt_kwargs.pop('ylim', [-100, 100]))
 
-    # Set ticks and plot lines
+    # set ticks and plot lines
     sns.despine(ax=ax)
     plt.setp(ax.spines.values(), linewidth=3)
     ax.spines['bottom'].set_position('center')
     ax.xaxis.set_ticks_position('none')
     ax.yaxis.set_ticks_position('none')
 
-    # Add x-ticks
-    plt.xticks([250, 500], ['250 ms', '500 ms'], fontsize=14)
+    # add x-ticks
+    plt.xticks([250, 500], ['250 ms', '500 ms'], fontsize=18)
     ax.set_yticks([])
 
-    # Add data to plot from
+    # add data to plot
     for datum in data:
 
-        # Text takes: [X-pos, Y-pos, word, rotation]
+        # text takes: [X-pos, Y-pos, word, rotation]
         #   Where X-pos is latency, y-pos & rotation are defaults given +/-
         ax.text(datum[2], offsets[datum[1]], datum[0],
                 verticalalignment=alignments[datum[1]],

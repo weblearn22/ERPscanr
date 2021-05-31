@@ -15,8 +15,8 @@ TERMS_DIR = '../terms/'
 API_FILE = 'api_key.txt'
 
 # Set label for secondary terms to run
-#   Options: 'cognitive', 'disease', 'erp' (run ERPs against each other)
-LABEL = 'disease'
+#   Options: 'cognitive', 'disorders', 'erp'
+LABEL = 'cognitive'
 
 # Set collection settings
 LOGGING = None
