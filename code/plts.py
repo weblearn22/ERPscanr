@@ -21,6 +21,9 @@ def plot_count_hist(data, log=True, bins=10, xlabel=None, ylabel=None, **plt_kwa
 
     if log:
 
+        # Drop zeros, that mess up logging
+        data = data[~(data == 0)]
+
         # Use non-equal bin sizes, such that they look equal on log scale
         hist, bins = np.histogram(data, bins=bins)
         bins = np.logspace(np.log10(bins[0]), np.log10(bins[-1]), len(bins))
@@ -65,16 +68,16 @@ def plot_time_associations(data, **plt_kwargs):
     """
 
     # Plot params
-    offsets = {'P' : 30, 'N': -30}
+    offsets = {'P' : 25, 'N': -25}
     rotations = {'P' : 45, 'N': -45}
     alignments = {'P' : 'bottom', 'N' : 'top'}
 
     # Initialize Plot
-    ax = check_ax(plt_kwargs.pop('ax', None), plt_kwargs.pop('figsize', (12, 5)))
+    ax = check_ax(plt_kwargs.pop('ax', None), plt_kwargs.pop('figsize', (15, 5)))
 
     # Set plot limits
-    ax.set_xlim([50, 750])
-    ax.set_ylim([-100, 100])
+    ax.set_xlim(plt_kwargs.pop('xlim', [85, 625]))
+    ax.set_ylim(plt_kwargs.pop('ylim', [-100, 100]))
 
     # Set ticks and plot lines
     sns.despine(ax=ax)
