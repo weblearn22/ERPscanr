@@ -2,21 +2,17 @@ anticipation, expectation, preparation
 attention, attentional
 arousal
 auditory, audition
-awareness
 categorization
 cognitive control
 comprehension
 conflict
-conscious, consciousness
+conscious, consciousness, awareness
 decision making
 emotion, emotional, mood
 error
 executive function, executive functions
-expectation
 face, facial
 fear
-goal
-illusion, illusory
 intelligence, knowledge
 language
 learning
@@ -28,18 +24,15 @@ perception
 phonology, phonological, phonetic, phonetics
 prediction, predictive
 reading, lexical
-reasoning
 recognition, familiar, familiarity
 representation
 reward, reinforcement
 semantic, semantics
-sleep
 spatial, navigation
 speech, articulation, prosody
 social, theory of mind
 somatosensory, tactile
 syntax, syntactic, grammar
-unconscious
 valence, affective
 vision, visual
 working memory
