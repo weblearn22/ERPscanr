@@ -18,7 +18,11 @@ F_NAME = 'words_erps'
 YEAR_RANGE = [None, 2020]
 
 # Set the file format for saved out plots
-PLT_EXT = '.svg'   # '.svg', '.png'
+PLT_EXT = '.pdf'
+
+# Set plotting context
+import seaborn as sns
+sns.set_context('talk')
 
 ###################################################################################################
 ###################################################################################################
@@ -47,14 +51,14 @@ def main():
         erp_data.save_summary(directory=db)
 
         # Create and save wordcloud figure
-        plot_wordcloud(erp_data.words, 20, #transparent=True,
+        plot_wordcloud(erp_data.words, 20,
                        file_name='wc/' + erp + PLT_EXT, directory=db,
-                       save_kwargs={'transparent': True}, close=True)
+                       save_kwargs={'transparent': True, 'dpi' : 600}, close=True)
 
         # Create and save years figure
-        plot_years(erp_data.years, year_range=YEAR_RANGE, #transparent=True,
+        plot_years(erp_data.years, year_range=YEAR_RANGE,
                    file_name='years/' + erp + PLT_EXT, directory=db,
-                   save_kwargs={'transparent': True}, close=True)
+                   save_kwargs={'transparent': True,  'dpi' : 600}, close=True)
 
         # Clear the loaded data for the current term
         words[erp].clear()
