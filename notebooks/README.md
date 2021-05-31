@@ -28,11 +28,11 @@ This notebook does a network analysis on ERP components.
 
 ### 04-CountsCognitive
 
-This notebook explores and analyses the cognitive term co-occurrence data.
+This notebook explores and analyses the cognitive-related term co-occurrence data.
 
-### 05-CountsDisease
+### 05-CountsDisorders
 
-This notebook explores and analyses the disease term co-occurrence data.
+This notebook explores and analyses the disorder-related term co-occurrence data.
 
 ### 06-CountsERPs
 
