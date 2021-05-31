@@ -22,6 +22,7 @@ def plot_count_hist(data, log=True, bins=10, xlabel=None, ylabel=None, **plt_kwa
     if log:
 
         # Drop zeros, that mess up logging
+        data = np.array(data)
         data = data[~(data == 0)]
 
         # Use non-equal bin sizes, such that they look equal on log scale
