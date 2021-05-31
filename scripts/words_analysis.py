@@ -47,12 +47,14 @@ def main():
         erp_data.save_summary(directory=db)
 
         # Create and save wordcloud figure
-        plot_wordcloud(erp_data.words, 20, transparent=True,
-                       save_fig=True, f_name='wc/' + erp + PLT_EXT, directory=db, close=True)
+        plot_wordcloud(erp_data.words, 20, #transparent=True,
+                       file_name='wc/' + erp + PLT_EXT, directory=db,
+                       save_kwargs={'transparent': True}, close=True)
 
         # Create and save years figure
-        plot_years(erp_data.years, year_range=YEAR_RANGE, transparent=True,
-                   save_fig=True, f_name='years/' + erp + PLT_EXT, directory=db, close=True)
+        plot_years(erp_data.years, year_range=YEAR_RANGE, #transparent=True,
+                   file_name='years/' + erp + PLT_EXT, directory=db,
+                   save_kwargs={'transparent': True}, close=True)
 
         # Clear the loaded data for the current term
         words[erp].clear()
