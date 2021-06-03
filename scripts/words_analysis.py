@@ -46,8 +46,13 @@ def main():
         # Aggregate data together across all articles
         erp_data = ArticlesAll(words[erp], exclusions=exclusions)
 
-        # Create and save summary
+        # Create the summary
         erp_data.create_summary()
+
+        # Add custom information to the summary - including full name
+        erp_data.summary['name'] = erp_data.term.search[0]
+
+        # Save out the summary
         erp_data.save_summary(directory=db)
 
         # Create and save wordcloud figure

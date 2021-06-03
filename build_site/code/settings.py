@@ -1,3 +1,8 @@
-"""Settings for the ERP-SCANR website."""
+"""Settings for the ERPscanr website."""
 
-WEBSITE_LOC = "/Users/tom/Documents/GitCode/ERPscanr/docs"
+from pathlib import Path
+
+###################################################################################################
+###################################################################################################
+
+WEBSITE_LOC = Path.cwd().parents[0] / 'docs'
