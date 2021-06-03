@@ -21,16 +21,17 @@ def main():
 
     # Remove data files
     for file in os.listdir(wdb.post_path):
-        os.remove(os.path.join(wdb.post_path, file))
+        os.remove(wdb.post_path / file)
 
     # Remove post pages
     for file in os.listdir(wdb.data_path):
-        os.remove(os.path.join(wdb.data_path, file))
+        os.remove(wdb.data_path / file)
 
     # Remove image folders
     for folder in os.listdir(wdb.plot_path):
-        if folder[0] == '.': continue
-        shutil.rmtree(os.path.join(wdb.plot_path, folder))
+        if folder[0] == '.':
+            continue
+        shutil.rmtree(wdb.plot_path / folder)
 
     # Print out status
     print('\n WEBSITE DATA CLEARED \n\n')

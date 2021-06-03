@@ -49,20 +49,20 @@ def main():
 
         # Website data json - copy to website directory
         copyfile(db.get_file_path('summary', label + '.json'),
-                 os.path.join(wdb.data_path, label + '.json'))
+                 wdb.data_path / (label + '.json'))
 
         # Check website plots folder
-        w_plts_path = os.path.join(wdb.plot_path, label)
+        w_plts_path = wdb.plot_path / label
         if not os.path.exists(w_plts_path):
             os.mkdir(w_plts_path)
 
         # Wordcloud - copy to website directory
         copyfile(db.get_file_path('figures', 'wc/' + label + PLT_EXT),
-                 os.path.join(w_plts_path, 'wc' + PLT_EXT))
+                 w_plts_path / ('wc' + PLT_EXT))
 
         # Publication graph - copy to wesbite directory
         copyfile(db.get_file_path('figures', 'years/' + label + PLT_EXT),
-                 os.path.join(w_plts_path, 'hist' + PLT_EXT))
+                 w_plts_path / ('hist' + PLT_EXT))
 
     # Print out status
     print('\n\n WEBSITE DATA GENERATED \n\n')

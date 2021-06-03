@@ -1,6 +1,6 @@
 """A database object that defines the layout """
 
-import os
+from pathlib import Path
 
 ###################################################################################################
 ###################################################################################################
@@ -24,9 +24,10 @@ class WebDB(object):
         """Initialize WebDB object."""
 
         # Set base path for the website
-        self.base_path = base_path
+        self.base_path = Path(base_path)
 
         # Set paths to directories for the website
-        self.post_path = os.path.join(self.base_path, '_posts')
-        self.data_path = os.path.join(self.base_path, '_data')
-        self.plot_path = os.path.join(self.base_path, 'assets/ERPs')
+        self.post_path = self.base_path / '_posts'
+        self.data_path = self.base_path / '_data'
+        self.assets_path = self.base_path / 'assets'
+        self.plot_path = self.base_path / 'assets/ERPs'
