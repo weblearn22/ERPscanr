@@ -8,7 +8,7 @@ In order to collect the literature data, search terms for ERP components and ass
 
 The main methods for this project are briefly summarized in the following graphic:
 
-![methods]({{ site.baseurl }}/assets/FIGS/methods.png)
+![methods]({{ site.baseurl }}/assets/FIGS/overview.png){: width="500" }
 
 Code for this project is written in Python, and primarily uses the
 [LISC](https://github.com/lisc-tools/lisc) module for data collection and analysis.

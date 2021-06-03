@@ -22,9 +22,10 @@ A more in-depth overview of the methods is available [here](methods.html). The c
 
 The current collection and analysis is v0.2:
 
-	- collected on: 23 March, 2017
-	- dbbuild: Build170322-2207m.1
-	- lastupdate: 2017/03/23 02:08
+    - database: Pubmed
+	- collected on: 31st May, 2021
+	- db-build: Build210530-1333.1
+	- db-lastupdate: 2021/05/30 18:23
 
 Note that the project, codebase, and website are all dynamic and in active development, and this website may change without warning, including changes to the results due to edits to the analysis procedure, changes in the term dictionaries, and the addition of new analyses.
 
