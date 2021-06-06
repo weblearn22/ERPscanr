@@ -1,12 +1,17 @@
 P100
+P110
+P120
 P150
+P160
 P170
 P180
+P190
 P200
 P220
 P230
 P240
 P250
+P260
 P270
 P300
 P3a
@@ -34,6 +39,8 @@ N2a
 N2b
 N2c
 N2pc
+N220
+N230
 N240
 N250
 N270
@@ -48,6 +55,7 @@ N550
 N600
 N700
 MMN,mismatch negativity
+contralateral delay activity
 late positive component,late positive complex
 late positive potential,late positive potentials
 negative slow wave
@@ -78,7 +86,6 @@ selection positivity
 sustained posterior negativity
 sustained posterior contralateral negativity
 posterior contralateral negativity
-vsep,vestibular sensory evoked potentials,vestibular evoked potentials
 movement related cortical potential,movement related cortical potentials
 frontal selection positivity,fronto polar selection positivity
 prefrontal negativity
@@ -88,3 +95,5 @@ early frontal negativity
 FN400, frontal old/new effect
 phonological mapping negativity
 visual awareness negativity
+negative central
+reversal negativity
