@@ -59,13 +59,13 @@ def plot_year_comparison(years, counts, labels, **plt_kwargs):
 
 
 @savefig
-def plot_time_associations(data, **plt_kwargs):
+def plot_time_associations(data, exclude=[], **plt_kwargs):
     """Plot top associations for each ERP across time.
 
     Parameters
     ----------
-    data : list of list of [str, str, int]
-        ERP data - [association, P or N, latency]
+    data : list of list of [str, str, int, str]
+        ERP latency data, as [ERP, P or N, latency, association].
     """
 
     # plot params
@@ -94,11 +94,14 @@ def plot_time_associations(data, **plt_kwargs):
     # add data to plot
     for datum in data:
 
+        if datum['name'] in exclude: continue
+        if datum['polarity'] == 'X': continue
+
         # text takes: [X-pos, Y-pos, word, rotation]
         #   Where X-pos is latency, y-pos & rotation are defaults given +/-
-        ax.text(datum[2], offsets[datum[1]], datum[0],
-                verticalalignment=alignments[datum[1]],
-                rotation=rotations[datum[1]], fontsize=18)
+        ax.text(datum['latency'], offsets[datum['polarity']], datum['association'],
+                verticalalignment=alignments[datum['polarity']],
+                rotation=rotations[datum['polarity']], fontsize=18)
 
 
 @savefig
@@ -143,3 +146,15 @@ def plot_network(network, labels, edge_weights=(0.1, 2), layout_seed=None, figsi
 
     nx.draw(network, pos=pos, node_size=75, alpha=0.75, width=widths)
     nx.draw_networkx_labels(network, label_pos, labels=labels, font_size=16);
+
+
+@savefig
+def plot_latency_values(latencies, avgs, **plt_kwargs):
+    """Plot average association values across latencies."""
+
+    ax = check_ax(plt_kwargs.pop('ax', None), plt_kwargs.pop('figsize', (6, 4)))
+
+    plt.plot(latencies, avgs, '.', **plt_kwargs)
+
+    plt.xlabel('Latency')
+    plt.ylabel('Association')

@@ -1,38 +1,39 @@
 """Analysis functions for the ERPscanr project."""
 
+from copy import deepcopy
+
 import numpy as np
 
 ###################################################################################################
 ###################################################################################################
 
-def get_time_associations(counts):
-    """Get time associations from canonically named ERP components."""
+def get_time_associations(counts, latencies, collect='highest'):
+    """Get highest associations for each ERP component, based on co-occurence data."""
 
     time_associations = []
+    latency_dict = {'name' : None, 'polarity' : None,
+                    'latency' : None, 'association' : None}
 
     for erp_ind, erp in enumerate(counts.terms['A'].labels):
 
-        # List is: [word, P or N, latency]
-        temp  = [None, None, None]
+        # Initialize store & get latency information
+        temp = deepcopy(latency_dict)
+        latency = latencies[erp]
 
-        # Get P/N & latency for ERPs with naming convention
-        if erp[1:].isdigit():
+        # Parse information into latency dictionary
+        temp['name'] = erp
+        temp['polarity'] = latency[0]
+        temp['latency'] = int(latency[1])
 
-            # Get P or N
-            if erp[0] == 'P':
-                temp[1] = 'P'
-            elif erp[0] == 'N':
-                temp[1] = 'N'
-
-            # Get latency
-            temp[2] = int(erp[1:])
-
-            # Get association
+        # Get association
+        if collect == 'highest':
             term_ind = np.argmax(counts.score[erp_ind, :])
-            temp[0] = counts.terms['B'].terms[term_ind][0]
+            temp['association'] = counts.terms['B'].terms[term_ind][0]
+        elif collect == 'all':
+            temp['association'] = counts.score[erp_ind, :]
 
-            # Collect ERP data
-            time_associations.append(temp)
+        # Collect ERP data
+        time_associations.append(temp)
 
     return time_associations
 
