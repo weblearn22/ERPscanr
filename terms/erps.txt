@@ -95,5 +95,4 @@ early frontal negativity
 FN400, frontal old/new effect
 phonological mapping negativity
 visual awareness negativity
-negative central
 reversal negativity

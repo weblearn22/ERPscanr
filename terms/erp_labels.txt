@@ -95,5 +95,4 @@ EFN
 FN400
 PMN
 VAN
-Nc
 RN
