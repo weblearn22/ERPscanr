@@ -95,7 +95,6 @@ def plot_time_associations(data, exclude=[], **plt_kwargs):
     for datum in data:
 
         if datum['name'] in exclude: continue
-        if datum['polarity'] == 'X': continue
 
         # text takes: [X-pos, Y-pos, word, rotation]
         #   Where X-pos is latency, y-pos & rotation are defaults given +/-
@@ -146,6 +145,24 @@ def plot_network(network, labels, edge_weights=(0.1, 2), layout_seed=None, figsi
 
     nx.draw(network, pos=pos, node_size=75, alpha=0.75, width=widths)
     nx.draw_networkx_labels(network, label_pos, labels=labels, font_size=16);
+
+
+@savefig
+def plot_latencies(polarities, latencies, **plt_kwargs):
+    """Plot ERP latencies."""
+
+    offsets = {'P' : 25, 'N': -25, 'X' : 0}
+
+    ax = check_ax(plt_kwargs.pop('ax', None), plt_kwargs.pop('figsize', (10, 4)))
+
+    for pol, lat in zip(polarities, latencies):
+        ax.plot(lat, offsets[pol], 'b.',
+                markersize=plt_kwargs.pop('markersize', 20),
+                alpha=plt_kwargs.pop('alpha', 0.25))
+    ax.set_ylim([-50, 50])
+    ax.set_yticks([-25, 25])
+    ax.set_yticklabels(['N', 'P'])
+    ax.set_xlabel('Latency')
 
 
 @savefig
