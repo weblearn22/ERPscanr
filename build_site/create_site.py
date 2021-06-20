@@ -18,7 +18,12 @@ DB_NAME = '../data'
 F_NAME = 'words_erps'
 
 # Set the file format for plots to use for website
-PLT_EXT = '.svg'   # '.png', '.svg'
+PLT_EXT = '.svg'
+
+COPY_FIGS = ['cognitive_time',
+             'cognitive_clustermap',
+             'disorders_clustermap',
+             'erp_network']
 
 ###################################################################################################
 ###################################################################################################
@@ -27,7 +32,7 @@ PLT_EXT = '.svg'   # '.png', '.svg'
 DATE = datetime.today().strftime('%Y-%m-%d')
 
 def main():
-    """Build the website page from ERP-SCANR results."""
+    """Build the website page from ERPscanr results."""
 
     # Print out status
     print('\n\n GENERATING WEBSITE DATA \n\n')
@@ -52,7 +57,7 @@ def main():
                  wdb.data_path / (label + '.json'))
 
         # Check website plots folder
-        w_plts_path = wdb.plot_path / label
+        w_plts_path = wdb.erp_plot_path / label
         if not os.path.exists(w_plts_path):
             os.mkdir(w_plts_path)
 
@@ -63,6 +68,21 @@ def main():
         # Publication graph - copy to wesbite directory
         copyfile(db.get_file_path('figures', 'years/' + label + PLT_EXT),
                  w_plts_path / ('hist' + PLT_EXT))
+
+    # Copy over 'group' figures
+    for fig in COPY_FIGS:
+
+        # Check for figure file in possible folders, and copy if present
+        for folder in ['counts', 'network']:
+
+            fig_path = db.get_file_path('figures', folder + '/' + fig + PLT_EXT)
+            if os.path.exists(fig_path):
+                copyfile(fig_path, wdb.group_plot_path / (fig + PLT_EXT))
+                break
+
+        # Print status if figure not found to copy
+        else:
+            print('Could not copy {:s} - file not found'.format(fig))
 
     # Print out status
     print('\n\n WEBSITE DATA GENERATED \n\n')

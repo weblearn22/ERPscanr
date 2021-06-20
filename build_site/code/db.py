@@ -30,4 +30,5 @@ class WebDB(object):
         self.post_path = self.base_path / '_posts'
         self.data_path = self.base_path / '_data'
         self.assets_path = self.base_path / 'assets'
-        self.plot_path = self.base_path / 'assets/ERPs'
+        self.erp_plot_path = self.assets_path / 'ERPs'
+        self.group_plot_path = self.assets_path / 'FIGS'

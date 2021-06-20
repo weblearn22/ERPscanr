@@ -28,10 +28,19 @@ def main():
         os.remove(wdb.data_path / file)
 
     # Remove image folders
-    for folder in os.listdir(wdb.plot_path):
+    for folder in os.listdir(wdb.erp_plot_path):
         if folder[0] == '.':
             continue
-        shutil.rmtree(wdb.plot_path / folder)
+        shutil.rmtree(wdb.erp_plot_path / folder)
+
+    # Remove group plots
+    for file in os.listdir(wdb.group_plot_path):
+
+        # Ignore png files (like the overview figure)
+        if file.split('.')[-1] == 'png': continue
+
+        # Remove other figure files
+        os.remove(wdb.group_plot_path / file)
 
     # Print out status
     print('\n WEBSITE DATA CLEARED \n\n')
