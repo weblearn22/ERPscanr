@@ -1,5 +1,6 @@
 ---
-layout: default
+layout: assoc
+title: disorders
 ---
 
 # Disorder-Related Associations

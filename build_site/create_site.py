@@ -51,7 +51,7 @@ def main():
     # Load word object, used to get the index of all collect ERPs
     words = load_object(F_NAME, directory=db)
 
-    # Loop through each erp
+    # Loop through each erp and copy words data
     for label in words.labels:
 
         # Create website template file
@@ -65,9 +65,6 @@ def main():
         # Website data json - save out to website directory
         with open(wdb.data_path / (label + '.json'), 'w') as outfile:
             json.dump(comb_summary, outfile)
-
-        #copyfile(db.get_file_path('summary', label + '.json'),
-        #         wdb.data_path / (label + '.json'))
 
         # Check website plots folder
         w_plts_path = wdb.erp_plot_path / label
@@ -96,6 +93,11 @@ def main():
         # Print status if figure not found to copy
         else:
             print('Could not copy {:s} - file not found'.format(fig))
+
+    # Copy over co-occurence summary data for association terms
+    for assoc in ['cognitive', 'disorders']:
+        copyfile(db.get_folder_path('counts') + '/assocs/' + assoc + '.json',
+                 wdb.data_path / (assoc + '.json'))
 
     # Print out status
     print('\n\n WEBSITE DATA GENERATED \n\n')

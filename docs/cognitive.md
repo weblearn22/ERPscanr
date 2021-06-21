@@ -1,5 +1,6 @@
 ---
-layout: default
+layout: assoc
+title: cognitive
 ---
 
 # Cognitive Associations

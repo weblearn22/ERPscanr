@@ -1,0 +1,18 @@
+{% include header.html %}
+
+{{ content }}
+
+<h3> The highest associated components for each association term are: </h3>
+
+<ul>
+{% for data in site.data[page.title] %}
+  {% for label in data %}
+    {% if label[0] == null %}
+      {% continue %}
+    {% endif %}
+    <li> {{ data[0] }}: {{ label[0] }}, {{ label[1]}}, {{ label[2]}} </li>
+  {% endfor %}
+{% endfor %}
+</ul>
+
+{% include sidebar.html %}

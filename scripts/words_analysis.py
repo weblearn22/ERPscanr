@@ -9,7 +9,7 @@ from lisc.plts.words import plot_years, plot_wordcloud
 ###################################################################################################
 ###################################################################################################
 
-# Set data words object to load
+# Set data for words object to load
 TERM_DIR = '../terms'
 DB_NAME = '../data'
 F_NAME = 'words_erps'
