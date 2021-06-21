@@ -8,7 +8,7 @@ ERPscanr is a semi-automated meta-analysis of scientific literature on the topic
 
 ## Motivation
 
-ERPs are a common method of investigation in cognitive neuroscience. There have been thousands of articles investigating ERPs in the context of cognition and disease, white hundreds of new investigations each year. The scale of this literature can make it difficult to keep up of updates.
+ERPs are a common method of investigation in cognitive neuroscience. There have been thousands of articles investigating ERPs in both basic research into cognition and clinical investigations, with thousands more published each year. The scale of this literature can make it difficult to keep up with the research.
 
 Systematic reviews offer one way to examine the literature. However, they require a significant time commitment, and are often focused on specific topics. As a complement to systematic reviews, here we use literature analysis to collect and analyze the ERP literature at scale, in a semi-automated way. After manual curation or search terms of interest, automated processes are used to collect and analyze literature data. In doing so, this project serves mostly as a data-driven summarization tool - a way to quickly and efficiently get a quick summary of ERP components that have been characterized in the literature, what they are used to investigate, and the relations between them.
 
@@ -23,15 +23,15 @@ A more in-depth overview of the methods is available [here](methods.html). The c
 The current collection and analysis is v0.2:
 
     - database: Pubmed
-	- collected on: 31st May, 2021
-	- db-build: Build210530-1333.1
-	- db-lastupdate: 2021/05/30 18:23
+	- collected on: 14th June, 2021
+	- db-build: Build210612-2212m.2
+	- db-lastupdate: 2021/06/13 07:12
 
 Note that the project, codebase, and website are all dynamic and in active development, and this website may change without warning, including changes to the results due to edits to the analysis procedure, changes in the term dictionaries, and the addition of new analyses.
 
 ## Reference
 
-A preprint for this project is upcoming.
+A preprint for this project is coming soon!
 
 ## Contact
 
