@@ -1,10 +1,13 @@
 """Prepare and move the data and figures for the website."""
 
 import os
+import json
+from pathlib import Path
 from shutil import copyfile
 from datetime import datetime
 
 from lisc.utils import SCDB, load_object
+from lisc.utils.io import parse_json_data
 
 # Import local utility code
 from code.db import WebDB
@@ -37,8 +40,10 @@ def main():
     # Print out status
     print('\n\n GENERATING WEBSITE DATA \n\n')
 
-    # Get database object for the data
+    # Get database object for the data, and paths of interest
     db = SCDB(DB_NAME)
+    w_sum_path = Path(db.paths['summary'])
+    c_sum_path = Path(db.paths['counts']) / 'summary'
 
     # Get the database object for the website
     wdb = WebDB(WEBSITE_LOC)
@@ -52,9 +57,17 @@ def main():
         # Create website template file
         make_post_md(label, wdb)
 
-        # Website data json - copy to website directory
-        copyfile(db.get_file_path('summary', label + '.json'),
-                 wdb.data_path / (label + '.json'))
+        # Load and copy combined summary data
+        words_summary = next(parse_json_data(w_sum_path / (label + '.json')))
+        counts_summary = next(parse_json_data(c_sum_path / (label + '.json')))
+        comb_summary = {**words_summary, **counts_summary}
+
+        # Website data json - save out to website directory
+        with open(wdb.data_path / (label + '.json'), 'w') as outfile:
+            json.dump(comb_summary, outfile)
+
+        #copyfile(db.get_file_path('summary', label + '.json'),
+        #         wdb.data_path / (label + '.json'))
 
         # Check website plots folder
         w_plts_path = wdb.erp_plot_path / label

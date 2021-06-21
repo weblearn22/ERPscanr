@@ -3,6 +3,8 @@
 <!-- <h1>{{ page.title }} - {{ page.label }} {{ site.data[page.title].name }} </h1> -->
 <h1> {{ site.data[page.title].name }} </h1>
 
+<h2> Words Collection Summary </h2>
+
 <img src={{ site.baseurl }}/assets/ERPs/{{ page.title }}/wc.svg alt="wordcloud" align="middle">
 
 <h3> The most common keywords for this ERP are: </h3>
@@ -12,7 +14,7 @@
 {% endfor %}
 </ul>
 
-<h3> Quick Stats </h3>
+<h3> Articles Summary </h3>
 
 <p>
 	Number of Papers: {{ site.data[page.title].n_articles }} <br/>
@@ -23,5 +25,27 @@
 
 <h3> Publication History </h3>
 <img src={{ site.baseurl }}/assets/ERPs/{{ page.title }}/hist.svg alt="publication_years">
+
+<h2> Co-occurence Collection Summary </h2>
+
+<p> The following information is collected from the co-occurence analysis. </p>
+
+<h3> The highest cognitive associations are: </h3>
+
+<ul>
+{% for assoc in site.data[page.title].top_cog_assocs %}
+    <li> {{ assoc }} </li>
+{% endfor %}
+</ul>
+
+<h3> The highest disorder-related associations are: </h3>
+
+<ul>
+{% for assoc in site.data[page.title].top_dis_assocs %}
+    <li> {{ assoc }} </li>
+{% endfor %}
+</ul>
+
+</p>
 
 {% include sidebar.html %}
