@@ -6,17 +6,17 @@
 
 ## Overview
 
-Event-related potentials (ERP) are a common signal of analysis in neuroscientific experiments. This project aims to summarize the ERP literature, using automated literature collection and text-mining of published research articles to summarize current findings, and examine patterns in the ERP literature.
+Event-related potentials (ERP) are a common signal of analysis in neuroscience experiments, with a large existing literature of ERP-related work. This project uses automated literature collection and text-mining of published research articles in order to help summarize the ERP literature, examining patterns and associations within and between ERP components.
 
 ## Project Guide
 
-To goal of this project is to map and annotate the existing literature related to the method of ERPs. In order to do so, we first manually curated a dictionary of all known ERP components that we could find. This list of ERP components is available viewable at /notebooks/Intro.ipynb.
+To goal of this project is explore and summarize the existing ERP-related literature. In order to do so, we first manually curated a dictionary of all known ERP components that we could find. This list of ERP components and labels is viewable in the `SearchTerms` notebook. 
 
-For data collection, this project employs main approaches to mining information:
-- 'Count': a co-occurence analysis of ERP terms and other pre-defined terms of interest (cognitive and/or disorder-related association terms)
-- 'Words': an analysis of all words that appear in the abstract of ERP related papers. From this web-scrape, we also gather and analysis meta-data, such as authors, journals, keywords and date of publication to build profiles of ERPs.
+For data collection, this project employs main approaches for collecting literature data:
+- The 'Words' approach collects text and metadata, such as authors, journals, keywords and date of publication, from all articles that are found based on the search terms. This data is primarily used to characterize and build profiles of ERP components. 
+- The 'Count' approach collects data on co-occurence of ERP terms and other pre-defined terms of interest, including cognitive and/or disorder-related association terms of interest. This data is primarily used to examine patterns and similarities across ERP components, based on their associated topics. 
 
-From there, we analyze patterns in the literature and make inferences about ERPs and how they relate based on analyzing this co-occurence data, by analyzing this co-occuring and text data.
+Overall, the goal is to analyze patterns in the literature and make inferences about ERPs, by analyzing the collected data.
 
 The easiest way to examine the outputs of this project is on the
 [project website](http://erpscanr.github.io/), which includes
@@ -29,7 +29,7 @@ To explore how this project was done, and see the underlying code, you can explo
 
 A preprint for this project is upcoming.
 
-This results of this project are hosted project is now hosted online [here](http://erpscanr.github.io/).
+This results of this project are hosted online on the [project website](http://erpscanr.github.io/).
 
 ## Requirements
 
@@ -43,15 +43,16 @@ Additional requirements include:
 
 ## Repository Layout
 
-This project repository is set up in the following way:
+This project repository is organized in the following way:
 
 - `build_site/` contains scripts to create the project website
-- `code`/ includes local code used for this project
-- `docs/` includes files for the project website
-- `notebooks/` is a collection of Jupyter notebooks that step through the project
+- `code`/ contains code written and used for this project
+- `docs/` contains files that create and define the project website
+- `notebooks/` contains a collection of Jupyter notebooks that step through the project
 - `scripts/` contains stand alone scripts that run the data collection and analysis
+- `terms/` contains all the search terms used for the literature collection
 
 ## Data
 
-The project uses literature data, collected with code that is available in this repository. Due to size, the
-collected data files are not hosted on this repository, but are available upon request.
+The project uses literature data, collected using code that is available in this repository. 
+Data files will be made available soon [LINK UPCOMING].
