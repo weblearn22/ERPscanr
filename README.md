@@ -55,4 +55,6 @@ This project repository is organized in the following way:
 ## Data
 
 The project uses literature data, collected using code that is available in this repository. 
-Data files will be made available soon [LINK UPCOMING].
+
+Data files from the current collection are available on
+[OSF](https://osf.io/g2ruj/).
