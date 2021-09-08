@@ -12,11 +12,11 @@ This results of this project are hosted online on the [project website](http://e
 
 ## Project Guide
 
-To goal of this project is explore and summarize the existing ERP-related literature. In order to do so, we first manually curated a dictionary of all known ERP components that we could find. This list of ERP components and labels is viewable in the `SearchTerms` notebook. 
+To goal of this project is explore and summarize the existing ERP-related literature. In order to do so, we first manually curated a dictionary of all known ERP components that we could find. This list of ERP components and labels is viewable in the `SearchTerms` notebook.
 
 For data collection, this project employs main approaches for collecting literature data:
-- The 'Words' approach collects text and metadata, such as authors, journals, keywords and date of publication, from all articles that are found based on the search terms. This data is primarily used to characterize and build profiles of ERP components. 
-- The 'Count' approach collects data on co-occurence of ERP terms and other pre-defined terms of interest, including cognitive and/or disorder-related association terms of interest. This data is primarily used to examine patterns and similarities across ERP components, based on their associated topics. 
+- The 'Words' approach collects text and metadata, such as authors, journals, keywords and date of publication, from all articles that are found based on the search terms. This data is primarily used to characterize and build profiles of ERP components.
+- The 'Count' approach collects data on co-occurence of ERP terms and other pre-defined terms of interest, including cognitive and/or disorder-related association terms of interest. This data is primarily used to examine patterns and similarities across ERP components, based on their associated topics.
 
 Overall, the goal is to analyze patterns in the literature and make inferences about ERPs, by analyzing the collected data.
 
@@ -31,7 +31,7 @@ To explore how this project was done, and see the underlying code, you can explo
 
 This project is described in the following preprint:
 
-    Donoghue T & Voytek B. Automated meta-analysis of the event-related
+    Donoghue T & Voytek B (2021). Automated meta-analysis of the event-related
     potential (ERP) literature. PsyArXiv. DOI: 10.31234/osf.io/7ezmh
 
 Direct link: https://doi.org/10.31234/osf.io/7ezmh
@@ -59,7 +59,7 @@ This project repository is organized in the following way:
 
 ## Data
 
-The project uses literature data, collected using code that is available in this repository. 
+The project uses literature data, collected using code that is available in this repository.
 
 Data files from the current collection are available on
 [OSF](https://osf.io/g2ruj/).
