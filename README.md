@@ -8,6 +8,8 @@
 
 Event-related potentials (ERP) are a common signal of analysis in neuroscience experiments, with a large existing literature of ERP-related work. This project uses automated literature collection and text-mining of published research articles in order to help summarize the ERP literature, examining patterns and associations within and between ERP components.
 
+This results of this project are hosted online on the [project website](http://erpscanr.github.io/).
+
 ## Project Guide
 
 To goal of this project is explore and summarize the existing ERP-related literature. In order to do so, we first manually curated a dictionary of all known ERP components that we could find. This list of ERP components and labels is viewable in the `SearchTerms` notebook. 
@@ -27,9 +29,12 @@ To explore how this project was done, and see the underlying code, you can explo
 
 ## Reference
 
-A preprint for this project is upcoming.
+This project is described in the following preprint:
 
-This results of this project are hosted online on the [project website](http://erpscanr.github.io/).
+    Donoghue T & Voytek B. Automated meta-analysis of the event-related
+    potential (ERP) literature. PsyArXiv. DOI: 10.31234/osf.io/7ezmh
+
+Direct link: https://doi.org/10.31234/osf.io/7ezmh
 
 ## Requirements
 
