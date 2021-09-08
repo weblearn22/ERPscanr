@@ -2,6 +2,7 @@
 
 `ERPscanr` project repository: automated meta-analysis of the ERP literature.
 
+[![Paper](https://img.shields.io/badge/preprint-10.31234/osf.io/7ezmh-informational.svg)](https://doi.org/10.31234/osf.io/7ezmh)
 [![Website](https://img.shields.io/badge/site-erpscanr.github.io-informational.svg)](http://erpscanr.github.io/)
 
 ## Overview
