@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+preferred-citation:
+  type: article
+  authors:
+  - family-names: "Donoghue"
+    given-names: "Thomas"
+    orcid: "https://orcid.org/0000-0001-5911-0472"
+  - family-names: "Voytek"
+    given-names: "Bradley"
+    orcid: "https://orcid.org/0000-0003-1640-2525"
+  doi: "10.31234/osf.io/7ezmh"
+  journal: "PsyArXiv"
+  title: "Automated meta-analysis of the event-related potential (ERP) literature"
+  year: 2021
