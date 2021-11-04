@@ -169,15 +169,15 @@ def plot_latencies(polarities, latencies, **plt_kwargs):
 
 
 @savefig
-def plot_latency_values(latencies, avgs, **plt_kwargs):
-    """Plot average association values across latencies."""
+def plot_latency_values(latencies, values, **plt_kwargs):
+    """Plot computed association values across latencies."""
 
     ax = check_ax(plt_kwargs.pop('ax', None), plt_kwargs.pop('figsize', (6, 4)))
 
     xlabel = plt_kwargs.pop('xlabel', 'Latency')
     ylabel = plt_kwargs.pop('ylabel', 'Association')
 
-    ax.plot(latencies, avgs, '.', **plt_kwargs)
+    ax.plot(latencies, values, '.', **plt_kwargs)
 
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
