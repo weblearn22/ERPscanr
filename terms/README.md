@@ -31,3 +31,9 @@ The following lists contain ERPs that were initially considered but ultimately d
     - There ERPs have canonical latencies less than 100 ms (early sensory responses) and were not included
 
 Note that dropped terms were removed prior to data collection, and so are not included in the collected dataset.
+
+### Analysis Related Lists
+
+The following lists contain lists of terms that were used during the analysis (post data collection).
+
+- `analysis_exclusions.txt` a list of general terms that are excluded from analysis of common keywords, words, etc
