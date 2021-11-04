@@ -1,0 +1,30 @@
+P105
+P165
+P225
+P290
+P320
+P155
+P290
+P370
+P440
+P560
+P570
+P700
+P800
+N115
+N165
+N340
+N374
+N430
+N370
+N380
+N750
+N900
+N1000
+N2ac
+pN400N, post N400 positivity
+ACOP, auditory-evoked contralateral occipital positivity
+SAN, sustained anterior negativity
+SPS, syntactic positive shift
+LDN, late difference negativity
+RP, reversal positivity
