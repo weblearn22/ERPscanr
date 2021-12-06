@@ -1,0 +1,26 @@
+P25
+P27
+P37
+P39
+P40
+P45
+P50
+P60
+P90
+N20
+N25
+N30
+N35
+N50
+N60
+N70
+N75
+N80
+N85
+N90
+VSeP, vestibular sensory evoked potentials
+VaSEP, vagus somatosensory evoked potentials
+BAEP, brainstem auditory evoked potentials
+SEP, somatosensory evoked potential
+AEP, auditory evoked potential
+HEP, heartbeat evoked potential
