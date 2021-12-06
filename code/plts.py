@@ -120,6 +120,7 @@ def plot_attrs_by_year(journals, authors, **plt_kwargs):
                alpha=plt_kwargs.pop('alpha', 0.85), ax=ax2)
 
     fig.legend(loc='upper left', bbox_to_anchor=(0, 1), bbox_transform=ax1.transAxes)
+
     ax1.set_ylabel('Unique Journals')
     ax2.set_ylabel('Unique Authors')
 
@@ -159,19 +160,24 @@ def plot_latencies(polarities, latencies, **plt_kwargs):
         ax.plot(lat, offsets[pol], 'b.',
                 markersize=plt_kwargs.pop('markersize', 20),
                 alpha=plt_kwargs.pop('alpha', 0.25))
+
     ax.set_ylim([-50, 50])
     ax.set_yticks([-25, 25])
     ax.set_yticklabels(['N', 'P'])
+
     ax.set_xlabel('Latency')
 
 
 @savefig
-def plot_latency_values(latencies, avgs, **plt_kwargs):
-    """Plot average association values across latencies."""
+def plot_latency_values(latencies, values, **plt_kwargs):
+    """Plot computed association values across latencies."""
 
     ax = check_ax(plt_kwargs.pop('ax', None), plt_kwargs.pop('figsize', (6, 4)))
 
-    plt.plot(latencies, avgs, '.', **plt_kwargs)
+    xlabel = plt_kwargs.pop('xlabel', 'Latency')
+    ylabel = plt_kwargs.pop('ylabel', 'Association')
 
-    plt.xlabel('Latency')
-    plt.ylabel('Association')
+    ax.plot(latencies, values, '.', **plt_kwargs)
+
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
