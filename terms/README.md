@@ -2,6 +2,9 @@
 
 This sub-folder contains a collection of terms lists used for the project.
 
+For an overview of the search terms that were used, and brief descriptions, see
+[this notebook](https://github.com/ERPscanr/ERPscanr/blob/main/notebooks/01-SearchTerms.ipynb).
+
 ### ERP Terms
 
 The following files relate to term definitions and metadata about the ERP components included in this project.
