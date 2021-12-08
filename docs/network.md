@@ -6,7 +6,7 @@ layout: default
 
 In this analysis, a network approach is used to investigate how different ERP components relate to each other.
 
-To do so, each node in the network is an ERP, sub-selected to include only ERP components for which at least 150 articles were found. Each weighted edge (connection) in the network is a measure of often these ERP terms are mentioned in the same articles.
+To do so, each node in the network is an ERP, sub-selected to include only ERP components for which at least 150 articles were found. Each weighted edge (connection) in the network is a measure of how often these ERP terms are mentioned in the same articles.
 
 This allows for a quantification and visualization of patterns in the literature:
 
