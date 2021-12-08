@@ -7,17 +7,22 @@
 
 ## Overview
 
-Event-related potentials (ERP) are a common signal of analysis in neuroscience experiments, with a large existing literature of ERP-related work. This project uses automated literature collection and text-mining of published research articles in order to help summarize the ERP literature, examining patterns and associations within and between ERP components.
+Event-related potentials (ERP) are a common signal of analysis in neuroscience experiments, with a large existing literature of ERP-related work.
+This project uses automated literature collection and text-mining of published research articles in order to help summarize the ERP literature,
+examining patterns and associations within and between ERP components.
 
 This results of this project are hosted online on the [project website](http://erpscanr.github.io/).
 
 ## Project Guide
 
-To goal of this project is explore and summarize the existing ERP-related literature. In order to do so, we first manually curated a dictionary of all known ERP components that we could find. This list of ERP components and labels is viewable in the `SearchTerms` notebook.
+To goal of this project is explore and summarize the existing ERP-related literature.
+In order to do so, we first manually curated a dictionary of all known ERP components that we could find.
+This list of ERP components and labels is defined in the
+`terms` sub-folder, and viewable in the `SearchTerms` notebook.
 
 For data collection, this project employs main approaches for collecting literature data:
 - The 'Words' approach collects text and metadata, such as authors, journals, keywords and date of publication, from all articles that are found based on the search terms. This data is primarily used to characterize and build profiles of ERP components.
-- The 'Count' approach collects data on co-occurence of ERP terms and other pre-defined terms of interest, including cognitive and/or disorder-related association terms of interest. This data is primarily used to examine patterns and similarities across ERP components, based on their associated topics.
+- The 'Count' approach collects data on co-occurrence of ERP terms and other pre-defined terms of interest, including cognitive and/or disorder-related association terms of interest. This data is primarily used to examine patterns and similarities across ERP components, based on their associated topics.
 
 Overall, the goal is to analyze patterns in the literature and make inferences about ERPs, by analyzing the collected data.
 
@@ -25,7 +30,8 @@ The easiest way to examine the outputs of this project is on the
 [project website](http://erpscanr.github.io/), which includes
 individual profiles for all examined ERP components and group level analyses.
 
-To explore how this project was done, and see the underlying code, you can explore this repository. As a starting point, the `notebooks` describe the approach used in this project. For doing literature analyses in general, see the
+To explore how this project was done, and see the underlying code, you can explore this repository.
+As a starting point, the `notebooks` describe the approach used in this project. For doing literature analyses in general, see the
 [LISC](https://github.com/lisc-tools/lisc) tool.
 
 ## Reference
@@ -58,9 +64,17 @@ This project repository is organized in the following way:
 - `scripts/` contains stand alone scripts that run the data collection and analysis
 - `terms/` contains all the search terms used for the literature collection
 
+Note that in order to re-run the analyses using the existing dataset, you will need to download the dataset (see below)
+and add this to a `data` folder within the project folder.
+
+The code in this repository can also be used to run a new data collection, using the terms as
+defined in the `terms` sub-folder, and data collection scripts available in the `scripts` sub-folder.
+
+Post data-collection, the main analyses of the data are done in the `notebooks`.
+
 ## Data
 
-The project uses literature data, collected using code that is available in this repository.
+This project uses literature data.
 
-Data files from the current collection are available on
-[OSF](https://osf.io/g2ruj/).
+The collected literature dataset that is analyzed in this project is openly available, available for download from this
+[OSF repository](https://osf.io/g2ruj/).
