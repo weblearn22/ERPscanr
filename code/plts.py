@@ -126,7 +126,7 @@ def plot_attrs_by_year(journals, authors, **plt_kwargs):
 
 
 @savefig
-def plot_network(network, labels, edge_weights=(0.1, 2), layout_seed=None, figsize=(10, 6)):
+def plot_network(network, labels=None, edge_weights=(0.1, 2), layout_seed=None, figsize=(10, 6)):
     """Plot network.
 
     Notes: uses the spring_layout approach for setting the layout.
@@ -141,11 +141,20 @@ def plot_network(network, labels, edge_weights=(0.1, 2), layout_seed=None, figsi
     # Get the location information for plotting the graph
     pos = nx.spring_layout(network, seed=layout_seed)
 
-    # Update the label positions to offset them from on top of nodes
-    label_pos = {ind : array + [0, 0.04] for ind, array in pos.items()}
-
+    # Draw the network
     nx.draw(network, pos=pos, node_size=75, alpha=0.75, width=widths)
-    nx.draw_networkx_labels(network, label_pos, labels=labels, font_size=16);
+
+    if labels:
+
+        # Define settings for the text bounding boxes to use
+        bbox_args = {"ec": "k", "fc": "white", "alpha": 0.75,
+                     "boxstyle": "round", "pad": 0.125}
+
+        # Update the label positions to offset them from on top of nodes
+        label_pos = {ind : array + [0, 0.08] for ind, array in pos.items()}
+
+        # Draw labels
+        nx.draw_networkx_labels(network, label_pos, labels=labels, font_size=11, bbox=bbox_args)
 
 
 @savefig
