@@ -52,10 +52,10 @@ Any major updates to the project are logged on the
 
 This project is described in the following preprint:
 
-    Donoghue T & Voytek B (2021). Automated meta-analysis of the event-related
-    potential (ERP) literature. PsyArXiv. DOI: 10.31234/osf.io/7ezmh
+    Donoghue T & Voytek B (2021). Automated meta-analysis of the event-related potential
+    (ERP) literature. Scientific Reports, 12, 1867. DOI: 10.1038/s41598-022-05939-9
 
-Direct link: [https://doi.org/10.31234/osf.io/7ezmh](https://doi.org/10.31234/osf.io/7ezmh)
+Direct link: [https://doi.org/10.1038/s41598-022-05939-9](https://doi.org/10.1038/s41598-022-05939-9)
 
 ## Contact
 
