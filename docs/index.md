@@ -8,7 +8,7 @@ ERPscanr is a semi-automated meta-analysis of scientific literature on the topic
 
 ## Motivation
 
-ERPs are a common method of investigation in neuroscience, with tens of thousands of existing articles using ERPs to investigate
+ERPs are a common method of investigation in psychology and neuroscience, with tens of thousands of existing articles using ERPs to investigate
 both cognitive and clinical questions, with thousands more published each year.
 The scale of this literature can make it difficult to keep up with the research, motivating the need for synthesis of the existing literature.
 
@@ -21,19 +21,22 @@ ERP components that have been characterized in the literature, what they are use
 
 ## Methods & Data
 
-ERPscanr uses the [LISC](https://lisc-tools.github.io/) Python tool to collect and analyze scientific literature. The data is collected from
+ERPscanr uses the [LISC](https://lisc-tools.github.io/) Python tool to collect and analyze scientific literature.
+The data is collected from
 [Pubmed](https://pubmed.ncbi.nlm.nih.gov/), a database of biomedical literature.
-From there, we use text-mining and word co-occurrence analysis to derive data-driven summaries for each ERP,
+From there, we use text-mining and word co-occurrence analyses to derive data-driven summaries for each ERP,
 as well as to compare across these profiles to summarize patterns across the literature.
 
-The code for this project is openly available in the [project repository](https://github.com/ERPscanr/ERPscanr).
+The code for this project is openly available in the
+[project repository](https://github.com/ERPscanr/ERPscanr).
 This includes the curated set of search terms for ERP components and potential associations, which is available in the
 [terms](https://github.com/ERPscanr/ERPscanr/tree/main/terms) sub-folder.
 
-The literature data collected and analyzed in this project is also openly available, in this
+The literature data collected and analyzed in this project is also openly available in this
 [OSF repository](https://osf.io/g2ruj/).
 
-A more in-depth overview of the methods is available on the [methods page](methods.html).
+A more in-depth overview of the methods is available on the
+[methods page](methods.html).
 
 ## Version
 
@@ -50,7 +53,7 @@ Any major updates to the project are logged on the
 
 ## Reference
 
-This project is described in the following preprint:
+This project is described in the following paper:
 
     Donoghue T & Voytek B (2021). Automated meta-analysis of the event-related potential
     (ERP) literature. Scientific Reports, 12, 1867. DOI: 10.1038/s41598-022-05939-9
