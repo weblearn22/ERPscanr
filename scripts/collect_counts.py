@@ -10,8 +10,8 @@ from lisc.utils import SCDB, save_object, load_api_key
 TEST = False
 
 # Set locations / names for loading files
-DB_NAME = '../../data'
-TERMS_DIR = '../../terms/'
+DB_NAME = '../data'
+TERMS_DIR = '../terms/'
 API_FILE = 'api_key.txt'
 
 # Set label for secondary terms to run
